@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#7c3aed"/>
+<title>CRACKTNPSC — AI Exam Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+/* ── RESET & ROOT ─────────────────────────────────── */
+:root{
+  --bg:#0d0d18;--surface:#13131f;--surface2:#1c1c2e;--surface3:#252538;
+  --border:#2e2e45;--border2:#3d3d58;
+  --text:#eeeef8;--muted:#8888b0;--muted2:#5a5a80;
+  --accent:#7c3aed;--accent2:#a855f7;--accent3:#06b6d4;
+  --green:#10b981;--red:#ef4444;--orange:#f97316;--yellow:#eab308;
+  --nav-h:56px;--bottom-h:64px;
+}
+.light{
+  --bg:#f2f2ff;--surface:#fff;--surface2:#f5f5ff;--surface3:#ebebff;
+  --border:#ddddf0;--border2:#c8c8e8;--text:#1a1a30;--muted:#6060a0;--muted2:#9090c0;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{font-size:16px;height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;
+  min-height:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.tamil{font-family:'Noto Sans Tamil','Poppins',sans-serif}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+input,select,textarea,button{font-family:inherit;outline:none;border:none}
+button{cursor:pointer;background:none}
+img{max-width:100%}
+
+/* ── ANIMATIONS ───────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes scaleIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 15px rgba(124,58,237,.3)}50%{box-shadow:0 0 30px rgba(124,58,237,.6)}}
+.fade-up{animation:fadeUp .35s ease both}
+.fade-in{animation:fadeIn .25s ease}
+.scale-in{animation:scaleIn .3s ease}
+.spin{animation:spin 1s linear infinite}
+.pulse{animation:pulse 1.5s ease-in-out infinite}
+.glow-anim{animation:glow 2s ease-in-out infinite}
+.shake{animation:shake .4s ease}
+
+/* ── LAYOUT ───────────────────────────────────────── */
+#app{display:flex;flex-direction:column;min-height:100vh;max-width:480px;margin:0 auto;position:relative}
+.top-nav{
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;z-index:200;height:var(--nav-h);
+  display:flex;align-items:center;padding:0 16px;
+  background:rgba(13,13,24,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.light .top-nav{background:rgba(242,242,255,.92)}
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;z-index:200;height:var(--bottom-h);
+  display:flex;align-items:center;padding:0 4px 8px;
+  background:var(--surface);border-top:1px solid var(--border);
+}
+.page{
+  flex:1;padding:calc(var(--nav-h) + 12px) 14px calc(var(--bottom-h) + 12px);
+  min-height:100vh;animation:fadeUp .3s ease;
+}
+.page-no-bottom{
+  flex:1;padding:calc(var(--nav-h) + 12px) 14px 16px;
+  min-height:100vh;animation:fadeUp .3s ease;
+}
+.full-page{min-height:100vh;display:flex;flex-direction:column;animation:fadeIn .3s ease}
+
+/* ── BOTTOM NAV ITEMS ─────────────────────────────── */
+.bnav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:6px 4px;border-radius:12px;transition:all .2s;
+  color:var(--muted);font-size:10px;font-weight:600;
+}
+.bnav-item.active{color:var(--accent2)}
+.bnav-item .icon{font-size:22px;line-height:1;transition:transform .2s}
+.bnav-item.active .icon{transform:scale(1.15)}
+
+/* ── CARDS ────────────────────────────────────────── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.card-p{padding:16px}
+.card:active{transform:scale(.98)}
+
+/* ── BUTTONS ──────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 20px;border-radius:14px;font-weight:700;font-size:15px;
+  transition:all .2s;white-space:nowrap;width:100%;
+}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-success{background:linear-gradient(135deg,#059669,#10b981);color:#fff}
+.btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
+.btn-sm{padding:9px 16px;font-size:13px;border-radius:10px}
+.btn-outline{background:transparent;border:2px solid var(--accent);color:var(--accent2)}
+
+/* ── INPUTS ───────────────────────────────────────── */
+.input{
+  width:100%;padding:14px 16px;
+  background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:12px;color:var(--text);font-size:15px;
+  transition:border-color .2s;
+}
+.input:focus{border-color:var(--accent)}
+.input-group{margin-bottom:14px}
+.input-group label{display:block;font-size:12px;font-weight:700;
+  color:var(--muted);margin-bottom:7px;letter-spacing:.5px;text-transform:uppercase}
+.input-wrap{position:relative}
+.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:18px}
+.input-with-icon{padding-left:44px}
+
+/* ── BADGES ───────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.tag-easy{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+.tag-medium{background:rgba(234,179,8,.15);color:#eab308;border:1px solid rgba(234,179,8,.3)}
+.tag-hard{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+
+/* ── MODALS ───────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;
+  display:flex;align-items:flex-end;padding:0;animation:fadeIn .2s}
+.modal-sheet{background:var(--surface);border-radius:24px 24px 0 0;
+  width:100%;max-height:90vh;overflow-y:auto;
+  padding:20px 20px 32px;animation:slideUp .3s ease}
+.modal-pill{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 20px}
+
+/* ── PROGRESS BAR ─────────────────────────────────── */
+.progress-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .8s ease}
+
+/* ── TOGGLE SWITCH ────────────────────────────────── */
+.toggle-wrap{display:flex;background:var(--surface2);border-radius:12px;padding:4px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:9px;border-radius:9px;font-size:14px;font-weight:700;
+  transition:all .2s;color:var(--muted);background:none;border:none;cursor:pointer}
+.toggle-btn.active{background:var(--accent);color:#fff}
+
+/* ── LANG SELECTOR ────────────────────────────────── */
+.lang-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:20px;font-size:13px;font-weight:700;
+  border:2px solid var(--border);cursor:pointer;transition:all .2s;
+}
+.lang-pill.active{border-color:var(--accent);background:rgba(124,58,237,.15);color:var(--accent2)}
+
+/* ── QUESTION PALETTE ─────────────────────────────── */
+.palette-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;padding:12px 0}
+.p-btn{
+  aspect-ratio:1;border-radius:8px;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:none;cursor:pointer;transition:all .15s;
+}
+.p-btn:active{transform:scale(.9)}
+.p-not{background:var(--surface2);color:var(--muted)}
+.p-ans{background:#10b981;color:#fff}
+.p-mark{background:#f97316;color:#fff}
+.p-mark-ans{background:#7c3aed;color:#fff}
+.p-vis{background:rgba(239,68,68,.3);color:#ef4444}
+
+/* ── OPTION CARDS ─────────────────────────────────── */
+.opt-card{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px;border-radius:14px;border:2px solid var(--border);
+  cursor:pointer;transition:all .2s;background:var(--surface);
+  margin-bottom:10px;text-align:left;width:100%;
+}
+.opt-card:active{transform:scale(.98)}
+.opt-card.selected{border-color:var(--accent);background:rgba(124,58,237,.08)}
+.opt-card.correct{border-color:#10b981;background:rgba(16,185,129,.08)}
+.opt-card.wrong{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.opt-letter{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;
+}
+
+/* ── STAT CARDS ───────────────────────────────────── */
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat-box{padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)}
+
+/* ── TOAST ────────────────────────────────────────── */
+.toast{
+  position:fixed;top:calc(var(--nav-h) + 10px);left:50%;transform:translateX(-50%);
+  z-index:999;background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:12px 18px;font-size:14px;font-weight:600;
+  white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:scaleIn .25s ease;
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ── SCROLLABLE AREA FIX ──────────────────────────── */
+.scroll-area{overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+/* ── ADMIN TABLE ──────────────────────────────────── */
+.admin-table{width:100%;font-size:13px}
+.admin-table th{text-align:left;padding:8px 10px;color:var(--muted);font-size:11px;font-weight:700;
+  border-bottom:1px solid var(--border);letter-spacing:.5px;text-transform:uppercase}
+.admin-table td{padding:10px;border-bottom:1px solid var(--border)}
+.admin-table tr:last-child td{border-bottom:none}
+
+/* ── DONUT ────────────────────────────────────────── */
+.donut-wrap{display:flex;align-items:center;justify-content:center;padding:10px 0}
+
+/* ── SECTION TITLE ────────────────────────────────── */
+.sec-title{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+
+/* ── DIVIDER ──────────────────────────────────────── */
+.divider{height:1px;background:var(--border);margin:14px 0}
+
+/* ── FLOATING ACTION ──────────────────────────────── */
+.fab{
+  position:fixed;bottom:calc(var(--bottom-h) + 16px);right:16px;z-index:100;
+  width:52px;height:52px;border-radius:16px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 8px 24px rgba(124,58,237,.4);border:none;cursor:pointer;
+  animation:glow 2s ease-in-out infinite;
+}
+.fab:active{transform:scale(.9)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useCallback,useRef,createContext,useContext,useMemo} = React;
+const Ctx = createContext(null);
+const useApp = () => useContext(Ctx);
+
+// ══════════════════════════════════════════════════════
+// CONFIG — Google Sheets / Forms Integration
+// ══════════════════════════════════════════════════════
+// REPLACE these with your actual Google Sheets/Forms URLs
+const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+// Admin credentials
+const ADMIN_PHONE = "9999999999";
+const ADMIN_PASS  = "admin123";
+
+// ══════════════════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════════════════
+const T = {
+  en:{
+    appName:"CRACKTNPSC",appSub:"AI Exam Platform",
+    login:"Login",register:"Register",
+    phone:"Mobile Number",name:"Full Name",email:"Email (Optional)",
+    password:"Password",confirmPw:"Confirm Password",
+    loginBtn:"Sign In",registerBtn:"Create Account",
+    demoStudent:"Demo Student",demoAdmin:"Demo Admin",
+    dashboard:"Home",practice:"Practice",tests:"Tests",analytics:"Analysis",profile:"Profile",
+    startTest:"Start Test",submitTest:"Submit Test",nextQ:"Next",prevQ:"Prev",
+    markReview:"Mark",clearAns:"Clear",
+    correct:"Correct",wrong:"Wrong",skipped:"Skipped",score:"Score",accuracy:"Accuracy",
+    timeLeft:"Time Left",questionNo:"Question",of:"of",
+    yourAns:"Your Answer",correctAns:"Correct Answer",explanation:"Explanation",
+    weakAreas:"Weak Areas",strongAreas:"Strong Areas",
+    testsTab:"Tests",analyticsTab:"Analytics",
+    logout:"Logout",settings:"Settings",language:"Language",
+    selectLang:"Select Question Language",
+    tamil:"Tamil",english:"English",
+    submit:"Submit",cancel:"Cancel",save:"Save",
+    adminPanel:"Admin Panel",allUsers:"All Users",
+    totalUsers:"Total Users",totalTests:"Total Tests",
+    avgScore:"Avg Score",todayActive:"Active Today",
+    noHistory:"No tests taken yet",startFirst:"Take your first test!",
+    welcome:"Welcome",goodMorning:"Good Morning",
+    dailyTarget:"Daily Target",questionsLeft:"Questions Left",
+    rank:"Rank",streak:"Streak",days:"days",
+    chooseTest:"Choose a Test",duration:"Duration",questions:"Questions",
+    mins:"min",easy:"Easy",medium:"Medium",hard:"Hard",
+    overall:"Overall",chapter:"Chapter",topic:"Topic",
+    instructions:"Instructions",beginTest:"Begin Test",
+    reviewAnswers:"Review Answers",viewResult:"View Result",
+    retake:"Retake",backHome:"Back to Home",
+    shareResult:"Share Result",exportPDF:"Export",
+    phoneRequired:"Mobile number required",
+    phoneInvalid:"Enter valid 10-digit mobile number",
+    pwMismatch:"Passwords do not match",
+    loginSuccess:"Login successful!",
+    registerSuccess:"Account created!",
+    fillAll:"Please fill all required fields",
+  },
+  ta:{
+    appName:"CRACKTNPSC",appSub:"AI தேர்வு தளம்",
+    login:"உள்நுழைவு",register:"பதிவு",
+    phone:"மொபைல் எண்",name:"முழு பெயர்",email:"மின்னஞ்சல் (விரும்பினால்)",
+    password:"கடவுச்சொல்",confirmPw:"கடவுச்சொல் உறுதி",
+    loginBtn:"உள்நுழை",registerBtn:"கணக்கு உருவாக்கு",
+    demoStudent:"டெமோ மாணவர்",demoAdmin:"டெமோ நிர்வாகி",
+    dashboard:"முகப்பு",practice:"பயிற்சி",tests:"தேர்வுகள்",analytics:"பகுப்பாய்வு",profile:"சுயவிவரம்",
+    startTest:"தேர்வு தொடங்கு",submitTest:"சமர்ப்பி",nextQ:"அடுத்து",prevQ:"முந்தைய",
+    markReview:"குறி",clearAns:"அழி",
+    correct:"சரி",wrong:"தவறு",skipped:"தவிர்த்தது",score:"மதிப்பெண்",accuracy:"துல்லியம்",
+    timeLeft:"நேரம்",questionNo:"கேள்வி",of:"இல்",
+    yourAns:"உங்கள் பதில்",correctAns:"சரியான பதில்",explanation:"விளக்கம்",
+    weakAreas:"பலவீன பகுதிகள்",strongAreas:"வலுவான பகுதிகள்",
+    testsTab:"தேர்வுகள்",analyticsTab:"பகுப்பாய்வு",
+    logout:"வெளியேறு",settings:"அமைப்புகள்",language:"மொழி",
+    selectLang:"கேள்வி மொழி தேர்வு",
+    tamil:"தமிழ்",english:"ஆங்கிலம்",
+    submit:"சமர்ப்பி",cancel:"ரத்து",save:"சேமி",
+    adminPanel:"நிர்வாக பலகம்",allUsers:"எல்லா பயனர்கள்",
+    totalUsers:"மொத்த பயனர்கள்",totalTests:"மொத்த தேர்வுகள்",
+    avgScore:"சராசரி மதிப்பெண்",todayActive:"இன்று செயலில்",
+    noHistory:"இன்னும் தேர்வு எழுதவில்லை",startFirst:"உங்கள் முதல் தேர்வை எழுதுங்கள்!",
+    welcome:"வரவேற்கிறோம்",goodMorning:"காலை வணக்கம்",
+    dailyTarget:"தினசரி இலக்கு",questionsLeft:"கேள்விகள் மீதம்",
+    rank:"தரவரிசை",streak:"தொடர்ச்சி",days:"நாட்கள்",
+    chooseTest:"தேர்வை தேர்ந்தெடுக்கவும்",duration:"கால அளவு",questions:"கேள்விகள்",
+    mins:"நிமி",easy:"எளிது",medium:"நடுத்தரம்",hard:"கடினம்",
+    overall:"மொத்தம்",chapter:"அத்தியாயம்",topic:"தலைப்பு",
+    instructions:"வழிமுறைகள்",beginTest:"தேர்வு தொடங்கு",
+    reviewAnswers:"பதில்களை மதிப்பாய்வு",viewResult:"முடிவு பார்",
+    retake:"மீண்டும் எழுது",backHome:"முகப்பிற்கு",
+    shareResult:"பகிர்",exportPDF:"ஏற்றுமதி",
+    phoneRequired:"மொபைல் எண் தேவை",
+    phoneInvalid:"சரியான 10 இலக்க மொபைல் எண் உள்ளிடவும்",
+    pwMismatch:"கடவுச்சொற்கள் பொருந்தவில்லை",
+    loginSuccess:"உள்நுழைவு வெற்றி!",
+    registerSuccess:"கணக்கு உருவாக்கப்பட்டது!",
+    fillAll:"அனைத்து தகவல்களையும் நிரப்பவும்",
+  }
+};
+
+// ══════════════════════════════════════════════════════
+// SAMPLE QUESTIONS (EN + TA)
+// ══════════════════════════════════════════════════════
+const QUESTIONS = [
+  {id:1,topic:"Polity",chapter:"Constitution",difficulty:"Medium",
+   en:{q:"Which article of the Indian Constitution abolishes untouchability?",opts:["Article 14","Article 15","Article 17","Article 21"],correct:2,exp:"Article 17 abolishes untouchability and forbids its practice in any form.",concept:"Fundamental Rights"},
+   ta:{q:"இந்திய அரசியலமைப்பின் எந்த சட்டப்பிரிவு தீண்டாமையை ஒழிக்கிறது?",opts:["சட்டப்பிரிவு 14","சட்டப்பிரிவு 15","சட்டப்பிரிவு 17","சட்டப்பிரிவு 21"],correct:2,exp:"சட்டப்பிரிவு 17 தீண்டாமையை ஒழிக்கிறது மற்றும் எந்த வடிவத்திலும் அதை பயிற்சி செய்வதை தடை செய்கிறது.",concept:"அடிப்படை உரிமைகள்"}},
+  {id:2,topic:"Tamil Literature",chapter:"Classical Tamil",difficulty:"Easy",
+   en:{q:"Who wrote Thirukkural?",opts:["Bharathi","Kamban","Thiruvalluvar","Avvaiyar"],correct:2,exp:"Thirukkural was written by the classical Tamil poet Thiruvalluvar, containing 1330 couplets.",concept:"Ancient Tamil Literature"},
+   ta:{q:"திருக்குறளை யார் எழுதினார்?",opts:["பாரதி","கம்பன்","திருவள்ளுவர்","ஔவையார்"],correct:2,exp:"திருக்குறள் சங்க இலக்கியக் கவிஞர் திருவள்ளுவரால் எழுதப்பட்டது, இதில் 1330 குறள்கள் உள்ளன.",concept:"பழந்தமிழ் இலக்கியம்"}},
+  {id:3,topic:"History",chapter:"Freedom Movement",difficulty:"Hard",
+   en:{q:"The Dandi March was launched to protest against which British policy?",opts:["Rowlatt Act","Salt Tax","Press Act","Arms Act"],correct:1,exp:"Mahatma Gandhi launched the Dandi March on March 12, 1930 to protest the British Salt Tax.",concept:"Civil Disobedience Movement"},
+   ta:{q:"டாண்டி மார்ச் எந்த பிரிட்டிஷ் கொள்கைக்கு எதிராக தொடங்கப்பட்டது?",opts:["ரவுலட் சட்டம்","உப்பு வரி","பத்திரிகை சட்டம்","ஆயுத சட்டம்"],correct:1,exp:"மகாத்மா காந்தி மார்ச் 12, 1930 அன்று பிரிட்டிஷ் உப்பு வரிக்கு எதிர்ப்பு தெரிவிக்க டாண்டி மார்ச்சை தொடங்கினார்.",concept:"சட்டமறுப்பு இயக்கம்"}},
+  {id:4,topic:"Science",chapter:"Physics",difficulty:"Easy",
+   en:{q:"What is the SI unit of electric resistance?",opts:["Ampere","Volt","Watt","Ohm"],correct:3,exp:"The Ohm (Ω) is the SI unit of electrical resistance, named after Georg Simon Ohm.",concept:"Electricity Basics"},
+   ta:{q:"மின் எதிர்ப்பின் SI அலகு என்ன?",opts:["ஆம்பியர்","வோல்ட்","வாட்","ஓம்"],correct:3,exp:"ஓம் (Ω) என்பது மின் எதிர்ப்பின் SI அலகு ஆகும், இது ஜார்ஜ் சைமன் ஓமின் பெயரிடப்பட்டது.",concept:"மின்சாரம் அடிப்படைகள்"}},
+  {id:5,topic:"Geography",chapter:"Indian Rivers",difficulty:"Easy",
+   en:{q:"Which is the longest river in India?",opts:["Yamuna","Brahmaputra","Ganga","Godavari"],correct:2,exp:"The Ganga is the longest river in India at ~2,525 km.",concept:"Indian Rivers"},
+   ta:{q:"இந்தியாவில் மிக நீளமான நதி எது?",opts:["யமுனை","பிரம்மபுத்திரா","கங்கை","கோதாவரி"],correct:2,exp:"கங்கை இந்தியாவின் மிக நீளமான நதி, சுமார் 2,525 கி.மீ.",concept:"இந்திய நதிகள்"}},
+  {id:6,topic:"Economics",chapter:"Banking",difficulty:"Medium",
+   en:{q:"RBI was established in which year?",opts:["1930","1935","1947","1950"],correct:1,exp:"The Reserve Bank of India was established on April 1, 1935.",concept:"Indian Banking"},
+   ta:{q:"ரிசர்வ் வங்கி எந்த ஆண்டு நிறுவப்பட்டது?",opts:["1930","1935","1947","1950"],correct:1,exp:"இந்திய ரிசர்வ் வங்கி ஏப்ரல் 1, 1935 அன்று நிறுவப்பட்டது.",concept:"இந்திய வங்கி"}},
+  {id:7,topic:"Science",chapter:"Biology",difficulty:"Easy",
+   en:{q:"Which organelle is called the 'powerhouse of the cell'?",opts:["Nucleus","Ribosome","Mitochondria","Chloroplast"],correct:2,exp:"Mitochondria generate most of the cell's ATP through cellular respiration.",concept:"Cell Biology"},
+   ta:{q:"எந்த செல் உறுப்பு 'செல்லின் மின்நிலையம்' என்று அழைக்கப்படுகிறது?",opts:["உட்கரு","ரைபோசோம்","மைட்டோகாண்டிரியா","குளோரோபிளாஸ்ட்"],correct:2,exp:"மைட்டோகாண்டிரியா செல் சுவாசத்தின் மூலம் பெரும்பாலான ATP ஐ உற்பத்தி செய்கிறது.",concept:"செல் உயிரியல்"}},
+  {id:8,topic:"Polity",chapter:"Parliament",difficulty:"Hard",
+   en:{q:"How many members can the President nominate to Rajya Sabha?",opts:["10","12","14","16"],correct:1,exp:"The President can nominate 12 members to Rajya Sabha with expertise in various fields.",concept:"Parliament of India"},
+   ta:{q:"ஜனாதிபதி ராஜ்யசபாவிற்கு எத்தனை உறுப்பினர்களை நியமிக்கலாம்?",opts:["10","12","14","16"],correct:1,exp:"ஜனாதிபதி பல்வேறு துறைகளில் நிபுணத்துவம் கொண்ட 12 உறுப்பினர்களை ராஜ்யசபாவிற்கு நியமிக்கலாம்.",concept:"இந்திய நாடாளுமன்றம்"}},
+  {id:9,topic:"History",chapter:"Ancient India",difficulty:"Medium",
+   en:{q:"Indus Valley Civilization is also known as:",opts:["Vedic Civilization","Harappan Civilization","Dravidian Civilization","Aryan Civilization"],correct:1,exp:"It is called Harappan Civilization, named after Harappa — one of its major centers.",concept:"Ancient Indian History"},
+   ta:{q:"சிந்து சமவெளி நாகரிகம் எவ்வாறு அழைக்கப்படுகிறது?",opts:["வேத நாகரிகம்","ஹரப்பன் நாகரிகம்","திராவிட நாகரிகம்","ஆரிய நாகரிகம்"],correct:1,exp:"இது ஹரப்பன் நாகரிகம் என்று அழைக்கப்படுகிறது, ஹரப்பா என்ற முக்கிய மையத்தின் பெயரால்.",concept:"பண்டைய இந்திய வரலாறு"}},
+  {id:10,topic:"Tamil Literature",chapter:"Sangam",difficulty:"Hard",
+   en:{q:"Which belongs to Pathinenkilkanakku in Sangam literature?",opts:["Purananuru","Thirukkural","Pathitrupathu","Akananuru"],correct:1,exp:"Thirukkural is part of Pathinenkilkanakku (18 minor works) of Sangam literature.",concept:"Sangam Literature"},
+   ta:{q:"சங்க இலக்கியத்தில் பதினெண்கீழ்க்கணக்கில் எது அடங்கும்?",opts:["புறநானூறு","திருக்குறள்","பதிற்றுப்பத்து","அகநானூறு"],correct:1,exp:"திருக்குறள் சங்க இலக்கியத்தின் பதினெண்கீழ்க்கணக்கு (18 சிறு நூல்கள்) பகுதியாகும்.",concept:"சங்க இலக்கியம்"}},
+  {id:11,topic:"Geography",chapter:"World",difficulty:"Easy",
+   en:{q:"Which is the largest continent in the world?",opts:["Africa","North America","Europe","Asia"],correct:3,exp:"Asia is the world's largest continent covering 44.6 million sq km.",concept:"World Continents"},
+   ta:{q:"உலகில் மிகப்பெரிய கண்டம் எது?",opts:["ஆப்பிரிக்கா","வட அமெரிக்கா","ஐரோப்பா","ஆசியா"],correct:3,exp:"ஆசியா 44.6 மில்லியன் சதுர கி.மீ. பரப்பளவுடன் உலகின் மிகப்பெரிய கண்டமாகும்.",concept:"உலக கண்டங்கள்"}},
+  {id:12,topic:"Economics",chapter:"GDP",difficulty:"Medium",
+   en:{q:"GDP stands for?",opts:["General Domestic Product","Gross Domestic Product","Global Development Plan","Gross Development Program"],correct:1,exp:"GDP is the total monetary value of all goods and services produced within a country.",concept:"Macroeconomics"},
+   ta:{q:"GDP என்பதன் விரிவாக்கம் என்ன?",opts:["பொது உள்நாட்டு உற்பத்தி","மொத்த உள்நாட்டு உற்பத்தி","உலகளாவிய வளர்ச்சி திட்டம்","மொத்த வளர்ச்சி திட்டம்"],correct:1,exp:"GDP என்பது ஒரு நாட்டில் உற்பத்தி செய்யப்படும் அனைத்து பொருட்கள் மற்றும் சேவைகளின் மொத்த பண மதிப்பாகும்.",concept:"மேக்ரோ பொருளாதாரம்"}},
+  {id:13,topic:"Polity",chapter:"Preamble",difficulty:"Easy",
+   en:{q:"Word 'Socialist' was added by which amendment?",opts:["40th","42nd","44th","46th"],correct:1,exp:"The 42nd Amendment Act, 1976 added 'Socialist', 'Secular', and 'Integrity' to the Preamble.",concept:"Constitutional Amendments"},
+   ta:{q:"'சோஷலிஸ்ட்' என்ற வார்த்தை எந்த திருத்தத்தால் சேர்க்கப்பட்டது?",opts:["40வது","42வது","44வது","46வது"],correct:1,exp:"42வது திருத்தச் சட்டம் 1976, முன்னுரையில் 'சோஷலிஸ்ட்', 'மதச்சார்பற்ற' மற்றும் 'ஒருமைப்பாடு' சேர்த்தது.",concept:"அரசியலமைப்பு திருத்தங்கள்"}},
+  {id:14,topic:"History",chapter:"Mughal",difficulty:"Medium",
+   en:{q:"Who built the Taj Mahal?",opts:["Akbar","Jahangir","Shah Jahan","Aurangzeb"],correct:2,exp:"Taj Mahal was built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal (1632-1653).",concept:"Mughal Architecture"},
+   ta:{q:"தாஜ் மஹாலை யார் கட்டினார்?",opts:["அக்பர்","ஜஹாங்கீர்","ஷாஜஹான்","ஔரங்கசீப்"],correct:2,exp:"தாஜ் மஹால் மன்னர் ஷாஜஹான் தனது மனைவி மும்தாஜ் மஹாலின் நினைவாக கட்டினார் (1632-1653).",concept:"முகலாய கட்டிடக்கலை"}},
+  {id:15,topic:"Science",chapter:"Chemistry",difficulty:"Medium",
+   en:{q:"What is the chemical symbol for Gold?",opts:["Go","Gd","Au","Ag"],correct:2,exp:"Gold's symbol Au comes from Latin word 'Aurum'. Its atomic number is 79.",concept:"Periodic Table"},
+   ta:{q:"தங்கத்தின் வேதியியல் சின்னம் என்ன?",opts:["Go","Gd","Au","Ag"],correct:2,exp:"தங்கத்தின் சின்னம் Au என்பது லத்தீன் வார்த்தை 'Aurum' இலிருந்து வந்தது. அதன் அணு எண் 79.",concept:"ஆவர்த்தன அட்டவணை"}},
+  {id:16,topic:"Geography",chapter:"Tamil Nadu",difficulty:"Easy",
+   en:{q:"What is the capital of Tamil Nadu?",opts:["Madurai","Coimbatore","Chennai","Trichy"],correct:2,exp:"Chennai (formerly Madras) is the capital of Tamil Nadu and the 4th largest city in India.",concept:"Indian States"},
+   ta:{q:"தமிழ்நாட்டின் தலைநகர் எது?",opts:["மதுரை","கோயம்புத்தூர்","சென்னை","திருச்சி"],correct:2,exp:"சென்னை (முன்பு மதராஸ்) தமிழ்நாட்டின் தலைநகராகும், இந்தியாவின் 4வது பெரிய நகரம்.",concept:"இந்திய மாநிலங்கள்"}},
+  {id:17,topic:"Polity",chapter:"Judiciary",difficulty:"Hard",
+   en:{q:"The Supreme Court of India was established on?",opts:["26 Jan 1950","28 Jan 1950","15 Aug 1947","26 Nov 1949"],correct:1,exp:"The Supreme Court of India came into being on 28 January 1950.",concept:"Indian Judiciary"},
+   ta:{q:"இந்தியாவின் உச்சநீதிமன்றம் எப்போது நிறுவப்பட்டது?",opts:["26 ஜன 1950","28 ஜன 1950","15 ஆக 1947","26 நவ 1949"],correct:1,exp:"இந்திய உச்சநீதிமன்றம் ஜனவரி 28, 1950 அன்று நிலைக்கு வந்தது.",concept:"இந்திய நீதித்துறை"}},
+  {id:18,topic:"Tamil Literature",chapter:"Modern Tamil",difficulty:"Medium",
+   en:{q:"Who is known as 'Mahakavi' in Tamil?",opts:["Thiruvalluvar","Subramania Bharathi","Kamban","Avvaiyar"],correct:1,exp:"Subramania Bharathi is 'Mahakavi'. He was a patriot-poet who wrote about freedom and social reform.",concept:"Modern Tamil Literature"},
+   ta:{q:"தமிழில் 'மகாகவி' என்று யார் அழைக்கப்படுகிறார்?",opts:["திருவள்ளுவர்","சுப்ரமணிய பாரதி","கம்பன்","ஔவையார்"],correct:1,exp:"சுப்ரமணிய பாரதி 'மகாகவி'. அவர் சுதந்திரம் மற்றும் சமூக சீர்திருத்தம் பற்றி எழுதிய தேசபக்தக் கவிஞர்.",concept:"நவீன தமிழ் இலக்கியம்"}},
+  {id:19,topic:"History",chapter:"INA",difficulty:"Hard",
+   en:{q:"Who gave the slogan 'Give me blood, I will give you freedom'?",opts:["Bhagat Singh","Subhas Chandra Bose","Tilak","Lala Lajpat Rai"],correct:1,exp:"Subhas Chandra Bose gave this slogan to inspire Indians to join the INA.",concept:"Indian National Army"},
+   ta:{q:"'ரத்தம் கொடு, சுதந்திரம் தருவேன்' என்று கூறியவர் யார்?",opts:["பகத் சிங்","சுபாஷ் சந்திர போஸ்","திலகர்","லாலா லஜ்பத் ராய்"],correct:1,exp:"சுபாஷ் சந்திர போஸ் இந்தியர்களை INA இல் சேர ஊக்குவிக்க இந்த முழக்கத்தை கொடுத்தார்.",concept:"இந்திய தேசிய இராணுவம்"}},
+  {id:20,topic:"Science",chapter:"Physics",difficulty:"Medium",
+   en:{q:"Einstein's mass-energy formula is:",opts:["E=mc","E=mc²","E=m²c","E=2mc"],correct:1,exp:"E=mc² where E=energy, m=mass, c=speed of light. It describes mass-energy equivalence.",concept:"Theory of Relativity"},
+   ta:{q:"ஐன்ஸ்டீனின் நிறை-ஆற்றல் சூத்திரம்:",opts:["E=mc","E=mc²","E=m²c","E=2mc"],correct:1,exp:"E=mc² இல் E=ஆற்றல், m=நிறை, c=ஒளி வேகம். இது நிறை-ஆற்றல் சமானத்தை விவரிக்கிறது.",concept:"சார்பியல் கோட்பாடு"}},
+];
+
+const TESTS = [
+  {id:1,name:"TNPSC Group 1 Mock",nameTA:"TNPSC குழு 1 முழு தேர்வு",subject:"General Studies",duration:90,difficulty:"Hard",qs:QUESTIONS,year:"2024",attempts:1240},
+  {id:2,name:"Tamil Literature Special",nameTA:"தமிழ் இலக்கிய சிறப்பு",subject:"Tamil",duration:45,difficulty:"Medium",qs:QUESTIONS.filter(q=>q.topic==="Tamil Literature").concat(QUESTIONS.slice(0,8)),year:"2024",attempts:890},
+  {id:3,name:"Science & Polity",nameTA:"அறிவியல் & அரசியல்",subject:"Mixed",duration:30,difficulty:"Easy",qs:QUESTIONS.slice(0,10),year:"2024",attempts:650},
+  {id:4,name:"Daily Practice — 10Q",nameTA:"தினசரி பயிற்சி — 10கே",subject:"All",duration:15,difficulty:"Easy",qs:QUESTIONS.slice(5,15),year:"2024",attempts:3200},
+];
+
+// ══════════════════════════════════════════════════════
+// GOOGLE SHEETS INTEGRATION
+// ══════════════════════════════════════════════════════
+async function saveToGoogleSheet(data) {
+  try {
+    await fetch(GOOGLE_SHEET_WEBHOOK, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data),
+      mode:"no-cors"
+    });
+  } catch(e){ console.log("Sheet save attempted:", e.message); }
+}
+
+// ══════════════════════════════════════════════════════
+// USER STORAGE
+// ══════════════════════════════════════════════════════
+function getUsers(){ return JSON.parse(localStorage.getItem("ct_users")||"[]"); }
+function saveUsers(u){ localStorage.setItem("ct_users",JSON.stringify(u)); }
+function getHistory(){ return JSON.parse(localStorage.getItem("ct_history")||"[]"); }
+function saveHistory(h){ localStorage.setItem("ct_history",JSON.stringify(h)); }
+
+// ══════════════════════════════════════════════════════
+// COMPONENTS
+// ══════════════════════════════════════════════════════
+function Toast({msg,type="info",onClose}){
+  const colors={success:"#10b981",error:"#ef4444",info:"#7c3aed",warning:"#f97316"};
+  const icons={success:"✅",error:"❌",info:"ℹ️",warning:"⚠️"};
+  useEffect(()=>{const t=setTimeout(onClose,2800);return()=>clearTimeout(t)},[]);
+  return <div className="toast" style={{borderLeft:`3px solid ${colors[type]}`}}>
+    <span>{icons[type]}</span><span>{msg}</span>
+  </div>;
+}
+
+function Spinner({size=20,color="var(--accent2)"}){
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className="spin">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity=".15"/>
+    <path d="M12 2a10 10 0 0110 10" stroke={color} strokeWidth="3" strokeLinecap="round"/>
+  </svg>;
+}
+
+function DonutChart({pct,color,size=90}){
+  const r=36,cx=45,cy=45,circ=2*Math.PI*r;
+  const dash=(pct/100)*circ;
+  return <svg width={size} height={size} viewBox="0 0 90 90">
+    <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--surface2)" strokeWidth="7"/>
+    <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth="7"
+      strokeDasharray={`${dash} ${circ}`} strokeDashoffset={circ/4} strokeLinecap="round"/>
+    <text x="45" y="42" textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="15" fontWeight="800">{pct}%</text>
+  </svg>;
+}
+
+// ══════════════════════════════════════════════════════
+// LOGIN / REGISTER
+// ══════════════════════════════════════════════════════
+function LoginScreen(){
+  const {setUser,lang,setLang,setToast,navigate} = useApp();
+  const t = T[lang];
+  const [mode,setMode] = useState("login");
+  const [form,setForm] = useState({name:"",phone:"",email:"",password:"",confirm:""});
+  const [loading,setLoading] = useState(false);
+  const [showPass,setShowPass] = useState(false);
+
+  const validate = () => {
+    if(!form.phone.trim()){ setToast({msg:t.phoneRequired,type:"error"}); return false; }
+    if(!/^[0-9]{10}$/.test(form.phone.trim())){ setToast({msg:t.phoneInvalid,type:"error"}); return false; }
+    if(!form.password){ setToast({msg:t.fillAll,type:"error"}); return false; }
+    if(mode==="register"){
+      if(!form.name.trim()){ setToast({msg:t.fillAll,type:"error"}); return false; }
+      if(form.password!==form.confirm){ setToast({msg:t.pwMismatch,type:"error"}); return false; }
+    }
+    return true;
+  };
+
+  const submit = async () => {
+    if(!validate()) return;
+    setLoading(true);
+    await new Promise(r=>setTimeout(r,600));
+
+    // Admin check
+    if(form.phone===ADMIN_PHONE && form.password===ADMIN_PASS){
+      const admin={id:0,name:"Admin",phone:ADMIN_PHONE,role:"admin"};
+      localStorage.setItem("ct_session",JSON.stringify(admin));
+      setUser(admin);
+      navigate("admin");
+      setToast({msg:"Admin login!",type:"success"});
+      setLoading(false); return;
+    }
+
+    const users = getUsers();
+
+    if(mode==="login"){
+      const found = users.find(u=>u.phone===form.phone && u.password===form.password);
+      if(!found){ setToast({msg:"Invalid credentials",type:"error"}); setLoading(false); return; }
+      localStorage.setItem("ct_session",JSON.stringify(found));
+      setUser(found);
+      navigate("dashboard");
+      setToast({msg:t.loginSuccess,type:"success"});
+    } else {
+      const exists = users.find(u=>u.phone===form.phone);
+      if(exists){ setToast({msg:"Phone already registered",type:"error"}); setLoading(false); return; }
+      const newUser={
+        id:Date.now(),name:form.name.trim(),phone:form.phone.trim(),
+        email:form.email.trim(),password:form.password,role:"student",
+        joinedAt:new Date().toISOString(),
+        lang:"en",
+      };
+      users.push(newUser);
+      saveUsers(users);
+      localStorage.setItem("ct_session",JSON.stringify(newUser));
+      setUser(newUser);
+
+      // Save to Google Sheet
+      saveToGoogleSheet({
+        action:"register",name:newUser.name,phone:newUser.phone,
+        email:newUser.email,joinedAt:newUser.joinedAt,
+        timestamp:new Date().toLocaleString()
+      });
+
+      navigate("dashboard");
+      setToast({msg:t.registerSuccess,type:"success"});
+    }
+    setLoading(false);
+  };
+
+  const demoLogin = (role) => {
+    if(role==="admin"){
+      const admin={id:0,name:"Admin",phone:ADMIN_PHONE,role:"admin"};
+      localStorage.setItem("ct_session",JSON.stringify(admin));
+      setUser(admin); navigate("admin");
+    } else {
+      const demo={id:999,name:"Demo Student",phone:"9876543210",role:"student",email:"demo@test.com"};
+      localStorage.setItem("ct_session",JSON.stringify(demo));
+      setUser(demo); navigate("dashboard");
+    }
+    setToast({msg:t.loginSuccess,type:"success"});
+  };
+
+  return <div className="full-page" style={{background:"linear-gradient(160deg,#0d0d18 0%,#1a0a2e 60%,#0a1a2e 100%)",minHeight:"100vh"}}>
+    {/* Bg glow */}
+    <div style={{position:"absolute",top:"10%",left:"30%",width:180,height:180,borderRadius:"50%",background:"radial-gradient(circle,rgba(124,58,237,.35),transparent)",filter:"blur(40px)",pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:"30%",right:"5%",width:130,height:130,borderRadius:"50%",background:"radial-gradient(circle,rgba(6,182,212,.25),transparent)",filter:"blur(30px)",pointerEvents:"none"}}/>
+
+    {/* Language selector at top */}
+    <div style={{display:"flex",justifyContent:"center",gap:10,padding:"20px 20px 0",position:"relative",zIndex:1}}>
+      {["en","ta"].map(l=><button key={l} onClick={()=>setLang(l)} className="lang-pill" style={{
+        borderColor:lang===l?"var(--accent)":"rgba(255,255,255,.2)",
+        background:lang===l?"rgba(124,58,237,.2)":"transparent",
+        color:lang===l?"var(--accent2)":"rgba(255,255,255,.6)",
+      }}>
+        {l==="en"?"🇬🇧 English":"🇮🇳 தமிழ்"}
+      </button>)}
+    </div>
+
+    {/* Brand */}
+    <div style={{textAlign:"center",padding:"24px 20px 20px",position:"relative",zIndex:1}}>
+      <div style={{width:64,height:64,borderRadius:18,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
+        display:"flex",alignItems:"center",justifyContent:"center",fontSize:30,margin:"0 auto 14px",
+        boxShadow:"0 8px 24px rgba(124,58,237,.4)"}}>🎯</div>
+      <h1 style={{fontSize:26,fontWeight:800,color:"#fff",letterSpacing:"-0.5px"}}>CRACK<span style={{backgroundImage:"linear-gradient(90deg,#a78bfa,#22d3ee)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>TNPSC</span></h1>
+      <p style={{color:"rgba(255,255,255,.5)",fontSize:13,marginTop:4}}>{t.appSub}</p>
+    </div>
+
+    {/* Card */}
+    <div style={{flex:1,padding:"0 16px 32px",position:"relative",zIndex:1}}>
+      <div style={{background:"rgba(255,255,255,.05)",backdropFilter:"blur(20px)",
+        border:"1px solid rgba(255,255,255,.1)",borderRadius:24,padding:24}}>
+
+        {/* Mode toggle */}
+        <div className="toggle-wrap">
+          <button className={`toggle-btn ${mode==="login"?"active":""}`} onClick={()=>setMode("login")}>{t.login}</button>
+          <button className={`toggle-btn ${mode==="register"?"active":""}`} onClick={()=>setMode("register")}>{t.register}</button>
+        </div>
+
+        {mode==="register"&&<div className="input-group">
+          <label>{t.name} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">👤</span>
+            <input className="input input-with-icon" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder={lang==="ta"?"உங்கள் பெயர்":"Your full name"}
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
+        </div>}
+
+        <div className="input-group">
+          <label>{t.phone} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">📱</span>
+            <input className="input input-with-icon" type="tel" inputMode="numeric" maxLength={10}
+              value={form.phone} onChange={e=>setForm({...form,phone:e.target.value.replace(/\D/,"")})}
+              placeholder="9876543210"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
+        </div>
+
+        {mode==="register"&&<div className="input-group">
+          <label>{t.email}</label>
+          <div className="input-wrap">
+            <span className="input-icon">✉️</span>
+            <input className="input input-with-icon" type="email" value={form.email}
+              onChange={e=>setForm({...form,email:e.target.value})} placeholder="you@gmail.com"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
+        </div>}
+
+        <div className="input-group">
+          <label>{t.password} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">🔒</span>
+            <input className="input input-with-icon" type={showPass?"text":"password"}
+              value={form.password} onChange={e=>setForm({...form,password:e.target.value})}
+              placeholder="••••••••"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff",paddingRight:44}}/>
+            <button onClick={()=>setShowPass(!showPass)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",fontSize:18,background:"none",border:"none",cursor:"pointer"}}>{showPass?"🙈":"👁"}</button>
+          </div>
+        </div>
+
+        {mode==="register"&&<div className="input-group">
+          <label>{t.confirmPw} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">🔒</span>
+            <input className="input input-with-icon" type="password" value={form.confirm}
+              onChange={e=>setForm({...form,confirm:e.target.value})} placeholder="••••••••"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
+        </div>}
+
+        <button className="btn btn-primary" onClick={submit} disabled={loading} style={{marginTop:6}}>
+          {loading?<><Spinner size={16} color="#fff"/> {lang==="ta"?"செயலாக்கம்...":"Processing..."}</>:mode==="login"?`${t.loginBtn} →`:t.registerBtn}
+        </button>
+
+        <div style={{display:"flex",alignItems:"center",gap:10,margin:"14px 0",color:"rgba(255,255,255,.3)",fontSize:12}}>
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,.1)"}}/>
+          {lang==="ta"?"அல்லது":"or"}
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,.1)"}}/>
+        </div>
+
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+          <button className="btn btn-secondary" style={{fontSize:13,padding:"10px"}} onClick={()=>demoLogin("student")}>
+            🎓 {t.demoStudent}
+          </button>
+          <button className="btn btn-secondary" style={{fontSize:13,padding:"10px"}} onClick={()=>demoLogin("admin")}>
+            👑 {t.demoAdmin}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// TOP NAV
+// ══════════════════════════════════════════════════════
+function TopNav({title,showBack,onBack,right}){
+  const {darkMode,setDarkMode,lang} = useApp();
+  return <div className="top-nav">
+    <div style={{display:"flex",alignItems:"center",gap:10,flex:1}}>
+      {showBack
+        ?<button onClick={onBack} style={{width:36,height:36,borderRadius:10,background:"var(--surface2)",border:"1px solid var(--border)",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>←</button>
+        :<div style={{width:32,height:32,borderRadius:9,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>🎯</div>
+      }
+      <span style={{fontWeight:800,fontSize:16,flex:1}} className={lang==="ta"?"tamil":""}>{title||"CRACKTNPSC"}</span>
+    </div>
+    <div style={{display:"flex",gap:6}}>
+      {right}
+      <button onClick={()=>setDarkMode(d=>!d)} style={{width:34,height:34,borderRadius:9,background:"var(--surface2)",border:"1px solid var(--border)",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>
+        {darkMode?"☀️":"🌙"}
+      </button>
+    </div>
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// BOTTOM NAV
+// ══════════════════════════════════════════════════════
+function BottomNav(){
+  const {page,navigate,lang} = useApp();
+  const t=T[lang];
+  const items=[
+    {k:"dashboard",i:"🏠",l:t.dashboard},
+    {k:"practice",i:"🎯",l:t.practice},
+    {k:"tests",i:"📝",l:t.tests},
+    {k:"analytics",i:"📊",l:t.analytics},
+    {k:"profile",i:"👤",l:t.profile},
+  ];
+  return <div className="bottom-nav">
+    {items.map(item=><button key={item.k} className={`bnav-item ${page===item.k?"active":""}`} onClick={()=>navigate(item.k)}>
+      <span className="icon">{item.i}</span>
+      <span className={lang==="ta"?"tamil":""}>{item.l}</span>
+    </button>)}
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════════════
+function Dashboard(){
+  const {user,navigate,setActiveTest,lang} = useApp();
+  const t=T[lang];
+  const history = getHistory().filter(h=>h.userId===user?.id);
+  const stats = useMemo(()=>{
+    if(!history.length) return {total:0,avg:0,accuracy:0,streak:3};
+    return {
+      total:history.length,
+      avg:Math.round(history.reduce((a,b)=>a+b.score,0)/history.length),
+      accuracy:Math.round(history.reduce((a,b)=>a+b.accuracy,0)/history.length),
+      streak:3,
+    };
+  },[history]);
+
+  const hour = new Date().getHours();
+  const greeting = hour<12?"🌅 Good Morning":"hour<17?🌞 Good Afternoon":"🌙 Good Evening";
+
+  return <>
+    <TopNav title="CRACKTNPSC"/>
+    <div className="page">
+      {/* Greeting */}
+      <div style={{background:"linear-gradient(135deg,rgba(124,58,237,.2),rgba(6,182,212,.1))",borderRadius:18,padding:18,marginBottom:16,border:"1px solid rgba(124,58,237,.25)"}}>
+        <p style={{fontSize:13,color:"var(--muted)",marginBottom:4}}>{hour<12?"🌅":"🌞"} {hour<12?lang==="ta"?"காலை வணக்கம்":"Good Morning":lang==="ta"?"வணக்கம்":"Welcome back"}</p>
+        <p style={{fontSize:20,fontWeight:800}} className={lang==="ta"?"tamil":""}>{user?.name?.split(" ")[0]} 👋</p>
+        <div style={{display:"flex",gap:16,marginTop:10,fontSize:13,color:"var(--muted)"}}>
+          <span>🔥 {stats.streak} {t.days}</span>
+          <span>📝 {stats.total} {lang==="ta"?"தேர்வுகள்":"tests"}</span>
+          <span>⭐ {stats.avg}% {t.avgScore}</span>
+        </div>
+      </div>
+
+      {/* Stats row */}
+      <div className="stat-row">
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#7c3aed"}}>{stats.avg}%</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{t.avgScore}</div>
+        </div>
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#10b981"}}>{stats.accuracy}%</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{t.accuracy}</div>
+        </div>
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#f97316"}}>{stats.total}</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தேர்வுகள்":"Tests"}</div>
+        </div>
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#eab308"}}>🔥{stats.streak}</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{t.streak}</div>
+        </div>
+      </div>
+
+      {/* Quick tests */}
+      <div className="sec-title" style={{marginTop:8}} ><span>⚡</span><span className={lang==="ta"?"tamil":""}>{lang==="ta"?"விரைவு தேர்வுகள்":"Quick Tests"}</span></div>
+      {TESTS.slice(0,3).map(test=><div key={test.id} className="card card-p" style={{marginBottom:10,cursor:"pointer"}}
+        onClick={()=>{setActiveTest(test);navigate("exam")}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+          <div style={{flex:1}}>
+            <p style={{fontWeight:700,fontSize:14,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</p>
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              <span className={`badge tag-${test.difficulty.toLowerCase()}`}>{test.difficulty}</span>
+              <span style={{fontSize:12,color:"var(--muted)"}}>⏱ {test.duration}{t.mins}</span>
+              <span style={{fontSize:12,color:"var(--muted)"}}> ❓{test.qs.length}</span>
+            </div>
+          </div>
+          <button className="btn btn-primary btn-sm" style={{width:"auto",padding:"8px 14px",fontSize:13}}
+            onClick={e=>{e.stopPropagation();setActiveTest(test);navigate("exam");}}>
+            {lang==="ta"?"தொடங்கு":"Start"}
+          </button>
+        </div>
+      </div>)}
+
+      <button className="btn btn-secondary" style={{marginBottom:16}} onClick={()=>navigate("tests")}>
+        {lang==="ta"?"எல்லா தேர்வுகளும் →":"All Tests →"}
+      </button>
+
+      {/* Daily challenge */}
+      <div style={{background:"linear-gradient(135deg,#1e1b4b,#312e81)",borderRadius:18,padding:18,border:"1px solid rgba(124,58,237,.4)"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🔥</div>
+        <p style={{fontWeight:800,fontSize:15,color:"#fff",marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தினசரி சவால்":"Daily Challenge"}</p>
+        <p style={{color:"rgba(255,255,255,.6)",fontSize:13,marginBottom:14}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"10 கேள்விகள் · 15 நிமிடங்கள்":"10 questions · 15 minutes"}</p>
+        <button className="btn" style={{background:"rgba(255,255,255,.15)",color:"#fff",fontSize:14,backdropFilter:"blur(10px)"}}
+          onClick={()=>{setActiveTest(TESTS[3]);navigate("exam");}}>
+          {lang==="ta"?"இப்போது தொடங்கு →":"Start Now →"}
+        </button>
+      </div>
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// PRACTICE
+// ══════════════════════════════════════════════════════
+function PracticePage(){
+  const {lang,navigate} = useApp();
+  const t=T[lang];
+  const [filter,setFilter] = useState({topic:"All",diff:"All"});
+  const [current,setCurrent] = useState(null);
+  const [selected,setSelected] = useState(null);
+  const [revealed,setRevealed] = useState(false);
+  const [score,setScore] = useState({c:0,w:0});
+
+  const topics=["All",...new Set(QUESTIONS.map(q=>q.topic))];
+  const filtered = QUESTIONS.filter(q=>
+    (filter.topic==="All"||q.topic===filter.topic)&&
+    (filter.diff==="All"||q.difficulty===filter.diff)
+  );
+  const pickRandom=()=>{
+    const pool=filtered.filter(q=>!current||q.id!==current.id);
+    if(!pool.length)return;
+    setCurrent(pool[Math.floor(Math.random()*pool.length)]);
+    setSelected(null);setRevealed(false);
+  };
+  useEffect(()=>{if(filtered.length)pickRandom();},[filter]);
+  const check=()=>{if(selected===null)return;setRevealed(true);selected===current.correct?setScore(s=>({...s,c:s.c+1})):setScore(s=>({...s,w:s.w+1}));};
+  const qData = current?current[lang]||current.en:null;
+
+  return <>
+    <TopNav title={t.practice}/>
+    <div className="page">
+      {/* Score */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        {[{i:"✅",v:score.c,c:"#10b981"},{i:"❌",v:score.w,c:"#ef4444"},
+          {i:"🎯",v:score.c+score.w>0?Math.round(score.c/(score.c+score.w)*100):0,c:"#7c3aed",s:"%"}].map(s=>(
+          <div key={s.c} style={{flex:1,background:"var(--surface)",border:"1px solid var(--border)",borderRadius:12,padding:"10px 8px",textAlign:"center"}}>
+            <div style={{fontSize:20,fontWeight:900,color:s.c}}>{s.v}{s.s||""}</div>
+            <div style={{fontSize:10,color:"var(--muted)"}}>{s.i}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Filters */}
+      <div style={{display:"flex",gap:8,overflowX:"auto",paddingBottom:8,marginBottom:14}}>
+        {["All",...new Set(QUESTIONS.map(q=>q.topic))].map(tp=>(
+          <button key={tp} onClick={()=>setFilter(f=>({...f,topic:tp}))} style={{
+            flexShrink:0,padding:"7px 14px",borderRadius:20,fontSize:12,fontWeight:700,
+            background:filter.topic===tp?"var(--accent)":"var(--surface2)",
+            color:filter.topic===tp?"#fff":"var(--muted)",
+            border:`1px solid ${filter.topic===tp?"var(--accent)":"var(--border)"}`,cursor:"pointer"
+          }} className={lang==="ta"?"tamil":""}>{tp==="All"?lang==="ta"?"எல்லாம்":"All":tp}</button>
+        ))}
+      </div>
+
+      {current&&qData?<>
+        {/* Difficulty + Topic */}
+        <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+          <span className={`badge tag-${current.difficulty.toLowerCase()}`}>{current.difficulty}</span>
+          <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}} className={lang==="ta"?"tamil":""}>{current.topic}</span>
+          <span style={{fontSize:12,color:"var(--muted)",marginLeft:"auto"}}>{current.chapter}</span>
+        </div>
+
+        {/* Question */}
+        <div className="card card-p" style={{marginBottom:14}}>
+          <p style={{fontSize:16,fontWeight:600,lineHeight:1.7}} className={lang==="ta"?"tamil":""}>{qData.q}</p>
+        </div>
+
+        {/* Options */}
+        {qData.opts.map((opt,i)=>{
+          let extra="";
+          if(revealed){if(i===qData.correct)extra=" correct";else if(i===selected&&i!==qData.correct)extra=" wrong";}
+          else if(i===selected)extra=" selected";
+          return <button key={i} className={`opt-card${extra}`} onClick={()=>!revealed&&setSelected(i)}>
+            <div className="opt-letter" style={{
+              background:revealed&&i===qData.correct?"#10b981":revealed&&i===selected&&i!==qData.correct?"#ef4444":
+                i===selected?"#7c3aed":"var(--surface2)",
+              color:i===selected||revealed&&i===qData.correct?"#fff":revealed&&i===selected?"#fff":"var(--muted)"
+            }}>{String.fromCharCode(65+i)}</div>
+            <span style={{fontSize:14,textAlign:"left",flex:1,lineHeight:1.5}} className={lang==="ta"?"tamil":""}>{opt}</span>
+            {revealed&&i===qData.correct&&<span style={{color:"#10b981",fontSize:18}}>✓</span>}
+            {revealed&&i===selected&&i!==qData.correct&&<span style={{color:"#ef4444",fontSize:18}}>✗</span>}
+          </button>;
+        })}
+
+        {/* Explanation */}
+        {revealed&&<div style={{padding:14,borderRadius:14,background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.2)",marginBottom:14}}>
+          <p style={{fontSize:12,fontWeight:700,color:"var(--accent2)",marginBottom:6}}>💡 {t.explanation}</p>
+          <p style={{fontSize:13,lineHeight:1.6,color:"var(--text)"}} className={lang==="ta"?"tamil":""}>{qData.exp}</p>
+          <div style={{marginTop:8}}>
+            <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}} className={lang==="ta"?"tamil":""}>{qData.concept}</span>
+          </div>
+        </div>}
+
+        <div style={{display:"flex",gap:8}}>
+          {!revealed
+            ?<button className="btn btn-primary" onClick={check} disabled={selected===null} style={{flex:1}}>
+              {lang==="ta"?"பதிலை சரிபார்":"Check Answer"}
+            </button>
+            :<button className="btn btn-primary" onClick={pickRandom} style={{flex:1}}>
+              {lang==="ta"?"அடுத்த கேள்வி →":"Next Question →"}
+            </button>
+          }
+          <button className="btn btn-secondary" onClick={pickRandom} style={{width:"auto",padding:"13px 16px"}}>
+            {lang==="ta"?"தவிர்":"Skip"}
+          </button>
+        </div>
+      </>:<div style={{textAlign:"center",padding:"40px 0"}}>
+        <div style={{fontSize:40,marginBottom:10}}>😕</div>
+        <p style={{color:"var(--muted)"}}>{lang==="ta"?"பொருந்தும் கேள்விகள் இல்லை":"No questions match filter"}</p>
+      </div>}
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// TESTS LIST
+// ══════════════════════════════════════════════════════
+function TestsPage(){
+  const {navigate,setActiveTest,lang} = useApp();
+  const t=T[lang];
+  return <>
+    <TopNav title={t.testsTab}/>
+    <div className="page">
+      <div className="sec-title"><span>📋</span><span className={lang==="ta"?"tamil":""}>{t.chooseTest}</span></div>
+      {TESTS.map(test=><div key={test.id} className="card" style={{marginBottom:12,overflow:"hidden"}}>
+        <div style={{height:4,background:`linear-gradient(90deg,${test.difficulty==="Easy"?"#10b981":test.difficulty==="Medium"?"#eab308":"#ef4444"},transparent)`}}/>
+        <div className="card-p">
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
+            <div style={{flex:1}}>
+              <p style={{fontWeight:700,fontSize:15,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</p>
+              <p style={{fontSize:13,color:"var(--muted)"}}>{test.subject} · {test.year}</p>
+            </div>
+            <span className={`badge tag-${test.difficulty.toLowerCase()}`}>{test.difficulty}</span>
+          </div>
+          <div style={{display:"flex",gap:14,fontSize:13,color:"var(--muted)",marginBottom:14}}>
+            <span>❓ {test.qs.length} {t.questions}</span>
+            <span>⏱ {test.duration} {t.mins}</span>
+            <span>👥 {test.attempts.toLocaleString()}</span>
+          </div>
+          <button className="btn btn-primary" style={{fontSize:14}}
+            onClick={()=>{setActiveTest(test);navigate("exam");}}>
+            {t.startTest} →
+          </button>
+        </div>
+      </div>)}
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// EXAM INTERFACE
+// ══════════════════════════════════════════════════════
+function ExamPage(){
+  const {activeTest,navigate,setTestResult,user,lang} = useApp();
+  const t=T[lang];
+  const [started,setStarted] = useState(false);
+  const [current,setCurrent] = useState(0);
+  const [answers,setAnswers] = useState({});
+  const [marked,setMarked] = useState(new Set());
+  const [timeLeft,setTimeLeft] = useState(0);
+  const [warn,setWarn] = useState(false);
+  const [warnShown,setWarnShown] = useState(false);
+  const [showPalette,setShowPalette] = useState(false);
+  const [confirmSub,setConfirmSub] = useState(false);
+  const timerRef=useRef(null);
+
+  const test=activeTest||TESTS[0];
+  const qs=test.qs||[];
+  const total=qs.length;
+  useEffect(()=>setTimeLeft(test.duration*60),[test]);
+
+  const doSubmit=useCallback(()=>{
+    clearInterval(timerRef.current);
+    let c=0,w=0,s=0;const tmap={};
+    qs.forEach((q,i)=>{
+      const a=answers[i];
+      const qd=q[lang]||q.en;
+      if(!tmap[q.topic])tmap[q.topic]={c:0,t:0};
+      tmap[q.topic].t++;
+      if(a===undefined)s++;
+      else if(a===qd.correct){c++;tmap[q.topic].c++;}
+      else w++;
+    });
+    const score=Math.round((c/total)*100);
+    const accuracy=Math.round((c/(c+w||1))*100);
+    const weakTopics=Object.entries(tmap).map(([name,d])=>({name,correct:d.c,total:d.t,accuracy:Math.round((d.c/d.t)*100)}));
+    const result={testId:test.id,testName:lang==="ta"?test.nameTA:test.name,
+      date:new Date().toISOString(),userId:user?.id,totalQuestions:total,
+      answers,timeTaken:(test.duration*60)-timeLeft,correct:c,wrong:w,skipped:s,score,accuracy,weakTopics};
+    setTestResult(result);
+    const h=getHistory();h.push(result);saveHistory(h);
+    navigate("result");
+  },[answers,qs,total,test,timeLeft,lang,user]);
+
+  useEffect(()=>{
+    if(!started)return;
+    timerRef.current=setInterval(()=>{
+      setTimeLeft(p=>{
+        if(p<=1){clearInterval(timerRef.current);doSubmit();return 0;}
+        if(p===300&&!warnShown){setWarn(true);setWarnShown(true);}
+        return p-1;
+      });
+    },1000);
+    return()=>clearInterval(timerRef.current);
+  },[started,doSubmit,warnShown]);
+
+  const fmt=s=>`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+  const answered=Object.keys(answers).length;
+  const crit=timeLeft<300;
+  const qStatus=i=>{
+    if(marked.has(i)&&answers[i]!==undefined)return"p-mark-ans";
+    if(marked.has(i))return"p-mark";
+    if(answers[i]!==undefined)return"p-ans";
+    if(i<current)return"p-vis";
+    return"p-not";
+  };
+  const q=qs[current];
+  const qd=q?q[lang]||q.en:null;
+
+  if(!started) return <div className="full-page" style={{padding:20,justifyContent:"center"}}>
+    <div style={{textAlign:"center",marginBottom:28}}>
+      <div style={{fontSize:48,marginBottom:12}}>🎯</div>
+      <h2 style={{fontSize:20,fontWeight:800,marginBottom:6}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</h2>
+      <p style={{color:"var(--muted)",fontSize:14}}>{test.subject} · {test.year}</p>
+    </div>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:24}}>
+      {[{i:"❓",l:t.questions,v:total},{i:"⏱",l:t.duration,v:`${test.duration}${t.mins}`},{i:"🏆",l:"Marking",v:"+1/0"}].map(s=>(
+        <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:"1px solid var(--border)",textAlign:"center"}}>
+          <div style={{fontSize:22,marginBottom:4}}>{s.i}</div>
+          <div style={{fontWeight:800,fontSize:14}}>{s.v}</div>
+          <div style={{fontSize:10,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{background:"var(--surface2)",borderRadius:14,padding:14,marginBottom:24}}>
+      <p style={{fontWeight:700,marginBottom:8,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.instructions}</p>
+      {(lang==="ta"?["ஒவ்வொரு கேள்விக்கும் 1 மதிப்பெண்","எதிர்மறை மதிப்பெண் இல்லை","நேரம் முடிந்தால் தானாக சமர்ப்பிக்கும்","மதிப்பாய்வுக்கு கேள்விகளை குறியிடலாம்"]:["1 mark per question","No negative marking","Auto-submits when timer ends","Mark questions for review"]).map((line,i)=>(
+        <p key={i} style={{fontSize:13,color:"var(--muted)",marginBottom:4}} className={lang==="ta"?"tamil":""}>• {line}</p>
+      ))}
+    </div>
+    <button className="btn btn-primary" style={{fontSize:16}} onClick={()=>setStarted(true)}>🚀 {t.beginTest}</button>
+    <button className="btn btn-secondary" style={{marginTop:10}} onClick={()=>navigate("tests")}>← {lang==="ta"?"திரும்பு":"Back"}</button>
+  </div>;
+
+  return <div style={{display:"flex",flexDirection:"column",height:"100vh",overflow:"hidden"}}>
+    {/* Exam top bar */}
+    <div style={{background:"var(--surface)",borderBottom:"1px solid var(--border)",padding:"10px 14px",
+      display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+      <div style={{flex:1,minWidth:0}}>
+        <p style={{fontWeight:700,fontSize:13,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</p>
+        <p style={{fontSize:11,color:"var(--muted)"}}>{t.questionNo} {current+1} {t.of} {total}</p>
+      </div>
+      <div style={{fontFamily:"monospace",fontWeight:900,fontSize:20,padding:"6px 14px",borderRadius:12,
+        background:crit?"rgba(239,68,68,.15)":"var(--surface2)",
+        color:crit?"#ef4444":"var(--text)",border:`1px solid ${crit?"rgba(239,68,68,.4)":"var(--border)"}`,
+        flexShrink:0,animation:crit?"pulse 1s infinite":undefined}}>
+        ⏱ {fmt(timeLeft)}
+      </div>
+      <button onClick={()=>setShowPalette(true)} style={{width:36,height:36,borderRadius:9,background:"var(--surface2)",border:"1px solid var(--border)",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>🔲</button>
+    </div>
+
+    {/* Progress bar */}
+    <div style={{height:3,background:"var(--surface2)"}}>
+      <div style={{height:"100%",background:"linear-gradient(90deg,#7c3aed,#a855f7)",width:`${(answered/total)*100}%`,transition:"width .3s"}}/>
+    </div>
+
+    {/* Question area */}
+    <div style={{flex:1,overflowY:"auto",padding:14,WebkitOverflowScrolling:"touch"}}>
+      {q&&qd&&<>
+        <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+          <span className={`badge tag-${q.difficulty.toLowerCase()}`}>{q.difficulty}</span>
+          <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}} className={lang==="ta"?"tamil":""}>{q.topic}</span>
+        </div>
+        <div className="card card-p" style={{marginBottom:14}}>
+          <p style={{fontSize:16,fontWeight:600,lineHeight:1.7}} className={lang==="ta"?"tamil":""}>{qd.q}</p>
+        </div>
+        {qd.opts.map((opt,i)=><button key={i}
+          className={`opt-card${answers[current]===i?" selected":""}`}
+          onClick={()=>setAnswers({...answers,[current]:i})}>
+          <div className="opt-letter" style={{background:answers[current]===i?"#7c3aed":"var(--surface2)",color:answers[current]===i?"#fff":"var(--muted)"}}>
+            {String.fromCharCode(65+i)}
+          </div>
+          <span style={{fontSize:15,flex:1,textAlign:"left",lineHeight:1.5}} className={lang==="ta"?"tamil":""}>{opt}</span>
+        </button>)}
+      </>}
+    </div>
+
+    {/* Bottom controls */}
+    <div style={{background:"var(--surface)",borderTop:"1px solid var(--border)",padding:"10px 14px",flexShrink:0}}>
+      <div style={{display:"flex",gap:8,marginBottom:8}}>
+        <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={()=>setCurrent(Math.max(0,current-1))} disabled={current===0}>
+          ← {t.prevQ}
+        </button>
+        <button className={`btn btn-sm ${marked.has(current)?"btn-danger":"btn-secondary"}`}
+          style={{width:"auto",padding:"9px 14px"}}
+          onClick={()=>{const m=new Set(marked);m.has(current)?m.delete(current):m.add(current);setMarked(m);}}>
+          🚩 {t.markReview}
+        </button>
+        <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={()=>current<total-1?setCurrent(current+1):setConfirmSub(true)}>
+          {current<total-1?`${t.nextQ} →`:`${t.submitTest} ✓`}
+        </button>
+      </div>
+      <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"var(--muted)"}}>
+        <span>✅ <strong style={{color:"#10b981"}}>{answered}</strong></span>
+        <span>⏭ <strong style={{color:"#ef4444"}}>{total-answered}</strong></span>
+        <span>🚩 <strong style={{color:"#f97316"}}>{marked.size}</strong></span>
+        <button className="btn btn-success btn-sm" style={{width:"auto",padding:"6px 12px",fontSize:12}} onClick={()=>setConfirmSub(true)}>
+          {t.submit} ✓
+        </button>
+      </div>
+    </div>
+
+    {/* Palette Modal */}
+    {showPalette&&<div className="modal-overlay" onClick={()=>setShowPalette(false)}>
+      <div className="modal-sheet" onClick={e=>e.stopPropagation()}>
+        <div className="modal-pill"/>
+        <p style={{fontWeight:800,marginBottom:4}}>{lang==="ta"?"கேள்வி பலகம்":"Question Palette"}</p>
+        <div className="palette-grid">
+          {qs.map((_,i)=><button key={i} className={`p-btn ${qStatus(i)}`}
+            style={{outline:i===current?"2px solid var(--accent2)":"none",outlineOffset:2}}
+            onClick={()=>{setCurrent(i);setShowPalette(false);}}>
+            {i+1}
+          </button>)}
+        </div>
+        <div style={{display:"flex",gap:12,fontSize:11,flexWrap:"wrap",marginTop:4}}>
+          {[{c:"#10b981",l:lang==="ta"?"பதில்":"Answered"},{c:"#f97316",l:lang==="ta"?"குறி":"Marked"},
+            {c:"#7c3aed",l:lang==="ta"?"குறி+பதில்":"Mark+Ans"},{c:"var(--surface2)",l:lang==="ta"?"செல்லவில்லை":"Not visited"}].map(x=>(
+            <div key={x.l} style={{display:"flex",alignItems:"center",gap:4}} className={lang==="ta"?"tamil":""}>
+              <div style={{width:10,height:10,borderRadius:2,background:x.c}}/>
+              <span style={{color:"var(--muted)"}}>{x.l}</span>
+            </div>
+          ))}
+        </div>
+        <button className="btn btn-secondary" style={{marginTop:16}} onClick={()=>setShowPalette(false)}>{t.cancel}</button>
+      </div>
+    </div>}
+
+    {/* Warning */}
+    {warn&&<div className="modal-overlay"><div className="modal-sheet">
+      <div className="modal-pill"/>
+      <div style={{textAlign:"center"}}>
+        <div style={{fontSize:44,marginBottom:10}}>⚠️</div>
+        <h3 style={{fontWeight:800,fontSize:18,marginBottom:8}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"5 நிமிடங்கள் மட்டுமே உள்ளன!":"5 Minutes Remaining!"}</h3>
+        <p style={{color:"var(--muted)",fontSize:14,marginBottom:20}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"உங்கள் பதில்களை மதிப்பாய்வு செய்து சமர்ப்பியுங்கள்.":"Please review and submit your answers."}</p>
+        <button className="btn btn-primary" onClick={()=>setWarn(false)}>{lang==="ta"?"தொடரவும்":"Continue Exam"}</button>
+      </div>
+    </div></div>}
+
+    {/* Confirm Submit */}
+    {confirmSub&&<div className="modal-overlay"><div className="modal-sheet">
+      <div className="modal-pill"/>
+      <h3 style={{fontWeight:800,fontSize:17,marginBottom:16}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தேர்வை சமர்ப்பிக்கவா?":"Submit Test?"}</h3>
+      {[{l:lang==="ta"?"மொத்த கேள்விகள்":"Total",v:total},
+        {l:lang==="ta"?"பதிலளித்தது":"Answered",v:answered,c:"#10b981"},
+        {l:lang==="ta"?"பதிலளிக்காதது":"Unanswered",v:total-answered,c:"#ef4444"},
+        {l:lang==="ta"?"குறியிடப்பட்டது":"Marked",v:marked.size,c:"#f97316"}].map(s=>(
+        <div key={s.l} style={{display:"flex",justifyContent:"space-between",padding:"10px 14px",borderRadius:10,background:"var(--surface2)",marginBottom:8}}>
+          <span style={{fontSize:14,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</span>
+          <strong style={{color:s.c||"var(--text)"}}>{s.v}</strong>
+        </div>
+      ))}
+      <div style={{display:"flex",gap:8,marginTop:16}}>
+        <button className="btn btn-secondary" style={{flex:1}} onClick={()=>setConfirmSub(false)}>{t.cancel}</button>
+        <button className="btn btn-success" style={{flex:1}} onClick={doSubmit}>{t.submitTest} ✓</button>
+      </div>
+    </div></div>}
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// RESULT
+// ══════════════════════════════════════════════════════
+function ResultPage(){
+  const {testResult,activeTest,navigate,lang} = useApp();
+  const t=T[lang];
+  const [tab,setTab] = useState("summary");
+  if(!testResult) return <div style={{textAlign:"center",padding:60}}>
+    <div style={{fontSize:44,marginBottom:12}}>📊</div>
+    <p style={{color:"var(--muted)",marginBottom:16}}>{lang==="ta"?"முடிவு இல்லை":"No result data"}</p>
+    <button className="btn btn-primary" onClick={()=>navigate("dashboard")}>{t.backHome}</button>
+  </div>;
+
+  const {correct,wrong,skipped,score,accuracy,totalQuestions,weakTopics,timeTaken,testName,answers}=testResult;
+  const test=activeTest||TESTS[0];
+  const qs=test.qs||[];
+  const fmt=s=>`${Math.floor(s/60)}m ${s%60}s`;
+  const grade=score>=90?{l:"Excellent! 🏆",c:"#10b981"}:score>=75?{l:lang==="ta"?"மிகவும் நல்லது 🌟":"Very Good 🌟",c:"#7c3aed"}:score>=60?{l:lang==="ta"?"நல்லது 👍":"Good 👍",c:"#06b6d4"}:score>=40?{l:lang==="ta"?"சராசரி 📈":"Average 📈",c:"#eab308"}:{l:lang==="ta"?"மேலும் முயற்சி 💪":"Keep Trying 💪",c:"#ef4444"};
+  const pc=a=>a>=70?"#10b981":a>=50?"#eab308":"#ef4444";
+
+  const shareResult = () => {
+    const text=`🎯 CRACKTNPSC Result\n📝 ${testName}\n✅ Score: ${score}%\n🎯 Accuracy: ${accuracy}%\n✓ Correct: ${correct}/${totalQuestions}\n\nJoin CRACKTNPSC for exam prep!`;
+    if(navigator.share) navigator.share({title:"My Exam Result",text});
+    else alert(text);
+  };
+
+  return <>
+    <TopNav title={lang==="ta"?"முடிவு":"Result"} showBack onBack={()=>navigate("dashboard")}/>
+    <div className="page-no-bottom">
+      {/* Grade banner */}
+      <div style={{textAlign:"center",padding:"20px 0 16px"}}>
+        <div style={{fontSize:48,marginBottom:8}}>🏁</div>
+        <h2 style={{fontSize:22,fontWeight:800,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தேர்வு முடிந்தது!":"Test Complete!"}</h2>
+        <p style={{color:"var(--muted)",fontSize:13,marginBottom:10}} className={lang==="ta"?"tamil":""}>{testName}</p>
+        <span style={{padding:"6px 16px",borderRadius:20,fontSize:14,fontWeight:700,
+          background:`${grade.c}20`,color:grade.c,border:`1px solid ${grade.c}40`}} className={lang==="ta"?"tamil":""}>{grade.l}</span>
+      </div>
+
+      {/* Score cards */}
+      <div className="stat-row">
+        {[{l:t.score,v:`${score}%`,i:"⭐",c:"#7c3aed"},{l:t.correct,v:correct,i:"✅",c:"#10b981"},
+          {l:t.wrong,v:wrong,i:"❌",c:"#ef4444"},{l:t.skipped,v:skipped,i:"⏭",c:"#f97316"}].map(s=>(
+          <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:`1px solid var(--border)`,textAlign:"center"}}>
+            <div style={{fontSize:20,marginBottom:4}}>{s.i}</div>
+            <div style={{fontSize:22,fontWeight:900,color:s.c}}>{s.v}</div>
+            <div style={{fontSize:10,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabs */}
+      <div className="toggle-wrap" style={{marginBottom:14}}>
+        {[{k:"summary",l:lang==="ta"?"சுருக்கம்":"Summary"},{k:"analysis",l:lang==="ta"?"பகுப்பாய்வு":"Analysis"},{k:"answers",l:lang==="ta"?"பதில்கள்":"Answers"}].map(tab2=>(
+          <button key={tab2.k} className={`toggle-btn ${tab===tab2.k?"active":""}`} onClick={()=>setTab(tab2.k)} className={`toggle-btn ${tab===tab2.k?"active":""} ${lang==="ta"?"tamil":""}`}>{tab2.l}</button>
+        ))}
+      </div>
+
+      {tab==="summary"&&<>
+        <div className="card card-p" style={{marginBottom:14}}>
+          <p style={{fontWeight:700,marginBottom:14}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"செயல்திறன்":"Performance"}</p>
+          <div style={{display:"flex",justifyContent:"space-around"}}>
+            <div style={{textAlign:"center"}}><DonutChart pct={score} color="#7c3aed"/><p style={{fontSize:12,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.score}</p></div>
+            <div style={{textAlign:"center"}}><DonutChart pct={accuracy} color="#10b981"/><p style={{fontSize:12,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.accuracy}</p></div>
+          </div>
+        </div>
+        <div className="card card-p" style={{marginBottom:14}}>
+          {[{l:lang==="ta"?"மொத்த கேள்விகள்":"Total Questions",v:totalQuestions},
+            {l:t.correct,v:correct,c:"#10b981"},{l:t.wrong,v:wrong,c:"#ef4444"},
+            {l:t.skipped,v:skipped,c:"#f97316"},{l:t.accuracy,v:`${accuracy}%`,c:"#7c3aed"},
+            {l:lang==="ta"?"எடுத்த நேரம்":"Time Taken",v:fmt(timeTaken||0)}].map(d=>(
+            <div key={d.l} style={{display:"flex",justifyContent:"space-between",padding:"9px 0",borderBottom:"1px solid var(--border)"}}>
+              <span style={{fontSize:14,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{d.l}</span>
+              <strong style={{color:d.c||"var(--text)"}}>{d.v}</strong>
+            </div>
+          ))}
+        </div>
+      </>}
+
+      {tab==="analysis"&&<div className="card card-p" style={{marginBottom:14}}>
+        <p style={{fontWeight:700,marginBottom:14}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தலைப்பு வாரியான பகுப்பாய்வு":"Topic Analysis"}</p>
+        {(weakTopics||[]).sort((a,b)=>a.accuracy-b.accuracy).map(tp=>(
+          <div key={tp.name} style={{marginBottom:14}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+              <span style={{fontWeight:600,fontSize:14}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                <span style={{fontSize:12,color:"var(--muted)"}}>{tp.correct}/{tp.total}</span>
+                <span style={{fontSize:13,fontWeight:700,color:pc(tp.accuracy)}}>{tp.accuracy}%</span>
+              </div>
+            </div>
+            <div className="progress-bar"><div className="progress-fill" style={{width:`${tp.accuracy}%`,background:pc(tp.accuracy)}}/></div>
+          </div>
+        ))}
+        <div style={{padding:12,borderRadius:12,background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.2)",marginTop:8}}>
+          <p style={{fontSize:13,fontWeight:700,color:"var(--accent2)",marginBottom:4}}>💡 {lang==="ta"?"பரிந்துரை":"Recommendation"}</p>
+          <p style={{fontSize:13,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>
+            {(weakTopics||[]).filter(tp=>tp.accuracy<50).length>0
+              ?lang==="ta"
+                ?`கவனிக்க: ${(weakTopics||[]).filter(tp=>tp.accuracy<50).map(tp=>tp.name).join(", ")}. இந்த பகுதிகளில் அதிக பயிற்சி தேவை.`
+                :`Focus on: ${(weakTopics||[]).filter(tp=>tp.accuracy<50).map(tp=>tp.name).join(", ")}. These need more practice.`
+              :lang==="ta"?"சிறப்பான செயல்திறன்! தொடர்ந்து பயிற்சி செய்யுங்கள்.":"Great performance! Keep practicing."}
+          </p>
+        </div>
+      </div>}
+
+      {tab==="answers"&&<div style={{marginBottom:14}}>
+        {qs.map((q,i)=>{
+          const qd=q[lang]||q.en;
+          const uAns=answers?.[i];
+          const ok=uAns===qd.correct,skip=uAns===undefined;
+          return <div key={i} className="card" style={{marginBottom:10,overflow:"hidden",
+            borderColor:skip?"var(--border)":ok?"rgba(16,185,129,.4)":"rgba(239,68,68,.4)"}}>
+            <div className="card-p">
+              <div style={{display:"flex",gap:8,marginBottom:10,alignItems:"center"}}>
+                <div style={{width:26,height:26,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,fontSize:13,
+                  background:skip?"var(--surface2)":ok?"rgba(16,185,129,.2)":"rgba(239,68,68,.2)",
+                  color:skip?"var(--muted)":ok?"#10b981":"#ef4444"}}>
+                  {skip?"—":ok?"✓":"✗"}
+                </div>
+                <span className={`badge tag-${q.difficulty.toLowerCase()}`}>{q.difficulty}</span>
+                <span style={{fontSize:12,color:"var(--muted)",marginLeft:"auto"}} className={lang==="ta"?"tamil":""}>{q.topic}</span>
+              </div>
+              <p style={{fontSize:13,fontWeight:500,marginBottom:12,lineHeight:1.6}} className={lang==="ta"?"tamil":""}>{i+1}. {qd.q}</p>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+                {qd.opts.map((opt,j)=><div key={j} style={{
+                  padding:"7px 10px",borderRadius:8,fontSize:12,
+                  background:j===qd.correct?"rgba(16,185,129,.1)":j===uAns&&!ok?"rgba(239,68,68,.1)":"var(--surface2)",
+                  border:`1px solid ${j===qd.correct?"rgba(16,185,129,.3)":j===uAns&&!ok?"rgba(239,68,68,.3)":"var(--border)"}`
+                }} className={lang==="ta"?"tamil":""}>{String.fromCharCode(65+j)}. {opt}</div>)}
+              </div>
+            </div>
+            {qd.exp&&<div style={{padding:"10px 14px",borderTop:"1px solid var(--border)",background:"rgba(124,58,237,.04)"}}>
+              <span style={{fontSize:12,fontWeight:700,color:"var(--accent2)"}}>💡 </span>
+              <span style={{fontSize:12,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{qd.exp}</span>
+            </div>}
+          </div>;
+        })}
+      </div>}
+
+      <div style={{display:"flex",gap:8,paddingBottom:20,flexWrap:"wrap"}}>
+        <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={()=>navigate("dashboard")}>{t.backHome}</button>
+        <button className="btn btn-secondary btn-sm" style={{width:"auto",padding:"9px 14px"}} onClick={shareResult}>📤 {t.shareResult}</button>
+        <button className="btn btn-primary btn-sm" style={{flex:1}} onClick={()=>navigate("exam")}>🔁 {t.retake}</button>
+      </div>
+    </div>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// ANALYTICS
+// ══════════════════════════════════════════════════════
+function AnalyticsPage(){
+  const {lang,user} = useApp();
+  const t=T[lang];
+  const history=getHistory().filter(h=>h.userId===user?.id);
+  const topicData=[
+    {name:"Polity",acc:40},{name:"History",acc:78},{name:"Science",acc:35},
+    {name:"Geography",acc:62},{name:"Tamil",acc:85},{name:"Economics",acc:50},
+  ];
+  const pc=a=>a>=70?"#10b981":a>=50?"#eab308":"#ef4444";
+
+  return <>
+    <TopNav title={t.analyticsTab}/>
+    <div className="page">
+      <div style={{display:"flex",justifyContent:"space-around",marginBottom:16}}>
+        <div style={{textAlign:"center"}}><DonutChart pct={72} color="#7c3aed" size={80}/><p style={{fontSize:11,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.overall}</p></div>
+        <div style={{textAlign:"center"}}><DonutChart pct={81} color="#10b981" size={80}/><p style={{fontSize:11,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.accuracy}</p></div>
+        <div style={{textAlign:"center"}}><DonutChart pct={65} color="#06b6d4" size={80}/><p style={{fontSize:11,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>Progress</p></div>
+      </div>
+
+      <div className="sec-title"><span>📚</span><span className={lang==="ta"?"tamil":""}>{lang==="ta"?"தலைப்பு வாரியான துல்லியம்":"Chapter Accuracy"}</span></div>
+      <div className="card card-p" style={{marginBottom:14}}>
+        {topicData.map(tp=>(
+          <div key={tp.name} style={{marginBottom:14}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:5,fontSize:13}}>
+              <span style={{fontWeight:600}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <span style={{fontWeight:700,color:pc(tp.acc)}}>{tp.acc}%</span>
+            </div>
+            <div className="progress-bar"><div className="progress-fill" style={{width:`${tp.acc}%`,background:pc(tp.acc)}}/></div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        <div className="card card-p" style={{border:"1px solid rgba(239,68,68,.3)"}}>
+          <p style={{fontWeight:700,color:"#ef4444",marginBottom:10,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.weakAreas}</p>
+          {topicData.filter(tp=>tp.acc<55).map(tp=>(
+            <div key={tp.name} style={{display:"flex",justifyContent:"space-between",padding:"7px 10px",borderRadius:8,background:"rgba(239,68,68,.08)",marginBottom:6}}>
+              <span style={{fontSize:13,fontWeight:600}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <span style={{fontSize:12,fontWeight:700,color:"#ef4444"}}>{tp.acc}%</span>
+            </div>
+          ))}
+        </div>
+        <div className="card card-p" style={{border:"1px solid rgba(16,185,129,.3)"}}>
+          <p style={{fontWeight:700,color:"#10b981",marginBottom:10,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.strongAreas}</p>
+          {topicData.filter(tp=>tp.acc>=70).map(tp=>(
+            <div key={tp.name} style={{display:"flex",justifyContent:"space-between",padding:"7px 10px",borderRadius:8,background:"rgba(16,185,129,.08)",marginBottom:6}}>
+              <span style={{fontSize:13,fontWeight:600}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <span style={{fontSize:12,fontWeight:700,color:"#10b981"}}>{tp.acc}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Rank prediction */}
+      <div className="card card-p" style={{background:"linear-gradient(135deg,rgba(124,58,237,.12),rgba(6,182,212,.08))",border:"1px solid rgba(124,58,237,.3)",marginBottom:14}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <div>
+            <p style={{fontWeight:800,fontSize:15,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தரவரிசை கணிப்பு 🎯":"Rank Prediction 🎯"}</p>
+            <p style={{fontSize:12,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தற்போதைய செயல்திறன் அடிப்படையில்":"Based on current performance"}</p>
+          </div>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontSize:28,fontWeight:900,color:"var(--accent2)"}}>Top 15%</div>
+            <div style={{fontSize:10,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தரவரிசை வரம்பு":"Rank band"}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════════════════
+function ProfilePage(){
+  const {user,setUser,navigate,lang,setLang,darkMode,setDarkMode} = useApp();
+  const t=T[lang];
+  const history=getHistory().filter(h=>h.userId===user?.id);
+
+  const logout=()=>{
+    localStorage.removeItem("ct_session");
+    setUser(null);navigate("login");
+  };
+
+  return <>
+    <TopNav title={t.profile}/>
+    <div className="page">
+      {/* Profile card */}
+      <div style={{textAlign:"center",padding:"16px 0 24px"}}>
+        <div style={{width:72,height:72,borderRadius:22,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
+          display:"flex",alignItems:"center",justifyContent:"center",fontSize:30,margin:"0 auto 12px",
+          boxShadow:"0 8px 24px rgba(124,58,237,.4)"}}>
+          {user?.name?.[0]||"S"}
+        </div>
+        <p style={{fontWeight:800,fontSize:18}}>{user?.name}</p>
+        <p style={{color:"var(--muted)",fontSize:14,marginTop:4}}>📱 +91 {user?.phone}</p>
+        {user?.email&&<p style={{color:"var(--muted)",fontSize:13,marginTop:2}}>{user?.email}</p>}
+        <div style={{display:"inline-flex",alignItems:"center",gap:6,marginTop:8,padding:"4px 12px",borderRadius:20,
+          background:"rgba(16,185,129,.15)",color:"#10b981",border:"1px solid rgba(16,185,129,.3)",fontSize:12,fontWeight:700}}>
+          🎓 {lang==="ta"?"மாணவர்":"Student"}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="stat-row" style={{marginBottom:20}}>
+        {[{l:lang==="ta"?"தேர்வுகள்":"Tests",v:history.length,c:"#7c3aed"},
+          {l:lang==="ta"?"சராசரி":"Avg",v:`${history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length):0}%`,c:"#10b981"},
+          {l:lang==="ta"?"நாட்கள்":"Streak",v:"🔥 3",c:"#f97316"},
+          {l:lang==="ta"?"தரவரிசை":"Rank",v:"#12",c:"#eab308"}].map(s=>(
+          <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:"1px solid var(--border)",textAlign:"center"}}>
+            <div style={{fontWeight:900,fontSize:20,color:s.c}}>{s.v}</div>
+            <div style={{fontSize:11,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Settings */}
+      <div className="sec-title"><span>⚙️</span><span className={lang==="ta"?"tamil":""}>{t.settings}</span></div>
+
+      {/* Language selector */}
+      <div className="card card-p" style={{marginBottom:12}}>
+        <p style={{fontWeight:700,marginBottom:12,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.selectLang}</p>
+        <div style={{display:"flex",gap:10}}>
+          {[{k:"en",l:"🇬🇧 English"},{k:"ta",l:"🇮🇳 தமிழ்"}].map(l=>(
+            <button key={l.k} className={`lang-pill ${lang===l.k?"active":""}`} style={{flex:1,justifyContent:"center"}}
+              onClick={()=>setLang(l.k)}>
+              {l.l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Dark mode */}
+      <div className="card card-p" style={{marginBottom:12,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <span style={{fontWeight:600,fontSize:14}} className={lang==="ta"?"tamil":""}>{darkMode?lang==="ta"?"இருள் பயன்முறை":"Dark Mode":lang==="ta"?"ஒளி பயன்முறை":"Light Mode"}</span>
+        <label style={{position:"relative",display:"inline-block",width:50,height:27,cursor:"pointer"}}>
+          <input type="checkbox" checked={darkMode} onChange={()=>setDarkMode(d=>!d)} style={{opacity:0,width:0,height:0}}/>
+          <div style={{position:"absolute",inset:0,background:darkMode?"#7c3aed":"var(--surface2)",borderRadius:14,transition:"all .3s",border:"1px solid var(--border)"}}>
+            <div style={{position:"absolute",top:2,left:darkMode?24:2,width:22,height:22,borderRadius:"50%",background:"#fff",transition:"left .3s",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}/>
+          </div>
+        </label>
+      </div>
+
+      {/* Logout */}
+      <button className="btn btn-danger" style={{marginTop:8}} onClick={logout}>
+        🚪 {t.logout}
+      </button>
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// ADMIN PANEL
+// ══════════════════════════════════════════════════════
+function AdminPanel(){
+  const {navigate,setUser,lang} = useApp();
+  const [tab,setTab] = useState("overview");
+  const users=getUsers();
+  const history=getHistory();
+
+  const stats={
+    users:users.length,
+    tests:history.length,
+    avg:history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length):0,
+    today:users.filter(u=>u.joinedAt&&new Date(u.joinedAt).toDateString()===new Date().toDateString()).length,
+  };
+
+  const logout=()=>{localStorage.removeItem("ct_session");setUser(null);navigate("login");};
+
+  const exportCSV=()=>{
+    const rows=[["Name","Phone","Email","Joined","Tests","Avg Score"]];
+    users.forEach(u=>{
+      const uh=history.filter(h=>h.userId===u.id);
+      const avg=uh.length?Math.round(uh.reduce((a,b)=>a+b.score,0)/uh.length):0;
+      rows.push([u.name,u.phone,u.email||"",u.joinedAt?new Date(u.joinedAt).toLocaleDateString():"",uh.length,avg+"%"]);
+    });
+    const csv=rows.map(r=>r.join(",")).join("\n");
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+    a.download="CRACKTNPSC_Users.csv";a.click();
+  };
+
+  const syncToSheet=async()=>{
+    const allData={
+      action:"sync_all",
+      users:users.map(u=>({name:u.name,phone:u.phone,email:u.email||"",joined:u.joinedAt||""})),
+      totalTests:history.length,
+      timestamp:new Date().toLocaleString()
+    };
+    await saveToGoogleSheet(allData);
+    alert(lang==="ta"?"கூகிள் ஷீட்டுக்கு அனுப்பப்பட்டது!":"Data sent to Google Sheets!");
+  };
+
+  return <div style={{display:"flex",flexDirection:"column",height:"100vh",overflow:"hidden"}}>
+    {/* Admin nav */}
+    <div style={{background:"linear-gradient(135deg,#7c3aed,#4c1d95)",padding:"12px 16px",display:"flex",alignItems:"center",gap:10,flexShrink:0}}>
+      <div style={{width:36,height:36,borderRadius:10,background:"rgba(255,255,255,.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>👑</div>
+      <div style={{flex:1}}>
+        <p style={{fontWeight:800,fontSize:16,color:"#fff"}}>Admin Panel</p>
+        <p style={{fontSize:11,color:"rgba(255,255,255,.6)"}}>CRACKTNPSC</p>
+      </div>
+      <button onClick={logout} style={{padding:"6px 12px",borderRadius:8,background:"rgba(255,255,255,.15)",color:"#fff",fontSize:12,fontWeight:700,border:"1px solid rgba(255,255,255,.2)"}}>Logout</button>
+    </div>
+
+    {/* Admin tabs */}
+    <div style={{display:"flex",background:"var(--surface)",borderBottom:"1px solid var(--border)",flexShrink:0}}>
+      {[{k:"overview",i:"📊",l:"Overview"},{k:"users",i:"👥",l:"Users"},{k:"tests",i:"📝",l:"Results"}].map(tb=>(
+        <button key={tb.k} onClick={()=>setTab(tb.k)} style={{
+          flex:1,padding:"11px 6px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,
+          borderBottom:`2px solid ${tab===tb.k?"#7c3aed":"transparent"}`,
+          color:tab===tb.k?"#7c3aed":"var(--muted)",background:"none",fontSize:10,fontWeight:700,
+          transition:"all .2s"
+        }}>
+          <span style={{fontSize:18}}>{tb.i}</span>{tb.l}
+        </button>
+      ))}
+    </div>
+
+    <div style={{flex:1,overflowY:"auto",padding:14,WebkitOverflowScrolling:"touch"}}>
+      {tab==="overview"&&<>
+        <div className="stat-row">
+          {[{i:"👥",l:"Total Users",v:stats.users,c:"#7c3aed"},{i:"📝",l:"Tests Taken",v:stats.tests,c:"#10b981"},
+            {i:"⭐",l:"Avg Score",v:`${stats.avg}%`,c:"#06b6d4"},{i:"🆕",l:"Today",v:stats.today,c:"#f97316"}].map(s=>(
+            <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:"1px solid var(--border)",textAlign:"center"}}>
+              <div style={{fontSize:20,marginBottom:4}}>{s.i}</div>
+              <div style={{fontSize:22,fontWeight:900,color:s.c}}>{s.v}</div>
+              <div style={{fontSize:10,color:"var(--muted)"}}>{s.l}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap"}}>
+          <button className="btn btn-primary btn-sm" style={{flex:1}} onClick={syncToSheet}>📊 Sync to Google Sheet</button>
+          <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={exportCSV}>📥 Export CSV</button>
+        </div>
+
+        <div className="card card-p">
+          <p style={{fontWeight:700,marginBottom:12,fontSize:14}}>📋 Recent Registrations</p>
+          {users.length===0?<p style={{color:"var(--muted)",fontSize:13,textAlign:"center",padding:"16px 0"}}>No users yet</p>:
+          users.slice(-5).reverse().map((u,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid var(--border)"}}>
+            <div>
+              <p style={{fontWeight:600,fontSize:14}}>{u.name}</p>
+              <p style={{fontSize:12,color:"var(--muted)"}}>📱 {u.phone}</p>
+            </div>
+            <span style={{fontSize:11,color:"var(--muted)"}}>{u.joinedAt?new Date(u.joinedAt).toLocaleDateString():"-"}</span>
+          </div>)}
+        </div>
+      </>}
+
+      {tab==="users"&&<>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+          <p style={{fontWeight:800,fontSize:16}}>All Users ({users.length})</p>
+          <button className="btn btn-secondary btn-sm" style={{width:"auto",padding:"8px 12px"}} onClick={exportCSV}>📥 CSV</button>
+        </div>
+        {users.length===0?<div style={{textAlign:"center",padding:"40px 0"}}>
+          <div style={{fontSize:40,marginBottom:10}}>👥</div>
+          <p style={{color:"var(--muted)"}}>No registered users yet</p>
+        </div>:
+        users.map((u,i)=>{
+          const uh=history.filter(h=>h.userId===u.id);
+          const avg=uh.length?Math.round(uh.reduce((a,b)=>a+b.score,0)/uh.length):0;
+          return <div key={i} className="card card-p" style={{marginBottom:10}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+              <div style={{display:"flex",gap:10,alignItems:"center"}}>
+                <div style={{width:36,height:36,borderRadius:10,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:800,fontSize:15}}>{u.name[0]}</div>
+                <div>
+                  <p style={{fontWeight:700,fontSize:14}}>{u.name}</p>
+                  <p style={{fontSize:12,color:"var(--muted)"}}>📱 {u.phone}</p>
+                </div>
+              </div>
+              <div style={{textAlign:"right"}}>
+                <div style={{fontSize:16,fontWeight:800,color:"#7c3aed"}}>{avg}%</div>
+                <div style={{fontSize:10,color:"var(--muted)"}}>{uh.length} tests</div>
+              </div>
+            </div>
+            {/* Admin sees password */}
+            <div style={{padding:"8px 12px",borderRadius:8,background:"rgba(239,68,68,.06)",border:"1px solid rgba(239,68,68,.15)",fontSize:12}}>
+              <span style={{color:"var(--muted)"}}>🔑 Password: </span>
+              <span style={{fontFamily:"monospace",color:"#ef4444",fontWeight:700}}>{u.password}</span>
+              {u.email&&<span style={{color:"var(--muted)",marginLeft:12}}>✉️ {u.email}</span>}
+            </div>
+          </div>;
+        })}
+      </>}
+
+      {tab==="tests"&&<>
+        <p style={{fontWeight:800,fontSize:16,marginBottom:12}}>All Results ({history.length})</p>
+        {history.length===0?<div style={{textAlign:"center",padding:"40px 0"}}>
+          <div style={{fontSize:40,marginBottom:10}}>📝</div>
+          <p style={{color:"var(--muted)"}}>No test results yet</p>
+        </div>:
+        history.slice().reverse().slice(0,30).map((h,i)=>{
+          const u=users.find(u=>u.id===h.userId);
+          return <div key={i} className="card card-p" style={{marginBottom:10}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+              <div>
+                <p style={{fontWeight:700,fontSize:14}}>{u?.name||"Demo Student"}</p>
+                <p style={{fontSize:12,color:"var(--muted)"}}>📱 {u?.phone||"9876543210"}</p>
+              </div>
+              <div style={{textAlign:"right"}}>
+                <span style={{fontSize:18,fontWeight:900,color:h.score>=60?"#10b981":"#ef4444"}}>{h.score}%</span>
+              </div>
+            </div>
+            <div style={{display:"flex",gap:10,fontSize:12,color:"var(--muted)",flexWrap:"wrap"}}>
+              <span>📝 {h.testName}</span>
+              <span>✅ {h.correct}/{h.totalQuestions}</span>
+              <span>🎯 {h.accuracy}%</span>
+              <span>📅 {new Date(h.date).toLocaleDateString()}</span>
+            </div>
+          </div>;
+        })}
+      </>}
+    </div>
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// ROOT APP
+// ══════════════════════════════════════════════════════
+function App(){
+  const [page,setPage] = useState("login");
+  const [user,setUser] = useState(null);
+  const [lang,setLang] = useState("en");
+  const [darkMode,setDarkMode] = useState(true);
+  const [activeTest,setActiveTest] = useState(null);
+  const [testResult,setTestResult] = useState(null);
+  const [toast,setToast] = useState(null);
+
+  useEffect(()=>{
+    const s=localStorage.getItem("ct_session");
+    if(s){ const u=JSON.parse(s);setUser(u);setPage(u.role==="admin"?"admin":"dashboard"); }
+    const dm=localStorage.getItem("ct_dark");
+    if(dm!==null)setDarkMode(dm==="true");
+    const lg=localStorage.getItem("ct_lang");
+    if(lg)setLang(lg);
+  },[]);
+
+  useEffect(()=>{
+    document.documentElement.className=darkMode?"":"light";
+    localStorage.setItem("ct_dark",darkMode);
+  },[darkMode]);
+
+  useEffect(()=>{
+    localStorage.setItem("ct_lang",lang);
+  },[lang]);
+
+  const navigate=p=>setPage(p);
+  const showToast=(t)=>{setToast(t);};
+  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(null),3000);return()=>clearTimeout(t);}},[toast]);
+
+  const renderPage=()=>{
+    switch(page){
+      case "login":     return <LoginScreen/>;
+      case "dashboard": return <Dashboard/>;
+      case "practice":  return <PracticePage/>;
+      case "tests":     return <TestsPage/>;
+      case "exam":      return <ExamPage/>;
+      case "result":    return <ResultPage/>;
+      case "analytics": return <AnalyticsPage/>;
+      case "profile":   return <ProfilePage/>;
+      case "admin":     return <AdminPanel/>;
+      default:          return <Dashboard/>;
+    }
+  };
+
+  return <Ctx.Provider value={{
+    page,navigate,user,setUser,lang,setLang,darkMode,setDarkMode,
+    activeTest,setActiveTest,testResult,setTestResult,
+    toast,setToast:showToast
+  }}>
+    <div id="app">
+      {renderPage()}
+      {toast&&<Toast msg={toast.msg} type={toast.type} onClose={()=>setToast(null)}/>}
+    </div>
+  </Ctx.Provider>;
+}
+
+ReactDOM.render(<App/>, document.getElementById("root"));
+</script>
+</body>
+</html>
