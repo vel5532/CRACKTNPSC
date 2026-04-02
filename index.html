@@ -2,174 +2,234 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ExamIQ — AI-Powered Exam Platform</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#7c3aed"/>
+<title>CRACKTNPSC — AI Exam Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <style>
-:root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --surface2: #1a1a24;
-  --border: #2a2a3a;
-  --border2: #3a3a50;
-  --text: #e8e8f0;
-  --muted: #7070a0;
-  --accent: #7c3aed;
-  --accent2: #a855f7;
-  --accent3: #06b6d4;
-  --green: #10b981;
-  --red: #ef4444;
-  --orange: #f97316;
-  --yellow: #eab308;
-  --gold: #f59e0b;
+/* ── RESET & ROOT ─────────────────────────────────── */
+:root{
+  --bg:#0d0d18;--surface:#13131f;--surface2:#1c1c2e;--surface3:#252538;
+  --border:#2e2e45;--border2:#3d3d58;
+  --text:#eeeef8;--muted:#8888b0;--muted2:#5a5a80;
+  --accent:#7c3aed;--accent2:#a855f7;--accent3:#06b6d4;
+  --green:#10b981;--red:#ef4444;--orange:#f97316;--yellow:#eab308;
+  --nav-h:56px;--bottom-h:64px;
 }
-.light {
-  --bg: #f0f0f8;
-  --surface: #ffffff;
-  --surface2: #f5f5ff;
-  --border: #e0e0f0;
-  --border2: #d0d0e8;
-  --text: #1a1a2e;
-  --muted: #6060a0;
+.light{
+  --bg:#f2f2ff;--surface:#fff;--surface2:#f5f5ff;--surface3:#ebebff;
+  --border:#ddddf0;--border2:#c8c8e8;--text:#1a1a30;--muted:#6060a0;--muted2:#9090c0;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--text);font-family:'Bricolage Grotesque',sans-serif;min-height:100vh}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:var(--surface)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-input,select,textarea{font-family:inherit}
-button{font-family:inherit;cursor:pointer}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{font-size:16px;height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;
+  min-height:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.tamil{font-family:'Noto Sans Tamil','Poppins',sans-serif}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+input,select,textarea,button{font-family:inherit;outline:none;border:none}
+button{cursor:pointer;background:none}
+img{max-width:100%}
+
+/* ── ANIMATIONS ───────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.3)}50%{box-shadow:0 0 40px rgba(124,58,237,.6)}}
-@keyframes countup{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes slideIn{from{transform:translateX(-20px);opacity:0}to{transform:translateX(0);opacity:1}}
-.fade-up{animation:fadeUp .4s ease both}
-.fade-in{animation:fadeIn .3s ease}
-.pulse{animation:pulse 2s infinite}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes scaleIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 15px rgba(124,58,237,.3)}50%{box-shadow:0 0 30px rgba(124,58,237,.6)}}
+.fade-up{animation:fadeUp .35s ease both}
+.fade-in{animation:fadeIn .25s ease}
+.scale-in{animation:scaleIn .3s ease}
 .spin{animation:spin 1s linear infinite}
-.glow{animation:glow 2s ease-in-out infinite}
-.shimmer{
-  background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);
-  background-size:200% 100%;
-  animation:shimmer 1.5s infinite;
+.pulse{animation:pulse 1.5s ease-in-out infinite}
+.glow-anim{animation:glow 2s ease-in-out infinite}
+.shake{animation:shake .4s ease}
+
+/* ── LAYOUT ───────────────────────────────────────── */
+#app{display:flex;flex-direction:column;min-height:100vh;max-width:480px;margin:0 auto;position:relative}
+.top-nav{
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;z-index:200;height:var(--nav-h);
+  display:flex;align-items:center;padding:0 16px;
+  background:rgba(13,13,24,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
 }
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  transition:all .2s;
+.light .top-nav{background:rgba(242,242,255,.92)}
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;z-index:200;height:var(--bottom-h);
+  display:flex;align-items:center;padding:0 4px 8px;
+  background:var(--surface);border-top:1px solid var(--border);
 }
-.card:hover{border-color:var(--border2)}
+.page{
+  flex:1;padding:calc(var(--nav-h) + 12px) 14px calc(var(--bottom-h) + 12px);
+  min-height:100vh;animation:fadeUp .3s ease;
+}
+.page-no-bottom{
+  flex:1;padding:calc(var(--nav-h) + 12px) 14px 16px;
+  min-height:100vh;animation:fadeUp .3s ease;
+}
+.full-page{min-height:100vh;display:flex;flex-direction:column;animation:fadeIn .3s ease}
+
+/* ── BOTTOM NAV ITEMS ─────────────────────────────── */
+.bnav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:6px 4px;border-radius:12px;transition:all .2s;
+  color:var(--muted);font-size:10px;font-weight:600;
+}
+.bnav-item.active{color:var(--accent2)}
+.bnav-item .icon{font-size:22px;line-height:1;transition:transform .2s}
+.bnav-item.active .icon{transform:scale(1.15)}
+
+/* ── CARDS ────────────────────────────────────────── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.card-p{padding:16px}
+.card:active{transform:scale(.98)}
+
+/* ── BUTTONS ──────────────────────────────────────── */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:10px 20px;border-radius:12px;font-weight:700;font-size:14px;
-  border:none;cursor:pointer;transition:all .2s;white-space:nowrap;
+  padding:13px 20px;border-radius:14px;font-weight:700;font-size:15px;
+  transition:all .2s;white-space:nowrap;width:100%;
 }
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
-.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
-.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent2)}
-.btn-ghost{background:transparent;color:var(--muted);}
-.btn-ghost:hover{color:var(--text);background:var(--surface2)}
-.btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 .btn-success{background:linear-gradient(135deg,#059669,#10b981);color:#fff}
-.badge{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;
+.btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
+.btn-sm{padding:9px 16px;font-size:13px;border-radius:10px}
+.btn-outline{background:transparent;border:2px solid var(--accent);color:var(--accent2)}
+
+/* ── INPUTS ───────────────────────────────────────── */
+.input{
+  width:100%;padding:14px 16px;
+  background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:12px;color:var(--text);font-size:15px;
+  transition:border-color .2s;
 }
+.input:focus{border-color:var(--accent)}
+.input-group{margin-bottom:14px}
+.input-group label{display:block;font-size:12px;font-weight:700;
+  color:var(--muted);margin-bottom:7px;letter-spacing:.5px;text-transform:uppercase}
+.input-wrap{position:relative}
+.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:18px}
+.input-with-icon{padding-left:44px}
+
+/* ── BADGES ───────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
 .tag-easy{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
 .tag-medium{background:rgba(234,179,8,.15);color:#eab308;border:1px solid rgba(234,179,8,.3)}
 .tag-hard{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
-.input{
-  width:100%;padding:10px 14px;background:var(--surface2);
-  border:1px solid var(--border);border-radius:10px;color:var(--text);
-  font-size:14px;outline:none;transition:border-color .2s;
-}
-.input:focus{border-color:var(--accent)}
-.label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase}
+
+/* ── MODALS ───────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;
+  display:flex;align-items:flex-end;padding:0;animation:fadeIn .2s}
+.modal-sheet{background:var(--surface);border-radius:24px 24px 0 0;
+  width:100%;max-height:90vh;overflow-y:auto;
+  padding:20px 20px 32px;animation:slideUp .3s ease}
+.modal-pill{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 20px}
+
+/* ── PROGRESS BAR ─────────────────────────────────── */
 .progress-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;border-radius:3px;transition:width .8s ease}
-.mono{font-family:'JetBrains Mono',monospace}
-.gradient-text{background:linear-gradient(135deg,var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:520px;width:100%;max-height:85vh;overflow-y:auto}
-.nav{
-  position:sticky;top:0;z-index:50;
-  background:rgba(10,10,15,.9);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);padding:0 24px;height:60px;
-  display:flex;align-items:center;justify-content:space-between;
+
+/* ── TOGGLE SWITCH ────────────────────────────────── */
+.toggle-wrap{display:flex;background:var(--surface2);border-radius:12px;padding:4px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:9px;border-radius:9px;font-size:14px;font-weight:700;
+  transition:all .2s;color:var(--muted);background:none;border:none;cursor:pointer}
+.toggle-btn.active{background:var(--accent);color:#fff}
+
+/* ── LANG SELECTOR ────────────────────────────────── */
+.lang-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:20px;font-size:13px;font-weight:700;
+  border:2px solid var(--border);cursor:pointer;transition:all .2s;
 }
-.light .nav{background:rgba(240,240,248,.9)}
-.sidebar{
-  width:220px;min-height:calc(100vh - 60px);
-  background:var(--surface);border-right:1px solid var(--border);
-  padding:20px 12px;position:sticky;top:60px;height:calc(100vh - 60px);
-  overflow-y:auto;flex-shrink:0;
+.lang-pill.active{border-color:var(--accent);background:rgba(124,58,237,.15);color:var(--accent2)}
+
+/* ── QUESTION PALETTE ─────────────────────────────── */
+.palette-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;padding:12px 0}
+.p-btn{
+  aspect-ratio:1;border-radius:8px;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:none;cursor:pointer;transition:all .15s;
 }
-.nav-item{
-  display:flex;align-items:center;gap:10px;padding:10px 14px;
-  border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;
-  transition:all .15s;color:var(--muted);border:none;background:transparent;
-  width:100%;text-align:left;
+.p-btn:active{transform:scale(.9)}
+.p-not{background:var(--surface2);color:var(--muted)}
+.p-ans{background:#10b981;color:#fff}
+.p-mark{background:#f97316;color:#fff}
+.p-mark-ans{background:#7c3aed;color:#fff}
+.p-vis{background:rgba(239,68,68,.3);color:#ef4444}
+
+/* ── OPTION CARDS ─────────────────────────────────── */
+.opt-card{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px;border-radius:14px;border:2px solid var(--border);
+  cursor:pointer;transition:all .2s;background:var(--surface);
+  margin-bottom:10px;text-align:left;width:100%;
 }
-.nav-item:hover{background:var(--surface2);color:var(--text)}
-.nav-item.active{background:rgba(124,58,237,.15);color:var(--accent2);border:1px solid rgba(124,58,237,.2)}
-.stat-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  padding:20px;transition:all .3s;
+.opt-card:active{transform:scale(.98)}
+.opt-card.selected{border-color:var(--accent);background:rgba(124,58,237,.08)}
+.opt-card.correct{border-color:#10b981;background:rgba(16,185,129,.08)}
+.opt-card.wrong{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.opt-letter{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;
 }
-.stat-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,58,237,.15)}
-.table{width:100%;border-collapse:collapse}
-.table th{text-align:left;padding:10px 16px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
-.table td{padding:12px 16px;font-size:14px;border-bottom:1px solid var(--border)}
-.table tr:last-child td{border-bottom:none}
-.table tr:hover td{background:var(--surface2)}
-.donut-svg text{font-family:'Bricolage Grotesque',sans-serif}
-.q-option{
-  display:flex;align-items:center;gap:12px;padding:12px 16px;
-  border-radius:12px;border:2px solid var(--border);cursor:pointer;
-  transition:all .2s;background:var(--surface);
-}
-.q-option:hover{border-color:var(--accent);background:rgba(124,58,237,.05)}
-.q-option.selected{border-color:var(--accent);background:rgba(124,58,237,.1)}
-.q-option.correct{border-color:var(--green);background:rgba(16,185,129,.1)}
-.q-option.wrong{border-color:var(--red);background:rgba(239,68,68,.1)}
-.timer-critical{animation:pulse 1s infinite;color:var(--red)!important}
-.palette-btn{
-  width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;
-  font-size:12px;font-weight:700;transition:all .15s;
-}
-.p-not-visited{background:var(--surface2);color:var(--muted)}
-.p-answered{background:var(--green);color:#fff}
-.p-marked{background:var(--orange);color:#fff}
-.p-marked-answered{background:var(--accent);color:#fff}
-.p-visited{background:rgba(239,68,68,.3);color:var(--red)}
-.chart-bar{transition:height .8s ease}
-/* Scrollable page content */
-.page-content{flex:1;overflow-y:auto;padding:24px}
-.app-layout{display:flex;min-height:calc(100vh - 60px)}
-/* Upload zone */
-.upload-zone{
-  border:2px dashed var(--border);border-radius:16px;
-  padding:48px;text-align:center;cursor:pointer;transition:all .3s;
-}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(124,58,237,.05)}
-/* Notification toast */
+
+/* ── STAT CARDS ───────────────────────────────────── */
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat-box{padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)}
+
+/* ── TOAST ────────────────────────────────────────── */
 .toast{
-  position:fixed;bottom:24px;right:24px;z-index:999;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:14px 20px;font-size:14px;font-weight:500;
-  box-shadow:0 8px 30px rgba(0,0,0,.4);animation:fadeUp .3s ease;
-  display:flex;align-items:center;gap:10px;
+  position:fixed;top:calc(var(--nav-h) + 10px);left:50%;transform:translateX(-50%);
+  z-index:999;background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:12px 18px;font-size:14px;font-weight:600;
+  white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:scaleIn .25s ease;
+  display:flex;align-items:center;gap:8px;
 }
+
+/* ── SCROLLABLE AREA FIX ──────────────────────────── */
+.scroll-area{overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+/* ── ADMIN TABLE ──────────────────────────────────── */
+.admin-table{width:100%;font-size:13px}
+.admin-table th{text-align:left;padding:8px 10px;color:var(--muted);font-size:11px;font-weight:700;
+  border-bottom:1px solid var(--border);letter-spacing:.5px;text-transform:uppercase}
+.admin-table td{padding:10px;border-bottom:1px solid var(--border)}
+.admin-table tr:last-child td{border-bottom:none}
+
+/* ── DONUT ────────────────────────────────────────── */
+.donut-wrap{display:flex;align-items:center;justify-content:center;padding:10px 0}
+
+/* ── SECTION TITLE ────────────────────────────────── */
+.sec-title{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+
+/* ── DIVIDER ──────────────────────────────────────── */
+.divider{height:1px;background:var(--border);margin:14px 0}
+
+/* ── FLOATING ACTION ──────────────────────────────── */
+.fab{
+  position:fixed;bottom:calc(var(--bottom-h) + 16px);right:16px;z-index:100;
+  width:52px;height:52px;border-radius:16px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 8px 24px rgba(124,58,237,.4);border:none;cursor:pointer;
+  animation:glow 2s ease-in-out infinite;
+}
+.fab:active{transform:scale(.9)}
 </style>
 </head>
 <body>
@@ -179,394 +239,475 @@ const {useState,useEffect,useCallback,useRef,createContext,useContext,useMemo} =
 const Ctx = createContext(null);
 const useApp = () => useContext(Ctx);
 
-// ══════════════════════════════════════════════════════════
-// DATA LAYER
-// ══════════════════════════════════════════════════════════
-const SAMPLE_MCQS = [
-  {id:1,topic:"Tamil Literature",chapter:"Classical Tamil",difficulty:"Easy",
-   question:"Who wrote Thirukkural?",
-   options:["Bharathi","Kamban","Thiruvalluvar","Avvaiyar"],correct:2,
-   explanation:"Thirukkural was written by the classical Tamil poet Thiruvalluvar, containing 1330 couplets on ethics, polity and love.",
-   concept:"Ancient Tamil Literature"},
-  {id:2,topic:"Polity",chapter:"Constitutional Law",difficulty:"Medium",
-   question:"Which article of the Indian Constitution abolishes untouchability?",
-   options:["Article 14","Article 15","Article 17","Article 19"],correct:2,
-   explanation:"Article 17 of the Indian Constitution abolishes untouchability and forbids its practice in any form.",
-   concept:"Fundamental Rights"},
-  {id:3,topic:"History",chapter:"Independence Movement",difficulty:"Hard",
-   question:"The Dandi March was launched to protest against which British policy?",
-   options:["Rowlatt Act","Salt Tax","Press Act","Arms Act"],correct:1,
-   explanation:"Mahatma Gandhi launched the Dandi March (Salt Satyagraha) on March 12, 1930 to protest against the British Salt Tax.",
-   concept:"Civil Disobedience Movement"},
-  {id:4,topic:"Science",chapter:"Physics",difficulty:"Medium",
-   question:"What is the SI unit of electric resistance?",
-   options:["Ampere","Volt","Watt","Ohm"],correct:3,
-   explanation:"The Ohm (Ω) is the SI unit of electrical resistance, named after German physicist Georg Simon Ohm.",
-   concept:"Electricity Basics"},
+// ══════════════════════════════════════════════════════
+// CONFIG — Google Sheets / Forms Integration
+// ══════════════════════════════════════════════════════
+// REPLACE these with your actual Google Sheets/Forms URLs
+const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+// Admin credentials
+const ADMIN_PHONE = "9999999999";
+const ADMIN_PASS  = "admin123";
+
+// ══════════════════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════════════════
+const T = {
+  en:{
+    appName:"CRACKTNPSC",appSub:"AI Exam Platform",
+    login:"Login",register:"Register",
+    phone:"Mobile Number",name:"Full Name",email:"Email (Optional)",
+    password:"Password",confirmPw:"Confirm Password",
+    loginBtn:"Sign In",registerBtn:"Create Account",
+    demoStudent:"Demo Student",demoAdmin:"Demo Admin",
+    dashboard:"Home",practice:"Practice",tests:"Tests",analytics:"Analysis",profile:"Profile",
+    startTest:"Start Test",submitTest:"Submit Test",nextQ:"Next",prevQ:"Prev",
+    markReview:"Mark",clearAns:"Clear",
+    correct:"Correct",wrong:"Wrong",skipped:"Skipped",score:"Score",accuracy:"Accuracy",
+    timeLeft:"Time Left",questionNo:"Question",of:"of",
+    yourAns:"Your Answer",correctAns:"Correct Answer",explanation:"Explanation",
+    weakAreas:"Weak Areas",strongAreas:"Strong Areas",
+    testsTab:"Tests",analyticsTab:"Analytics",
+    logout:"Logout",settings:"Settings",language:"Language",
+    selectLang:"Select Question Language",
+    tamil:"Tamil",english:"English",
+    submit:"Submit",cancel:"Cancel",save:"Save",
+    adminPanel:"Admin Panel",allUsers:"All Users",
+    totalUsers:"Total Users",totalTests:"Total Tests",
+    avgScore:"Avg Score",todayActive:"Active Today",
+    noHistory:"No tests taken yet",startFirst:"Take your first test!",
+    welcome:"Welcome",goodMorning:"Good Morning",
+    dailyTarget:"Daily Target",questionsLeft:"Questions Left",
+    rank:"Rank",streak:"Streak",days:"days",
+    chooseTest:"Choose a Test",duration:"Duration",questions:"Questions",
+    mins:"min",easy:"Easy",medium:"Medium",hard:"Hard",
+    overall:"Overall",chapter:"Chapter",topic:"Topic",
+    instructions:"Instructions",beginTest:"Begin Test",
+    reviewAnswers:"Review Answers",viewResult:"View Result",
+    retake:"Retake",backHome:"Back to Home",
+    shareResult:"Share Result",exportPDF:"Export",
+    phoneRequired:"Mobile number required",
+    phoneInvalid:"Enter valid 10-digit mobile number",
+    pwMismatch:"Passwords do not match",
+    loginSuccess:"Login successful!",
+    registerSuccess:"Account created!",
+    fillAll:"Please fill all required fields",
+  },
+  ta:{
+    appName:"CRACKTNPSC",appSub:"AI தேர்வு தளம்",
+    login:"உள்நுழைவு",register:"பதிவு",
+    phone:"மொபைல் எண்",name:"முழு பெயர்",email:"மின்னஞ்சல் (விரும்பினால்)",
+    password:"கடவுச்சொல்",confirmPw:"கடவுச்சொல் உறுதி",
+    loginBtn:"உள்நுழை",registerBtn:"கணக்கு உருவாக்கு",
+    demoStudent:"டெமோ மாணவர்",demoAdmin:"டெமோ நிர்வாகி",
+    dashboard:"முகப்பு",practice:"பயிற்சி",tests:"தேர்வுகள்",analytics:"பகுப்பாய்வு",profile:"சுயவிவரம்",
+    startTest:"தேர்வு தொடங்கு",submitTest:"சமர்ப்பி",nextQ:"அடுத்து",prevQ:"முந்தைய",
+    markReview:"குறி",clearAns:"அழி",
+    correct:"சரி",wrong:"தவறு",skipped:"தவிர்த்தது",score:"மதிப்பெண்",accuracy:"துல்லியம்",
+    timeLeft:"நேரம்",questionNo:"கேள்வி",of:"இல்",
+    yourAns:"உங்கள் பதில்",correctAns:"சரியான பதில்",explanation:"விளக்கம்",
+    weakAreas:"பலவீன பகுதிகள்",strongAreas:"வலுவான பகுதிகள்",
+    testsTab:"தேர்வுகள்",analyticsTab:"பகுப்பாய்வு",
+    logout:"வெளியேறு",settings:"அமைப்புகள்",language:"மொழி",
+    selectLang:"கேள்வி மொழி தேர்வு",
+    tamil:"தமிழ்",english:"ஆங்கிலம்",
+    submit:"சமர்ப்பி",cancel:"ரத்து",save:"சேமி",
+    adminPanel:"நிர்வாக பலகம்",allUsers:"எல்லா பயனர்கள்",
+    totalUsers:"மொத்த பயனர்கள்",totalTests:"மொத்த தேர்வுகள்",
+    avgScore:"சராசரி மதிப்பெண்",todayActive:"இன்று செயலில்",
+    noHistory:"இன்னும் தேர்வு எழுதவில்லை",startFirst:"உங்கள் முதல் தேர்வை எழுதுங்கள்!",
+    welcome:"வரவேற்கிறோம்",goodMorning:"காலை வணக்கம்",
+    dailyTarget:"தினசரி இலக்கு",questionsLeft:"கேள்விகள் மீதம்",
+    rank:"தரவரிசை",streak:"தொடர்ச்சி",days:"நாட்கள்",
+    chooseTest:"தேர்வை தேர்ந்தெடுக்கவும்",duration:"கால அளவு",questions:"கேள்விகள்",
+    mins:"நிமி",easy:"எளிது",medium:"நடுத்தரம்",hard:"கடினம்",
+    overall:"மொத்தம்",chapter:"அத்தியாயம்",topic:"தலைப்பு",
+    instructions:"வழிமுறைகள்",beginTest:"தேர்வு தொடங்கு",
+    reviewAnswers:"பதில்களை மதிப்பாய்வு",viewResult:"முடிவு பார்",
+    retake:"மீண்டும் எழுது",backHome:"முகப்பிற்கு",
+    shareResult:"பகிர்",exportPDF:"ஏற்றுமதி",
+    phoneRequired:"மொபைல் எண் தேவை",
+    phoneInvalid:"சரியான 10 இலக்க மொபைல் எண் உள்ளிடவும்",
+    pwMismatch:"கடவுச்சொற்கள் பொருந்தவில்லை",
+    loginSuccess:"உள்நுழைவு வெற்றி!",
+    registerSuccess:"கணக்கு உருவாக்கப்பட்டது!",
+    fillAll:"அனைத்து தகவல்களையும் நிரப்பவும்",
+  }
+};
+
+// ══════════════════════════════════════════════════════
+// SAMPLE QUESTIONS (EN + TA)
+// ══════════════════════════════════════════════════════
+const QUESTIONS = [
+  {id:1,topic:"Polity",chapter:"Constitution",difficulty:"Medium",
+   en:{q:"Which article of the Indian Constitution abolishes untouchability?",opts:["Article 14","Article 15","Article 17","Article 21"],correct:2,exp:"Article 17 abolishes untouchability and forbids its practice in any form.",concept:"Fundamental Rights"},
+   ta:{q:"இந்திய அரசியலமைப்பின் எந்த சட்டப்பிரிவு தீண்டாமையை ஒழிக்கிறது?",opts:["சட்டப்பிரிவு 14","சட்டப்பிரிவு 15","சட்டப்பிரிவு 17","சட்டப்பிரிவு 21"],correct:2,exp:"சட்டப்பிரிவு 17 தீண்டாமையை ஒழிக்கிறது மற்றும் எந்த வடிவத்திலும் அதை பயிற்சி செய்வதை தடை செய்கிறது.",concept:"அடிப்படை உரிமைகள்"}},
+  {id:2,topic:"Tamil Literature",chapter:"Classical Tamil",difficulty:"Easy",
+   en:{q:"Who wrote Thirukkural?",opts:["Bharathi","Kamban","Thiruvalluvar","Avvaiyar"],correct:2,exp:"Thirukkural was written by the classical Tamil poet Thiruvalluvar, containing 1330 couplets.",concept:"Ancient Tamil Literature"},
+   ta:{q:"திருக்குறளை யார் எழுதினார்?",opts:["பாரதி","கம்பன்","திருவள்ளுவர்","ஔவையார்"],correct:2,exp:"திருக்குறள் சங்க இலக்கியக் கவிஞர் திருவள்ளுவரால் எழுதப்பட்டது, இதில் 1330 குறள்கள் உள்ளன.",concept:"பழந்தமிழ் இலக்கியம்"}},
+  {id:3,topic:"History",chapter:"Freedom Movement",difficulty:"Hard",
+   en:{q:"The Dandi March was launched to protest against which British policy?",opts:["Rowlatt Act","Salt Tax","Press Act","Arms Act"],correct:1,exp:"Mahatma Gandhi launched the Dandi March on March 12, 1930 to protest the British Salt Tax.",concept:"Civil Disobedience Movement"},
+   ta:{q:"டாண்டி மார்ச் எந்த பிரிட்டிஷ் கொள்கைக்கு எதிராக தொடங்கப்பட்டது?",opts:["ரவுலட் சட்டம்","உப்பு வரி","பத்திரிகை சட்டம்","ஆயுத சட்டம்"],correct:1,exp:"மகாத்மா காந்தி மார்ச் 12, 1930 அன்று பிரிட்டிஷ் உப்பு வரிக்கு எதிர்ப்பு தெரிவிக்க டாண்டி மார்ச்சை தொடங்கினார்.",concept:"சட்டமறுப்பு இயக்கம்"}},
+  {id:4,topic:"Science",chapter:"Physics",difficulty:"Easy",
+   en:{q:"What is the SI unit of electric resistance?",opts:["Ampere","Volt","Watt","Ohm"],correct:3,exp:"The Ohm (Ω) is the SI unit of electrical resistance, named after Georg Simon Ohm.",concept:"Electricity Basics"},
+   ta:{q:"மின் எதிர்ப்பின் SI அலகு என்ன?",opts:["ஆம்பியர்","வோல்ட்","வாட்","ஓம்"],correct:3,exp:"ஓம் (Ω) என்பது மின் எதிர்ப்பின் SI அலகு ஆகும், இது ஜார்ஜ் சைமன் ஓமின் பெயரிடப்பட்டது.",concept:"மின்சாரம் அடிப்படைகள்"}},
   {id:5,topic:"Geography",chapter:"Indian Rivers",difficulty:"Easy",
-   question:"Which is the longest river in India?",
-   options:["Yamuna","Brahmaputra","Ganga","Godavari"],correct:2,
-   explanation:"The Ganga is the longest river in India, spanning approximately 2,525 km from Gangotri glacier to the Bay of Bengal.",
-   concept:"Indian Rivers"},
+   en:{q:"Which is the longest river in India?",opts:["Yamuna","Brahmaputra","Ganga","Godavari"],correct:2,exp:"The Ganga is the longest river in India at ~2,525 km.",concept:"Indian Rivers"},
+   ta:{q:"இந்தியாவில் மிக நீளமான நதி எது?",opts:["யமுனை","பிரம்மபுத்திரா","கங்கை","கோதாவரி"],correct:2,exp:"கங்கை இந்தியாவின் மிக நீளமான நதி, சுமார் 2,525 கி.மீ.",concept:"இந்திய நதிகள்"}},
   {id:6,topic:"Economics",chapter:"Banking",difficulty:"Medium",
-   question:"The Reserve Bank of India was established in which year?",
-   options:["1930","1935","1947","1950"],correct:1,
-   explanation:"The Reserve Bank of India (RBI) was established on April 1, 1935 under the RBI Act 1934. It was nationalized in 1949.",
-   concept:"Indian Banking System"},
+   en:{q:"RBI was established in which year?",opts:["1930","1935","1947","1950"],correct:1,exp:"The Reserve Bank of India was established on April 1, 1935.",concept:"Indian Banking"},
+   ta:{q:"ரிசர்வ் வங்கி எந்த ஆண்டு நிறுவப்பட்டது?",opts:["1930","1935","1947","1950"],correct:1,exp:"இந்திய ரிசர்வ் வங்கி ஏப்ரல் 1, 1935 அன்று நிறுவப்பட்டது.",concept:"இந்திய வங்கி"}},
   {id:7,topic:"Science",chapter:"Biology",difficulty:"Easy",
-   question:"Which organelle is called the 'powerhouse of the cell'?",
-   options:["Nucleus","Ribosome","Mitochondria","Chloroplast"],correct:2,
-   explanation:"Mitochondria are called the powerhouse of the cell because they generate most of the cell's ATP (energy) through cellular respiration.",
-   concept:"Cell Biology"},
+   en:{q:"Which organelle is called the 'powerhouse of the cell'?",opts:["Nucleus","Ribosome","Mitochondria","Chloroplast"],correct:2,exp:"Mitochondria generate most of the cell's ATP through cellular respiration.",concept:"Cell Biology"},
+   ta:{q:"எந்த செல் உறுப்பு 'செல்லின் மின்நிலையம்' என்று அழைக்கப்படுகிறது?",opts:["உட்கரு","ரைபோசோம்","மைட்டோகாண்டிரியா","குளோரோபிளாஸ்ட்"],correct:2,exp:"மைட்டோகாண்டிரியா செல் சுவாசத்தின் மூலம் பெரும்பாலான ATP ஐ உற்பத்தி செய்கிறது.",concept:"செல் உயிரியல்"}},
   {id:8,topic:"Polity",chapter:"Parliament",difficulty:"Hard",
-   question:"How many members can the President nominate to the Rajya Sabha?",
-   options:["10","12","14","16"],correct:1,
-   explanation:"The President can nominate 12 members to the Rajya Sabha who have special knowledge or practical experience in literature, science, art and social service.",
-   concept:"Parliament of India"},
+   en:{q:"How many members can the President nominate to Rajya Sabha?",opts:["10","12","14","16"],correct:1,exp:"The President can nominate 12 members to Rajya Sabha with expertise in various fields.",concept:"Parliament of India"},
+   ta:{q:"ஜனாதிபதி ராஜ்யசபாவிற்கு எத்தனை உறுப்பினர்களை நியமிக்கலாம்?",opts:["10","12","14","16"],correct:1,exp:"ஜனாதிபதி பல்வேறு துறைகளில் நிபுணத்துவம் கொண்ட 12 உறுப்பினர்களை ராஜ்யசபாவிற்கு நியமிக்கலாம்.",concept:"இந்திய நாடாளுமன்றம்"}},
   {id:9,topic:"History",chapter:"Ancient India",difficulty:"Medium",
-   question:"The Indus Valley Civilization is also known as:",
-   options:["Vedic Civilization","Harappan Civilization","Dravidian Civilization","Aryan Civilization"],correct:1,
-   explanation:"The Indus Valley Civilization is also called the Harappan Civilization, named after Harappa — one of its major centers discovered first.",
-   concept:"Ancient Indian History"},
-  {id:10,topic:"Science",chapter:"Chemistry",difficulty:"Medium",
-   question:"What is the chemical symbol for Gold?",
-   options:["Go","Gd","Au","Ag"],correct:2,
-   explanation:"Gold's chemical symbol Au comes from the Latin word 'Aurum'. Its atomic number is 79.",
-   concept:"Periodic Table"},
-  {id:11,topic:"Tamil Literature",chapter:"Sangam Literature",difficulty:"Hard",
-   question:"Which of the following belongs to Pathinenkilkanakku in Sangam literature?",
-   options:["Purananuru","Thirukkural","Pathitrupathu","Akananuru"],correct:1,
-   explanation:"Thirukkural is part of Pathinenkilkanakku (18 minor works). It contains 1330 couplets divided into three books.",
-   concept:"Sangam Literature Classification"},
-  {id:12,topic:"Geography",chapter:"World Geography",difficulty:"Easy",
-   question:"Which is the largest continent in the world?",
-   options:["Africa","North America","Europe","Asia"],correct:3,
-   explanation:"Asia is the world's largest continent covering 44.6 million square km, about 30% of Earth's total land area.",
-   concept:"World Continents"},
-  {id:13,topic:"Economics",chapter:"GDP",difficulty:"Medium",
-   question:"GDP stands for:",
-   options:["General Domestic Product","Gross Domestic Product","Global Development Plan","Gross Development Program"],correct:1,
-   explanation:"GDP (Gross Domestic Product) is the total monetary value of all goods and services produced within a country's borders in a specific time period.",
-   concept:"Macroeconomics Basics"},
-  {id:14,topic:"Polity",chapter:"Preamble",difficulty:"Easy",
-   question:"The word 'Socialist' was added to the Indian Constitution's Preamble by which amendment?",
-   options:["40th","42nd","44th","46th"],correct:1,
-   explanation:"The 42nd Constitutional Amendment Act, 1976 added the words 'Socialist', 'Secular' and 'Integrity' to the Preamble of the Indian Constitution.",
-   concept:"Constitutional Amendments"},
-  {id:15,topic:"History",chapter:"Mughal Empire",difficulty:"Medium",
-   question:"Who built the Taj Mahal?",
-   options:["Akbar","Jahangir","Shah Jahan","Aurangzeb"],correct:2,
-   explanation:"The Taj Mahal was built by Mughal Emperor Shah Jahan in memory of his beloved wife Mumtaz Mahal between 1632 and 1653.",
-   concept:"Mughal Architecture"},
-  {id:16,topic:"Science",chapter:"Physics",difficulty:"Hard",
-   question:"Einstein's mass-energy equivalence formula is:",
-   options:["E=mc","E=mc²","E=m²c","E=2mc"],correct:1,
-   explanation:"E=mc² is Einstein's famous formula where E is energy, m is mass, and c is the speed of light (~3×10⁸ m/s). It describes mass-energy equivalence.",
-   concept:"Special Theory of Relativity"},
-  {id:17,topic:"Geography",chapter:"Indian States",difficulty:"Easy",
-   question:"Which Indian state has the longest coastline?",
-   options:["Kerala","Tamil Nadu","Andhra Pradesh","Gujarat"],correct:3,
-   explanation:"Gujarat has the longest coastline in India at approximately 1,600 km, followed by Andhra Pradesh.",
-   concept:"Indian Coastal Geography"},
-  {id:18,topic:"Economics",chapter:"Five Year Plans",difficulty:"Medium",
-   question:"Which Five Year Plan introduced the Green Revolution in India?",
-   options:["Second","Third","Fourth","Fifth"],correct:1,
-   explanation:"The Green Revolution began during the Third Five Year Plan (1961-66) and gained momentum in the late 1960s with high-yielding variety seeds.",
-   concept:"Indian Agricultural Policy"},
-  {id:19,topic:"Tamil Literature",chapter:"Modern Tamil",difficulty:"Medium",
-   question:"Who is known as 'Mahakavi' in Tamil literature?",
-   options:["Thiruvalluvar","Subramania Bharathi","Kamban","Avvaiyar"],correct:1,
-   explanation:"Subramania Bharathi is known as 'Mahakavi' (great poet) in Tamil literature. He was a patriot-poet who wrote extensively about freedom and social reform.",
-   concept:"Modern Tamil Literature"},
-  {id:20,topic:"History",chapter:"Freedom Movement",difficulty:"Hard",
-   question:"Who gave the slogan 'Give me blood, I will give you freedom'?",
-   options:["Bhagat Singh","Subhas Chandra Bose","Bal Gangadhar Tilak","Lala Lajpat Rai"],correct:1,
-   explanation:"Subhas Chandra Bose gave this famous slogan to inspire Indians to join the Indian National Army (INA) in the fight for independence.",
-   concept:"Indian National Army"},
+   en:{q:"Indus Valley Civilization is also known as:",opts:["Vedic Civilization","Harappan Civilization","Dravidian Civilization","Aryan Civilization"],correct:1,exp:"It is called Harappan Civilization, named after Harappa — one of its major centers.",concept:"Ancient Indian History"},
+   ta:{q:"சிந்து சமவெளி நாகரிகம் எவ்வாறு அழைக்கப்படுகிறது?",opts:["வேத நாகரிகம்","ஹரப்பன் நாகரிகம்","திராவிட நாகரிகம்","ஆரிய நாகரிகம்"],correct:1,exp:"இது ஹரப்பன் நாகரிகம் என்று அழைக்கப்படுகிறது, ஹரப்பா என்ற முக்கிய மையத்தின் பெயரால்.",concept:"பண்டைய இந்திய வரலாறு"}},
+  {id:10,topic:"Tamil Literature",chapter:"Sangam",difficulty:"Hard",
+   en:{q:"Which belongs to Pathinenkilkanakku in Sangam literature?",opts:["Purananuru","Thirukkural","Pathitrupathu","Akananuru"],correct:1,exp:"Thirukkural is part of Pathinenkilkanakku (18 minor works) of Sangam literature.",concept:"Sangam Literature"},
+   ta:{q:"சங்க இலக்கியத்தில் பதினெண்கீழ்க்கணக்கில் எது அடங்கும்?",opts:["புறநானூறு","திருக்குறள்","பதிற்றுப்பத்து","அகநானூறு"],correct:1,exp:"திருக்குறள் சங்க இலக்கியத்தின் பதினெண்கீழ்க்கணக்கு (18 சிறு நூல்கள்) பகுதியாகும்.",concept:"சங்க இலக்கியம்"}},
+  {id:11,topic:"Geography",chapter:"World",difficulty:"Easy",
+   en:{q:"Which is the largest continent in the world?",opts:["Africa","North America","Europe","Asia"],correct:3,exp:"Asia is the world's largest continent covering 44.6 million sq km.",concept:"World Continents"},
+   ta:{q:"உலகில் மிகப்பெரிய கண்டம் எது?",opts:["ஆப்பிரிக்கா","வட அமெரிக்கா","ஐரோப்பா","ஆசியா"],correct:3,exp:"ஆசியா 44.6 மில்லியன் சதுர கி.மீ. பரப்பளவுடன் உலகின் மிகப்பெரிய கண்டமாகும்.",concept:"உலக கண்டங்கள்"}},
+  {id:12,topic:"Economics",chapter:"GDP",difficulty:"Medium",
+   en:{q:"GDP stands for?",opts:["General Domestic Product","Gross Domestic Product","Global Development Plan","Gross Development Program"],correct:1,exp:"GDP is the total monetary value of all goods and services produced within a country.",concept:"Macroeconomics"},
+   ta:{q:"GDP என்பதன் விரிவாக்கம் என்ன?",opts:["பொது உள்நாட்டு உற்பத்தி","மொத்த உள்நாட்டு உற்பத்தி","உலகளாவிய வளர்ச்சி திட்டம்","மொத்த வளர்ச்சி திட்டம்"],correct:1,exp:"GDP என்பது ஒரு நாட்டில் உற்பத்தி செய்யப்படும் அனைத்து பொருட்கள் மற்றும் சேவைகளின் மொத்த பண மதிப்பாகும்.",concept:"மேக்ரோ பொருளாதாரம்"}},
+  {id:13,topic:"Polity",chapter:"Preamble",difficulty:"Easy",
+   en:{q:"Word 'Socialist' was added by which amendment?",opts:["40th","42nd","44th","46th"],correct:1,exp:"The 42nd Amendment Act, 1976 added 'Socialist', 'Secular', and 'Integrity' to the Preamble.",concept:"Constitutional Amendments"},
+   ta:{q:"'சோஷலிஸ்ட்' என்ற வார்த்தை எந்த திருத்தத்தால் சேர்க்கப்பட்டது?",opts:["40வது","42வது","44வது","46வது"],correct:1,exp:"42வது திருத்தச் சட்டம் 1976, முன்னுரையில் 'சோஷலிஸ்ட்', 'மதச்சார்பற்ற' மற்றும் 'ஒருமைப்பாடு' சேர்த்தது.",concept:"அரசியலமைப்பு திருத்தங்கள்"}},
+  {id:14,topic:"History",chapter:"Mughal",difficulty:"Medium",
+   en:{q:"Who built the Taj Mahal?",opts:["Akbar","Jahangir","Shah Jahan","Aurangzeb"],correct:2,exp:"Taj Mahal was built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal (1632-1653).",concept:"Mughal Architecture"},
+   ta:{q:"தாஜ் மஹாலை யார் கட்டினார்?",opts:["அக்பர்","ஜஹாங்கீர்","ஷாஜஹான்","ஔரங்கசீப்"],correct:2,exp:"தாஜ் மஹால் மன்னர் ஷாஜஹான் தனது மனைவி மும்தாஜ் மஹாலின் நினைவாக கட்டினார் (1632-1653).",concept:"முகலாய கட்டிடக்கலை"}},
+  {id:15,topic:"Science",chapter:"Chemistry",difficulty:"Medium",
+   en:{q:"What is the chemical symbol for Gold?",opts:["Go","Gd","Au","Ag"],correct:2,exp:"Gold's symbol Au comes from Latin word 'Aurum'. Its atomic number is 79.",concept:"Periodic Table"},
+   ta:{q:"தங்கத்தின் வேதியியல் சின்னம் என்ன?",opts:["Go","Gd","Au","Ag"],correct:2,exp:"தங்கத்தின் சின்னம் Au என்பது லத்தீன் வார்த்தை 'Aurum' இலிருந்து வந்தது. அதன் அணு எண் 79.",concept:"ஆவர்த்தன அட்டவணை"}},
+  {id:16,topic:"Geography",chapter:"Tamil Nadu",difficulty:"Easy",
+   en:{q:"What is the capital of Tamil Nadu?",opts:["Madurai","Coimbatore","Chennai","Trichy"],correct:2,exp:"Chennai (formerly Madras) is the capital of Tamil Nadu and the 4th largest city in India.",concept:"Indian States"},
+   ta:{q:"தமிழ்நாட்டின் தலைநகர் எது?",opts:["மதுரை","கோயம்புத்தூர்","சென்னை","திருச்சி"],correct:2,exp:"சென்னை (முன்பு மதராஸ்) தமிழ்நாட்டின் தலைநகராகும், இந்தியாவின் 4வது பெரிய நகரம்.",concept:"இந்திய மாநிலங்கள்"}},
+  {id:17,topic:"Polity",chapter:"Judiciary",difficulty:"Hard",
+   en:{q:"The Supreme Court of India was established on?",opts:["26 Jan 1950","28 Jan 1950","15 Aug 1947","26 Nov 1949"],correct:1,exp:"The Supreme Court of India came into being on 28 January 1950.",concept:"Indian Judiciary"},
+   ta:{q:"இந்தியாவின் உச்சநீதிமன்றம் எப்போது நிறுவப்பட்டது?",opts:["26 ஜன 1950","28 ஜன 1950","15 ஆக 1947","26 நவ 1949"],correct:1,exp:"இந்திய உச்சநீதிமன்றம் ஜனவரி 28, 1950 அன்று நிலைக்கு வந்தது.",concept:"இந்திய நீதித்துறை"}},
+  {id:18,topic:"Tamil Literature",chapter:"Modern Tamil",difficulty:"Medium",
+   en:{q:"Who is known as 'Mahakavi' in Tamil?",opts:["Thiruvalluvar","Subramania Bharathi","Kamban","Avvaiyar"],correct:1,exp:"Subramania Bharathi is 'Mahakavi'. He was a patriot-poet who wrote about freedom and social reform.",concept:"Modern Tamil Literature"},
+   ta:{q:"தமிழில் 'மகாகவி' என்று யார் அழைக்கப்படுகிறார்?",opts:["திருவள்ளுவர்","சுப்ரமணிய பாரதி","கம்பன்","ஔவையார்"],correct:1,exp:"சுப்ரமணிய பாரதி 'மகாகவி'. அவர் சுதந்திரம் மற்றும் சமூக சீர்திருத்தம் பற்றி எழுதிய தேசபக்தக் கவிஞர்.",concept:"நவீன தமிழ் இலக்கியம்"}},
+  {id:19,topic:"History",chapter:"INA",difficulty:"Hard",
+   en:{q:"Who gave the slogan 'Give me blood, I will give you freedom'?",opts:["Bhagat Singh","Subhas Chandra Bose","Tilak","Lala Lajpat Rai"],correct:1,exp:"Subhas Chandra Bose gave this slogan to inspire Indians to join the INA.",concept:"Indian National Army"},
+   ta:{q:"'ரத்தம் கொடு, சுதந்திரம் தருவேன்' என்று கூறியவர் யார்?",opts:["பகத் சிங்","சுபாஷ் சந்திர போஸ்","திலகர்","லாலா லஜ்பத் ராய்"],correct:1,exp:"சுபாஷ் சந்திர போஸ் இந்தியர்களை INA இல் சேர ஊக்குவிக்க இந்த முழக்கத்தை கொடுத்தார்.",concept:"இந்திய தேசிய இராணுவம்"}},
+  {id:20,topic:"Science",chapter:"Physics",difficulty:"Medium",
+   en:{q:"Einstein's mass-energy formula is:",opts:["E=mc","E=mc²","E=m²c","E=2mc"],correct:1,exp:"E=mc² where E=energy, m=mass, c=speed of light. It describes mass-energy equivalence.",concept:"Theory of Relativity"},
+   ta:{q:"ஐன்ஸ்டீனின் நிறை-ஆற்றல் சூத்திரம்:",opts:["E=mc","E=mc²","E=m²c","E=2mc"],correct:1,exp:"E=mc² இல் E=ஆற்றல், m=நிறை, c=ஒளி வேகம். இது நிறை-ஆற்றல் சமானத்தை விவரிக்கிறது.",concept:"சார்பியல் கோட்பாடு"}},
 ];
 
-const SAMPLE_BOOKS = [
-  {id:1,title:"TNPSC Group 1 Study Material",subject:"General Studies",chapters:12,mcqs:240,source:"PDF",status:"ready",uploadedAt:"2024-01-15"},
-  {id:2,title:"Tamil Literature Notes",subject:"Tamil",chapters:8,mcqs:160,source:"DOCX",status:"ready",uploadedAt:"2024-01-20"},
-  {id:3,title:"Indian History Complete Guide",subject:"History",chapters:20,mcqs:400,source:"PDF",status:"ready",uploadedAt:"2024-02-01"},
+const TESTS = [
+  {id:1,name:"TNPSC Group 1 Mock",nameTA:"TNPSC குழு 1 முழு தேர்வு",subject:"General Studies",duration:90,difficulty:"Hard",qs:QUESTIONS,year:"2024",attempts:1240},
+  {id:2,name:"Tamil Literature Special",nameTA:"தமிழ் இலக்கிய சிறப்பு",subject:"Tamil",duration:45,difficulty:"Medium",qs:QUESTIONS.filter(q=>q.topic==="Tamil Literature").concat(QUESTIONS.slice(0,8)),year:"2024",attempts:890},
+  {id:3,name:"Science & Polity",nameTA:"அறிவியல் & அரசியல்",subject:"Mixed",duration:30,difficulty:"Easy",qs:QUESTIONS.slice(0,10),year:"2024",attempts:650},
+  {id:4,name:"Daily Practice — 10Q",nameTA:"தினசரி பயிற்சி — 10கே",subject:"All",duration:15,difficulty:"Easy",qs:QUESTIONS.slice(5,15),year:"2024",attempts:3200},
 ];
 
-const MOCK_LEADERBOARD = [
-  {rank:1,name:"Priya S.",score:96,tests:34,accuracy:94,streak:12},
-  {rank:2,name:"Karthik M.",score:93,tests:41,accuracy:91,streak:8},
-  {rank:3,name:"Ananya R.",score:90,tests:28,accuracy:89,streak:15},
-  {rank:4,name:"Vijay K.",score:86,tests:22,accuracy:84,streak:5},
-  {rank:5,name:"Deepa N.",score:83,tests:37,accuracy:82,streak:7},
-  {rank:6,name:"Arjun P.",score:79,tests:19,accuracy:78,streak:3},
-  {rank:7,name:"Meena L.",score:77,tests:26,accuracy:75,streak:6},
-  {rank:8,name:"Surya T.",score:74,tests:15,accuracy:73,streak:2},
-];
+// ══════════════════════════════════════════════════════
+// GOOGLE SHEETS INTEGRATION
+// ══════════════════════════════════════════════════════
+async function saveToGoogleSheet(data) {
+  try {
+    await fetch(GOOGLE_SHEET_WEBHOOK, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data),
+      mode:"no-cors"
+    });
+  } catch(e){ console.log("Sheet save attempted:", e.message); }
+}
 
-const generateTests = () => [
-  {id:1,name:"TNPSC Group 1 Full Mock",subject:"General Studies",questions:SAMPLE_MCQS,duration:90,difficulty:"Hard",year:"2023",totalAttempts:1240},
-  {id:2,name:"Tamil Literature Special",subject:"Tamil",questions:SAMPLE_MCQS.filter(q=>q.topic==="Tamil Literature").concat(SAMPLE_MCQS.slice(0,10)),duration:45,difficulty:"Medium",year:"2024",totalAttempts:890},
-  {id:3,name:"Science & Tech Practice",subject:"Science",questions:SAMPLE_MCQS.filter(q=>q.topic==="Science").concat(SAMPLE_MCQS.slice(0,8)),duration:30,difficulty:"Easy",year:"2024",totalAttempts:650},
-  {id:4,name:"Daily Challenge — Polity",subject:"Polity",questions:SAMPLE_MCQS.slice(0,10),duration:15,difficulty:"Medium",year:"2024",totalAttempts:2100},
-];
+// ══════════════════════════════════════════════════════
+// USER STORAGE
+// ══════════════════════════════════════════════════════
+function getUsers(){ return JSON.parse(localStorage.getItem("ct_users")||"[]"); }
+function saveUsers(u){ localStorage.setItem("ct_users",JSON.stringify(u)); }
+function getHistory(){ return JSON.parse(localStorage.getItem("ct_history")||"[]"); }
+function saveHistory(h){ localStorage.setItem("ct_history",JSON.stringify(h)); }
 
-// ══════════════════════════════════════════════════════════
-// UTILITY COMPONENTS
-// ══════════════════════════════════════════════════════════
-function Toast({msg,type="info",onClose}) {
-  useEffect(()=>{const t=setTimeout(onClose,3500);return()=>clearTimeout(t)},[]);
-  const icons={success:"✅",error:"❌",info:"ℹ️",warning:"⚠️"};
+// ══════════════════════════════════════════════════════
+// COMPONENTS
+// ══════════════════════════════════════════════════════
+function Toast({msg,type="info",onClose}){
   const colors={success:"#10b981",error:"#ef4444",info:"#7c3aed",warning:"#f97316"};
+  const icons={success:"✅",error:"❌",info:"ℹ️",warning:"⚠️"};
+  useEffect(()=>{const t=setTimeout(onClose,2800);return()=>clearTimeout(t)},[]);
   return <div className="toast" style={{borderLeft:`3px solid ${colors[type]}`}}>
     <span>{icons[type]}</span><span>{msg}</span>
-    <button onClick={onClose} style={{background:"none",border:"none",color:"var(--muted)",marginLeft:8,fontSize:16}}>×</button>
   </div>;
 }
 
-function Spinner({size=20}) {
+function Spinner({size=20,color="var(--accent2)"}){
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className="spin">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity=".2"/>
-    <path d="M12 2a10 10 0 0110 10" stroke="var(--accent2)" strokeWidth="3" strokeLinecap="round"/>
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity=".15"/>
+    <path d="M12 2a10 10 0 0110 10" stroke={color} strokeWidth="3" strokeLinecap="round"/>
   </svg>;
 }
 
-function DonutChart({pct,color,size=100,label}) {
-  const r=38,cx=50,cy=50,circ=2*Math.PI*r;
+function DonutChart({pct,color,size=90}){
+  const r=36,cx=45,cy=45,circ=2*Math.PI*r;
   const dash=(pct/100)*circ;
-  return <div style={{textAlign:"center"}}>
-    <svg width={size} height={size} viewBox="0 0 100 100">
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--surface2)" strokeWidth="8"/>
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth="8"
-        strokeDasharray={`${dash} ${circ}`} strokeDashoffset={circ/4} strokeLinecap="round"/>
-      <text x="50" y="47" textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="14" fontWeight="800">{pct}%</text>
-      <text x="50" y="62" textAnchor="middle" fill="var(--muted)" fontSize="9">{label}</text>
-    </svg>
-  </div>;
-}
-
-function BarChart({data}) {
-  const max=Math.max(...data.map(d=>d.value),1);
-  return <div style={{display:"flex",alignItems:"flex-end",gap:8,height:120,padding:"0 4px"}}>
-    {data.map((d,i)=>(
-      <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
-        <div style={{fontSize:10,color:"var(--muted)",fontWeight:600}}>{d.value}%</div>
-        <div style={{width:"100%",height:Math.max(8,(d.value/max)*90),borderRadius:"4px 4px 0 0",
-          background:d.value>=70?"var(--green)":d.value>=50?"var(--yellow)":"var(--red)",
-          transition:"height .8s ease"}}/>
-        <div style={{fontSize:10,color:"var(--muted)",textAlign:"center",lineHeight:1.2}}>{d.label}</div>
-      </div>
-    ))}
-  </div>;
-}
-
-function ProgressRing({pct,color="#7c3aed",size=60}) {
-  const r=24,circ=2*Math.PI*r,dash=(pct/100)*circ;
-  return <svg width={size} height={size} viewBox="0 0 60 60">
-    <circle cx="30" cy="30" r={r} fill="none" stroke="var(--surface2)" strokeWidth="5"/>
-    <circle cx="30" cy="30" r={r} fill="none" stroke={color} strokeWidth="5"
+  return <svg width={size} height={size} viewBox="0 0 90 90">
+    <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--surface2)" strokeWidth="7"/>
+    <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth="7"
       strokeDasharray={`${dash} ${circ}`} strokeDashoffset={circ/4} strokeLinecap="round"/>
-    <text x="30" y="30" textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="11" fontWeight="800">{pct}%</text>
+    <text x="45" y="42" textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="15" fontWeight="800">{pct}%</text>
   </svg>;
 }
 
-// ══════════════════════════════════════════════════════════
-// NAV BAR
-// ══════════════════════════════════════════════════════════
-function NavBar() {
-  const {user,setUser,darkMode,setDarkMode,navigate,page} = useApp();
-  return <nav className="nav">
-    <div style={{display:"flex",alignItems:"center",gap:12}}>
-      <div style={{width:34,height:34,borderRadius:10,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
-        display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>🎯</div>
-      <span style={{fontWeight:800,fontSize:18,letterSpacing:"-0.5px"}}>
-        Exam<span className="gradient-text">IQ</span>
-      </span>
-    </div>
-    <div style={{display:"flex",alignItems:"center",gap:8}}>
-      {user?.role==="admin" && <span className="badge" style={{background:"rgba(124,58,237,.2)",color:"var(--accent2)"}}>👑 Admin</span>}
-      <button className="btn btn-ghost" onClick={()=>{setDarkMode(!darkMode)}} style={{fontSize:16,padding:"6px 10px"}}>
-        {darkMode?"☀️":"🌙"}
-      </button>
-      <div style={{display:"flex",alignItems:"center",gap:8}}>
-        <div style={{width:32,height:32,borderRadius:10,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
-          display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:800,fontSize:13}}>
-          {user?.name?.[0]||"S"}
-        </div>
-        <span style={{fontSize:14,fontWeight:600,color:"var(--muted)"}}>{user?.name}</span>
-      </div>
-      <button className="btn btn-ghost" onClick={()=>{localStorage.removeItem("eiq_user");setUser(null);navigate("login")}}
-        style={{color:"var(--red)",fontSize:13}}>Sign out</button>
-    </div>
-  </nav>;
-}
-
-// ══════════════════════════════════════════════════════════
-// SIDEBAR
-// ══════════════════════════════════════════════════════════
-function Sidebar() {
-  const {navigate,page,user} = useApp();
-  const items = user?.role==="admin" ? [
-    {k:"admin-dashboard",i:"📊",l:"Overview"},
-    {k:"admin-upload",i:"📁",l:"Upload Books"},
-    {k:"admin-mcqs",i:"🧩",l:"MCQ Bank"},
-    {k:"admin-tests",i:"📝",l:"Manage Tests"},
-    {k:"admin-students",i:"👥",l:"Students"},
-    {k:"leaderboard",i:"🏆",l:"Leaderboard"},
-  ] : [
-    {k:"dashboard",i:"🏠",l:"Dashboard"},
-    {k:"practice",i:"🎯",l:"Practice MCQs"},
-    {k:"tests",i:"📝",l:"Tests"},
-    {k:"analytics",i:"📊",l:"Analytics"},
-    {k:"leaderboard",i:"🏆",l:"Leaderboard"},
-  ];
-  return <div className="sidebar">
-    <div style={{marginBottom:20}}>
-      <p style={{fontSize:11,color:"var(--muted)",fontWeight:600,letterSpacing:"1px",padding:"0 14px",marginBottom:6,textTransform:"uppercase"}}>
-        {user?.role==="admin"?"Admin Panel":"Navigation"}
-      </p>
-    </div>
-    {items.map(item=>(
-      <button key={item.k} className={`nav-item ${page===item.k?"active":""}`} onClick={()=>navigate(item.k)}>
-        <span style={{fontSize:16}}>{item.i}</span>
-        <span>{item.l}</span>
-      </button>
-    ))}
-    {user?.role==="student" && <>
-      <div style={{height:1,background:"var(--border)",margin:"16px 0"}}/>
-      <button className="nav-item" onClick={()=>navigate("admin-dashboard")} style={{color:"var(--muted)"}}>
-        <span>👑</span><span style={{fontSize:13}}>Switch to Admin</span>
-      </button>
-    </>}
-  </div>;
-}
-
-// ══════════════════════════════════════════════════════════
-// PAGE: LOGIN
-// ══════════════════════════════════════════════════════════
-function LoginPage() {
-  const {setUser,navigate} = useApp();
+// ══════════════════════════════════════════════════════
+// LOGIN / REGISTER
+// ══════════════════════════════════════════════════════
+function LoginScreen(){
+  const {setUser,lang,setLang,setToast,navigate} = useApp();
+  const t = T[lang];
   const [mode,setMode] = useState("login");
-  const [form,setForm] = useState({name:"",email:"",password:""});
+  const [form,setForm] = useState({name:"",phone:"",email:"",password:"",confirm:""});
   const [loading,setLoading] = useState(false);
+  const [showPass,setShowPass] = useState(false);
+
+  const validate = () => {
+    if(!form.phone.trim()){ setToast({msg:t.phoneRequired,type:"error"}); return false; }
+    if(!/^[0-9]{10}$/.test(form.phone.trim())){ setToast({msg:t.phoneInvalid,type:"error"}); return false; }
+    if(!form.password){ setToast({msg:t.fillAll,type:"error"}); return false; }
+    if(mode==="register"){
+      if(!form.name.trim()){ setToast({msg:t.fillAll,type:"error"}); return false; }
+      if(form.password!==form.confirm){ setToast({msg:t.pwMismatch,type:"error"}); return false; }
+    }
+    return true;
+  };
 
   const submit = async () => {
+    if(!validate()) return;
     setLoading(true);
     await new Promise(r=>setTimeout(r,600));
-    const u={id:Date.now(),name:form.name||form.email.split("@")[0],email:form.email,role:"student",avatar:form.email[0]?.toUpperCase()||"S"};
-    localStorage.setItem("eiq_user",JSON.stringify(u));
-    setUser(u); navigate("dashboard"); setLoading(false);
-  };
-  const demo = (role) => {
-    const u={id:role==="admin"?0:1,name:role==="admin"?"Admin User":"Demo Student",email:`${role}@examiq.com`,role,avatar:role==="admin"?"A":"D"};
-    localStorage.setItem("eiq_user",JSON.stringify(u));
-    setUser(u); navigate(role==="admin"?"admin-dashboard":"dashboard");
+
+    // Admin check
+    if(form.phone===ADMIN_PHONE && form.password===ADMIN_PASS){
+      const admin={id:0,name:"Admin",phone:ADMIN_PHONE,role:"admin"};
+      localStorage.setItem("ct_session",JSON.stringify(admin));
+      setUser(admin);
+      navigate("admin");
+      setToast({msg:"Admin login!",type:"success"});
+      setLoading(false); return;
+    }
+
+    const users = getUsers();
+
+    if(mode==="login"){
+      const found = users.find(u=>u.phone===form.phone && u.password===form.password);
+      if(!found){ setToast({msg:"Invalid credentials",type:"error"}); setLoading(false); return; }
+      localStorage.setItem("ct_session",JSON.stringify(found));
+      setUser(found);
+      navigate("dashboard");
+      setToast({msg:t.loginSuccess,type:"success"});
+    } else {
+      const exists = users.find(u=>u.phone===form.phone);
+      if(exists){ setToast({msg:"Phone already registered",type:"error"}); setLoading(false); return; }
+      const newUser={
+        id:Date.now(),name:form.name.trim(),phone:form.phone.trim(),
+        email:form.email.trim(),password:form.password,role:"student",
+        joinedAt:new Date().toISOString(),
+        lang:"en",
+      };
+      users.push(newUser);
+      saveUsers(users);
+      localStorage.setItem("ct_session",JSON.stringify(newUser));
+      setUser(newUser);
+
+      // Save to Google Sheet
+      saveToGoogleSheet({
+        action:"register",name:newUser.name,phone:newUser.phone,
+        email:newUser.email,joinedAt:newUser.joinedAt,
+        timestamp:new Date().toLocaleString()
+      });
+
+      navigate("dashboard");
+      setToast({msg:t.registerSuccess,type:"success"});
+    }
+    setLoading(false);
   };
 
-  return <div style={{minHeight:"100vh",display:"flex",alignItems:"stretch"}}>
-    {/* Left brand panel */}
-    <div style={{flex:"0 0 45%",background:"linear-gradient(160deg,#0a0a0f 0%,#1a0a2e 50%,#0a1a2e 100%)",
-      display:"flex",flexDirection:"column",justifyContent:"center",padding:"60px 56px",position:"relative",overflow:"hidden"}}>
-      {/* Grid pattern */}
-      <svg style={{position:"absolute",inset:0,opacity:.04}} width="100%" height="100%">
-        <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5"/>
-        </pattern></defs>
-        <rect width="100%" height="100%" fill="url(#g)"/>
-      </svg>
-      {/* Glow orbs */}
-      <div style={{position:"absolute",top:"20%",left:"30%",width:200,height:200,borderRadius:"50%",
-        background:"radial-gradient(circle,rgba(124,58,237,.4),transparent)",filter:"blur(40px)"}}/>
-      <div style={{position:"absolute",bottom:"30%",right:"10%",width:150,height:150,borderRadius:"50%",
-        background:"radial-gradient(circle,rgba(6,182,212,.3),transparent)",filter:"blur(30px)"}}/>
-      <div style={{position:"relative",zIndex:1}}>
-        <div style={{width:60,height:60,borderRadius:16,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
-          display:"flex",alignItems:"center",justifyContent:"center",fontSize:28,marginBottom:28}}>🎯</div>
-        <h1 style={{fontSize:42,fontWeight:800,lineHeight:1.1,marginBottom:16,color:"#fff",letterSpacing:"-1px"}}>
-          The Smartest<br/>Way to<br/><span style={{backgroundImage:"linear-gradient(90deg,#a78bfa,#22d3ee)",
-          WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Ace Exams</span>
-        </h1>
-        <p style={{color:"#a0a0c0",fontSize:16,lineHeight:1.7,maxWidth:320}}>
-          Upload textbooks & papers. AI generates thousands of MCQs instantly. Practice smarter, not harder.
-        </p>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginTop:36}}>
-          {[
-            {i:"📄",t:"Multi-format Upload",d:"PDF, DOCX, TXT"},
-            {i:"🤖",t:"AI MCQ Generation",d:"1000+ questions/book"},
-            {i:"⏱️",t:"Real Exam Mode",d:"Timer + palette"},
-            {i:"📊",t:"Deep Analytics",d:"Chapter-wise insights"},
-          ].map(f=><div key={f.t} style={{padding:14,borderRadius:12,background:"rgba(255,255,255,.04)",
-            border:"1px solid rgba(255,255,255,.08)"}}>
-            <div style={{fontSize:20,marginBottom:4}}>{f.i}</div>
-            <div style={{fontSize:13,fontWeight:700,color:"#e0e0f0"}}>{f.t}</div>
-            <div style={{fontSize:11,color:"#7070a0"}}>{f.d}</div>
-          </div>)}
-        </div>
-      </div>
+  const demoLogin = (role) => {
+    if(role==="admin"){
+      const admin={id:0,name:"Admin",phone:ADMIN_PHONE,role:"admin"};
+      localStorage.setItem("ct_session",JSON.stringify(admin));
+      setUser(admin); navigate("admin");
+    } else {
+      const demo={id:999,name:"Demo Student",phone:"9876543210",role:"student",email:"demo@test.com"};
+      localStorage.setItem("ct_session",JSON.stringify(demo));
+      setUser(demo); navigate("dashboard");
+    }
+    setToast({msg:t.loginSuccess,type:"success"});
+  };
+
+  return <div className="full-page" style={{background:"linear-gradient(160deg,#0d0d18 0%,#1a0a2e 60%,#0a1a2e 100%)",minHeight:"100vh"}}>
+    {/* Bg glow */}
+    <div style={{position:"absolute",top:"10%",left:"30%",width:180,height:180,borderRadius:"50%",background:"radial-gradient(circle,rgba(124,58,237,.35),transparent)",filter:"blur(40px)",pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:"30%",right:"5%",width:130,height:130,borderRadius:"50%",background:"radial-gradient(circle,rgba(6,182,212,.25),transparent)",filter:"blur(30px)",pointerEvents:"none"}}/>
+
+    {/* Language selector at top */}
+    <div style={{display:"flex",justifyContent:"center",gap:10,padding:"20px 20px 0",position:"relative",zIndex:1}}>
+      {["en","ta"].map(l=><button key={l} onClick={()=>setLang(l)} className="lang-pill" style={{
+        borderColor:lang===l?"var(--accent)":"rgba(255,255,255,.2)",
+        background:lang===l?"rgba(124,58,237,.2)":"transparent",
+        color:lang===l?"var(--accent2)":"rgba(255,255,255,.6)",
+      }}>
+        {l==="en"?"🇬🇧 English":"🇮🇳 தமிழ்"}
+      </button>)}
     </div>
 
-    {/* Right form panel */}
-    <div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",padding:40,background:"var(--bg)"}}>
-      <div style={{width:"100%",maxWidth:400}}>
-        <div style={{marginBottom:28}}>
-          <h2 style={{fontSize:26,fontWeight:800,marginBottom:4}}>{mode==="login"?"Welcome back":"Get started"}</h2>
-          <p style={{color:"var(--muted)",fontSize:14}}>
-            {mode==="login"?"Sign in to continue your exam prep":"Create your free account today"}
-          </p>
+    {/* Brand */}
+    <div style={{textAlign:"center",padding:"24px 20px 20px",position:"relative",zIndex:1}}>
+      <div style={{width:64,height:64,borderRadius:18,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
+        display:"flex",alignItems:"center",justifyContent:"center",fontSize:30,margin:"0 auto 14px",
+        boxShadow:"0 8px 24px rgba(124,58,237,.4)"}}>🎯</div>
+      <h1 style={{fontSize:26,fontWeight:800,color:"#fff",letterSpacing:"-0.5px"}}>CRACK<span style={{backgroundImage:"linear-gradient(90deg,#a78bfa,#22d3ee)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>TNPSC</span></h1>
+      <p style={{color:"rgba(255,255,255,.5)",fontSize:13,marginTop:4}}>{t.appSub}</p>
+    </div>
+
+    {/* Card */}
+    <div style={{flex:1,padding:"0 16px 32px",position:"relative",zIndex:1}}>
+      <div style={{background:"rgba(255,255,255,.05)",backdropFilter:"blur(20px)",
+        border:"1px solid rgba(255,255,255,.1)",borderRadius:24,padding:24}}>
+
+        {/* Mode toggle */}
+        <div className="toggle-wrap">
+          <button className={`toggle-btn ${mode==="login"?"active":""}`} onClick={()=>setMode("login")}>{t.login}</button>
+          <button className={`toggle-btn ${mode==="register"?"active":""}`} onClick={()=>setMode("register")}>{t.register}</button>
         </div>
 
-        {/* Tab toggle */}
-        <div style={{display:"flex",background:"var(--surface2)",borderRadius:12,padding:4,marginBottom:24}}>
-          {["login","register"].map(m=><button key={m} onClick={()=>setMode(m)} style={{
-            flex:1,padding:"9px 0",borderRadius:9,fontSize:14,fontWeight:700,border:"none",cursor:"pointer",
-            background:mode===m?"var(--accent)":"transparent",
-            color:mode===m?"#fff":"var(--muted)",transition:"all .2s"
-          }}>{m==="login"?"Sign In":"Register"}</button>)}
+        {mode==="register"&&<div className="input-group">
+          <label>{t.name} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">👤</span>
+            <input className="input input-with-icon" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder={lang==="ta"?"உங்கள் பெயர்":"Your full name"}
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
+        </div>}
+
+        <div className="input-group">
+          <label>{t.phone} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">📱</span>
+            <input className="input input-with-icon" type="tel" inputMode="numeric" maxLength={10}
+              value={form.phone} onChange={e=>setForm({...form,phone:e.target.value.replace(/\D/,"")})}
+              placeholder="9876543210"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
         </div>
 
-        <div style={{display:"flex",flexDirection:"column",gap:14}}>
-          {mode==="register"&&<div>
-            <label className="label">Full Name</label>
-            <input className="input" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Your full name"/>
-          </div>}
-          <div>
-            <label className="label">Email Address</label>
-            <input className="input" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="you@example.com"/>
+        {mode==="register"&&<div className="input-group">
+          <label>{t.email}</label>
+          <div className="input-wrap">
+            <span className="input-icon">✉️</span>
+            <input className="input input-with-icon" type="email" value={form.email}
+              onChange={e=>setForm({...form,email:e.target.value})} placeholder="you@gmail.com"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
           </div>
-          <div>
-            <label className="label">Password</label>
-            <input className="input" type="password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} placeholder="••••••••"/>
+        </div>}
+
+        <div className="input-group">
+          <label>{t.password} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">🔒</span>
+            <input className="input input-with-icon" type={showPass?"text":"password"}
+              value={form.password} onChange={e=>setForm({...form,password:e.target.value})}
+              placeholder="••••••••"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff",paddingRight:44}}/>
+            <button onClick={()=>setShowPass(!showPass)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",fontSize:18,background:"none",border:"none",cursor:"pointer"}}>{showPass?"🙈":"👁"}</button>
           </div>
-          <button className="btn btn-primary" onClick={submit} disabled={loading}
-            style={{width:"100%",padding:"13px 0",fontSize:15,borderRadius:12,marginTop:4}}>
-            {loading?<><Spinner size={16}/> Processing...</>:mode==="login"?"Sign In →":"Create Account →"}
+        </div>
+
+        {mode==="register"&&<div className="input-group">
+          <label>{t.confirmPw} *</label>
+          <div className="input-wrap">
+            <span className="input-icon">🔒</span>
+            <input className="input input-with-icon" type="password" value={form.confirm}
+              onChange={e=>setForm({...form,confirm:e.target.value})} placeholder="••••••••"
+              style={{background:"rgba(255,255,255,.08)",borderColor:"rgba(255,255,255,.15)",color:"#fff"}}/>
+          </div>
+        </div>}
+
+        <button className="btn btn-primary" onClick={submit} disabled={loading} style={{marginTop:6}}>
+          {loading?<><Spinner size={16} color="#fff"/> {lang==="ta"?"செயலாக்கம்...":"Processing..."}</>:mode==="login"?`${t.loginBtn} →`:t.registerBtn}
+        </button>
+
+        <div style={{display:"flex",alignItems:"center",gap:10,margin:"14px 0",color:"rgba(255,255,255,.3)",fontSize:12}}>
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,.1)"}}/>
+          {lang==="ta"?"அல்லது":"or"}
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,.1)"}}/>
+        </div>
+
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+          <button className="btn btn-secondary" style={{fontSize:13,padding:"10px"}} onClick={()=>demoLogin("student")}>
+            🎓 {t.demoStudent}
           </button>
-
-          <div style={{display:"flex",alignItems:"center",gap:12,color:"var(--muted)",fontSize:13}}>
-            <div style={{flex:1,height:1,background:"var(--border)"}}/>or<div style={{flex:1,height:1,background:"var(--border)"}}/>
-          </div>
-
-          <div style={{display:"flex",gap:8}}>
-            <button className="btn btn-secondary" onClick={()=>demo("student")} style={{flex:1,fontSize:13}}>
-              🎓 Demo Student
-            </button>
-            <button className="btn btn-secondary" onClick={()=>demo("admin")} style={{flex:1,fontSize:13}}>
-              👑 Demo Admin
-            </button>
-          </div>
+          <button className="btn btn-secondary" style={{fontSize:13,padding:"10px"}} onClick={()=>demoLogin("admin")}>
+            👑 {t.demoAdmin}
+          </button>
         </div>
       </div>
     </div>
   </div>;
 }
 
-// ══════════════════════════════════════════════════════════
-// PAGE: STUDENT DASHBOARD
-// ══════════════════════════════════════════════════════════
-function StudentDashboard() {
-  const {navigate,setActiveTest,user} = useApp();
-  const tests = generateTests();
-  const history = JSON.parse(localStorage.getItem("eiq_history")||"[]");
+// ══════════════════════════════════════════════════════
+// TOP NAV
+// ══════════════════════════════════════════════════════
+function TopNav({title,showBack,onBack,right}){
+  const {darkMode,setDarkMode,lang} = useApp();
+  return <div className="top-nav">
+    <div style={{display:"flex",alignItems:"center",gap:10,flex:1}}>
+      {showBack
+        ?<button onClick={onBack} style={{width:36,height:36,borderRadius:10,background:"var(--surface2)",border:"1px solid var(--border)",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>←</button>
+        :<div style={{width:32,height:32,borderRadius:9,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>🎯</div>
+      }
+      <span style={{fontWeight:800,fontSize:16,flex:1}} className={lang==="ta"?"tamil":""}>{title||"CRACKTNPSC"}</span>
+    </div>
+    <div style={{display:"flex",gap:6}}>
+      {right}
+      <button onClick={()=>setDarkMode(d=>!d)} style={{width:34,height:34,borderRadius:9,background:"var(--surface2)",border:"1px solid var(--border)",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>
+        {darkMode?"☀️":"🌙"}
+      </button>
+    </div>
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// BOTTOM NAV
+// ══════════════════════════════════════════════════════
+function BottomNav(){
+  const {page,navigate,lang} = useApp();
+  const t=T[lang];
+  const items=[
+    {k:"dashboard",i:"🏠",l:t.dashboard},
+    {k:"practice",i:"🎯",l:t.practice},
+    {k:"tests",i:"📝",l:t.tests},
+    {k:"analytics",i:"📊",l:t.analytics},
+    {k:"profile",i:"👤",l:t.profile},
+  ];
+  return <div className="bottom-nav">
+    {items.map(item=><button key={item.k} className={`bnav-item ${page===item.k?"active":""}`} onClick={()=>navigate(item.k)}>
+      <span className="icon">{item.i}</span>
+      <span className={lang==="ta"?"tamil":""}>{item.l}</span>
+    </button>)}
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════════════
+function Dashboard(){
+  const {user,navigate,setActiveTest,lang} = useApp();
+  const t=T[lang];
+  const history = getHistory().filter(h=>h.userId===user?.id);
   const stats = useMemo(()=>{
-    if(!history.length) return {total:0,avg:0,accuracy:0,streak:0};
+    if(!history.length) return {total:0,avg:0,accuracy:0,streak:3};
     return {
       total:history.length,
       avg:Math.round(history.reduce((a,b)=>a+b.score,0)/history.length),
@@ -575,313 +716,238 @@ function StudentDashboard() {
     };
   },[history]);
 
-  const topicAccuracy = [
-    {label:"Polity",value:stats.accuracy?Math.round(stats.accuracy*0.8):40},
-    {label:"History",value:stats.accuracy?Math.round(stats.accuracy*1.1):78},
-    {label:"Science",value:stats.accuracy?Math.round(stats.accuracy*0.6):35},
-    {label:"Geo",value:stats.accuracy?Math.round(stats.accuracy*0.9):62},
-    {label:"Tamil",value:stats.accuracy?Math.round(stats.accuracy*1.2):85},
-    {label:"Eco",value:stats.accuracy?Math.round(stats.accuracy*0.75):50},
-  ].map(x=>({...x,value:Math.min(100,Math.max(0,x.value))}));
+  const hour = new Date().getHours();
+  const greeting = hour<12?"🌅 Good Morning":"hour<17?🌞 Good Afternoon":"🌙 Good Evening";
 
-  const weak = topicAccuracy.filter(t=>t.value<50);
-  const strong = topicAccuracy.filter(t=>t.value>=70);
-
-  return <div style={{display:"flex",flexDirection:"column",gap:24,animation:"fadeUp .4s ease"}}>
-    {/* Welcome + Quick stats */}
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:16}}>
-      {[
-        {i:"📝",l:"Tests Taken",v:stats.total,c:"#7c3aed",sub:"+2 this week"},
-        {i:"⭐",l:"Avg Score",v:`${stats.avg}%`,c:"#06b6d4",sub:stats.avg>=60?"Above average":"Needs work"},
-        {i:"🎯",l:"Accuracy",v:`${stats.accuracy}%`,c:"#10b981",sub:`${stats.accuracy>=60?"Good":"Improve"} performance`},
-        {i:"🔥",l:"Day Streak",v:stats.streak,c:"#f97316",sub:"Keep it up!"},
-      ].map(s=><div key={s.l} className="stat-card fade-up">
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
-          <div style={{width:40,height:40,borderRadius:12,background:`${s.c}20`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{s.i}</div>
-          <span style={{fontSize:11,color:"var(--muted)",textAlign:"right",lineHeight:1.4}}>{s.sub}</span>
-        </div>
-        <div style={{fontSize:30,fontWeight:800,color:s.c}}>{s.v}</div>
-        <div style={{fontSize:13,color:"var(--muted)",marginTop:2}}>{s.l}</div>
-      </div>)}
-    </div>
-
-    <div style={{display:"grid",gridTemplateColumns:"1fr 340px",gap:20}}>
-      {/* Available Tests */}
-      <div>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-          <h2 style={{fontSize:18,fontWeight:800}}>Available Tests</h2>
-          <button className="btn btn-ghost" onClick={()=>navigate("tests")} style={{fontSize:13}}>View all →</button>
-        </div>
-        <div style={{display:"flex",flexDirection:"column",gap:12}}>
-          {tests.map(t=><div key={t.id} className="card" style={{padding:18,cursor:"pointer"}}
-            onClick={()=>{setActiveTest(t);navigate("exam")}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
-              <div style={{flex:1}}>
-                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
-                  <span style={{fontSize:15,fontWeight:700}}>{t.name}</span>
-                  <span className={`badge tag-${t.difficulty.toLowerCase()}`}>{t.difficulty}</span>
-                </div>
-                <div style={{fontSize:13,color:"var(--muted)",marginBottom:8}}>{t.subject}</div>
-                <div style={{display:"flex",gap:16,fontSize:12,color:"var(--muted)"}}>
-                  <span>❓ {t.questions.length} Qs</span>
-                  <span>⏱️ {t.duration} min</span>
-                  <span>👥 {t.totalAttempts.toLocaleString()} attempts</span>
-                </div>
-              </div>
-              <button className="btn btn-primary" style={{padding:"8px 16px",fontSize:13}}>Start →</button>
-            </div>
-          </div>)}
+  return <>
+    <TopNav title="CRACKTNPSC"/>
+    <div className="page">
+      {/* Greeting */}
+      <div style={{background:"linear-gradient(135deg,rgba(124,58,237,.2),rgba(6,182,212,.1))",borderRadius:18,padding:18,marginBottom:16,border:"1px solid rgba(124,58,237,.25)"}}>
+        <p style={{fontSize:13,color:"var(--muted)",marginBottom:4}}>{hour<12?"🌅":"🌞"} {hour<12?lang==="ta"?"காலை வணக்கம்":"Good Morning":lang==="ta"?"வணக்கம்":"Welcome back"}</p>
+        <p style={{fontSize:20,fontWeight:800}} className={lang==="ta"?"tamil":""}>{user?.name?.split(" ")[0]} 👋</p>
+        <div style={{display:"flex",gap:16,marginTop:10,fontSize:13,color:"var(--muted)"}}>
+          <span>🔥 {stats.streak} {t.days}</span>
+          <span>📝 {stats.total} {lang==="ta"?"தேர்வுகள்":"tests"}</span>
+          <span>⭐ {stats.avg}% {t.avgScore}</span>
         </div>
       </div>
 
-      {/* Right column */}
-      <div style={{display:"flex",flexDirection:"column",gap:16}}>
-        {/* Chapter accuracy chart */}
-        <div className="card" style={{padding:20}}>
-          <h3 style={{fontSize:15,fontWeight:700,marginBottom:4}}>📊 Chapter Accuracy</h3>
-          <p style={{fontSize:12,color:"var(--muted)",marginBottom:16}}>Based on your test history</p>
-          <BarChart data={topicAccuracy}/>
+      {/* Stats row */}
+      <div className="stat-row">
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#7c3aed"}}>{stats.avg}%</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{t.avgScore}</div>
         </div>
-
-        {/* Weak / Strong areas */}
-        <div className="card" style={{padding:20}}>
-          <h3 style={{fontSize:15,fontWeight:700,marginBottom:14}}>🔍 Weak Area Detector</h3>
-          {weak.length>0&&<>
-            <p style={{fontSize:12,fontWeight:600,color:"var(--red)",marginBottom:8}}>⚠️ Needs attention</p>
-            {weak.map(t=><div key={t.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",
-              padding:"7px 10px",borderRadius:8,background:"rgba(239,68,68,.08)",marginBottom:6}}>
-              <span style={{fontSize:13,fontWeight:600}}>{t.label}</span>
-              <span style={{fontSize:12,fontWeight:700,color:"var(--red)"}}>{t.value}%</span>
-            </div>)}
-          </>}
-          {strong.length>0&&<>
-            <p style={{fontSize:12,fontWeight:600,color:"var(--green)",marginBottom:8,marginTop:10}}>💪 Your strengths</p>
-            {strong.map(t=><div key={t.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",
-              padding:"7px 10px",borderRadius:8,background:"rgba(16,185,129,.08)",marginBottom:6}}>
-              <span style={{fontSize:13,fontWeight:600}}>{t.label}</span>
-              <span style={{fontSize:12,fontWeight:700,color:"var(--green)"}}>{t.value}%</span>
-            </div>)}
-          </>}
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#10b981"}}>{stats.accuracy}%</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{t.accuracy}</div>
         </div>
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#f97316"}}>{stats.total}</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தேர்வுகள்":"Tests"}</div>
+        </div>
+        <div className="stat-box">
+          <div style={{fontSize:26,fontWeight:900,color:"#eab308"}}>🔥{stats.streak}</div>
+          <div style={{fontSize:12,color:"var(--muted)",marginTop:2}} className={lang==="ta"?"tamil":""}>{t.streak}</div>
+        </div>
+      </div>
 
-        {/* Recommended practice */}
-        <div className="card" style={{padding:20,background:"linear-gradient(135deg,rgba(124,58,237,.15),rgba(6,182,212,.1))",border:"1px solid rgba(124,58,237,.3)"}}>
-          <div style={{fontSize:24,marginBottom:8}}>🧠</div>
-          <h3 style={{fontSize:15,fontWeight:700,marginBottom:4}}>Recommended Today</h3>
-          <p style={{fontSize:12,color:"var(--muted)",marginBottom:14}}>Based on your weak areas</p>
-          <button className="btn btn-primary" style={{width:"100%",fontSize:13}} onClick={()=>navigate("practice")}>
-            Practice Now →
+      {/* Quick tests */}
+      <div className="sec-title" style={{marginTop:8}} ><span>⚡</span><span className={lang==="ta"?"tamil":""}>{lang==="ta"?"விரைவு தேர்வுகள்":"Quick Tests"}</span></div>
+      {TESTS.slice(0,3).map(test=><div key={test.id} className="card card-p" style={{marginBottom:10,cursor:"pointer"}}
+        onClick={()=>{setActiveTest(test);navigate("exam")}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+          <div style={{flex:1}}>
+            <p style={{fontWeight:700,fontSize:14,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</p>
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              <span className={`badge tag-${test.difficulty.toLowerCase()}`}>{test.difficulty}</span>
+              <span style={{fontSize:12,color:"var(--muted)"}}>⏱ {test.duration}{t.mins}</span>
+              <span style={{fontSize:12,color:"var(--muted)"}}> ❓{test.qs.length}</span>
+            </div>
+          </div>
+          <button className="btn btn-primary btn-sm" style={{width:"auto",padding:"8px 14px",fontSize:13}}
+            onClick={e=>{e.stopPropagation();setActiveTest(test);navigate("exam");}}>
+            {lang==="ta"?"தொடங்கு":"Start"}
           </button>
         </div>
+      </div>)}
+
+      <button className="btn btn-secondary" style={{marginBottom:16}} onClick={()=>navigate("tests")}>
+        {lang==="ta"?"எல்லா தேர்வுகளும் →":"All Tests →"}
+      </button>
+
+      {/* Daily challenge */}
+      <div style={{background:"linear-gradient(135deg,#1e1b4b,#312e81)",borderRadius:18,padding:18,border:"1px solid rgba(124,58,237,.4)"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🔥</div>
+        <p style={{fontWeight:800,fontSize:15,color:"#fff",marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தினசரி சவால்":"Daily Challenge"}</p>
+        <p style={{color:"rgba(255,255,255,.6)",fontSize:13,marginBottom:14}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"10 கேள்விகள் · 15 நிமிடங்கள்":"10 questions · 15 minutes"}</p>
+        <button className="btn" style={{background:"rgba(255,255,255,.15)",color:"#fff",fontSize:14,backdropFilter:"blur(10px)"}}
+          onClick={()=>{setActiveTest(TESTS[3]);navigate("exam");}}>
+          {lang==="ta"?"இப்போது தொடங்கு →":"Start Now →"}
+        </button>
       </div>
     </div>
-
-    {/* Recent history */}
-    {history.length>0&&<div className="card" style={{padding:20}}>
-      <h3 style={{fontSize:15,fontWeight:700,marginBottom:14}}>📈 Recent Results</h3>
-      <table className="table">
-        <thead><tr>
-          <th>Test</th><th>Score</th><th>Accuracy</th><th>Date</th>
-        </tr></thead>
-        <tbody>
-          {history.slice(-5).reverse().map((h,i)=><tr key={i}>
-            <td style={{fontWeight:600}}>{h.testName}</td>
-            <td><span style={{color:h.score>=60?"var(--green)":"var(--red)",fontWeight:700}}>{h.score}%</span></td>
-            <td>{h.accuracy}%</td>
-            <td style={{color:"var(--muted)",fontSize:13}}>{new Date(h.date).toLocaleDateString()}</td>
-          </tr>)}
-        </tbody>
-      </table>
-    </div>}
-  </div>;
+    <BottomNav/>
+  </>;
 }
 
-// ══════════════════════════════════════════════════════════
-// PAGE: PRACTICE MCQs
-// ══════════════════════════════════════════════════════════
-function PracticePage() {
-  const [filter,setFilter] = useState({topic:"All",difficulty:"All",chapter:"All"});
+// ══════════════════════════════════════════════════════
+// PRACTICE
+// ══════════════════════════════════════════════════════
+function PracticePage(){
+  const {lang,navigate} = useApp();
+  const t=T[lang];
+  const [filter,setFilter] = useState({topic:"All",diff:"All"});
   const [current,setCurrent] = useState(null);
   const [selected,setSelected] = useState(null);
   const [revealed,setRevealed] = useState(false);
-  const [score,setScore] = useState({correct:0,wrong:0});
+  const [score,setScore] = useState({c:0,w:0});
 
-  const topics = ["All",...new Set(SAMPLE_MCQS.map(q=>q.topic))];
-  const difficulties = ["All","Easy","Medium","Hard"];
-
-  const filtered = SAMPLE_MCQS.filter(q=>
-    (filter.topic==="All"||q.topic===filter.topic) &&
-    (filter.difficulty==="All"||q.difficulty===filter.difficulty)
+  const topics=["All",...new Set(QUESTIONS.map(q=>q.topic))];
+  const filtered = QUESTIONS.filter(q=>
+    (filter.topic==="All"||q.topic===filter.topic)&&
+    (filter.diff==="All"||q.difficulty===filter.diff)
   );
-
-  const pickRandom = () => {
-    const pool = filtered.filter(q=>!current||q.id!==current.id);
-    if(!pool.length) return;
+  const pickRandom=()=>{
+    const pool=filtered.filter(q=>!current||q.id!==current.id);
+    if(!pool.length)return;
     setCurrent(pool[Math.floor(Math.random()*pool.length)]);
-    setSelected(null); setRevealed(false);
+    setSelected(null);setRevealed(false);
   };
+  useEffect(()=>{if(filtered.length)pickRandom();},[filter]);
+  const check=()=>{if(selected===null)return;setRevealed(true);selected===current.correct?setScore(s=>({...s,c:s.c+1})):setScore(s=>({...s,w:s.w+1}));};
+  const qData = current?current[lang]||current.en:null;
 
-  useEffect(()=>{ if(filtered.length) pickRandom(); },[filter]);
-
-  const submit = () => {
-    if(selected===null) return;
-    setRevealed(true);
-    if(selected===current.correct) setScore(s=>({...s,correct:s.correct+1}));
-    else setScore(s=>({...s,wrong:s.wrong+1}));
-  };
-
-  return <div style={{display:"flex",flexDirection:"column",gap:20,animation:"fadeUp .4s ease"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-      <div>
-        <h1 style={{fontSize:22,fontWeight:800}}>Practice MCQs</h1>
-        <p style={{fontSize:13,color:"var(--muted)"}}>Randomised questions from all books</p>
+  return <>
+    <TopNav title={t.practice}/>
+    <div className="page">
+      {/* Score */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        {[{i:"✅",v:score.c,c:"#10b981"},{i:"❌",v:score.w,c:"#ef4444"},
+          {i:"🎯",v:score.c+score.w>0?Math.round(score.c/(score.c+score.w)*100):0,c:"#7c3aed",s:"%"}].map(s=>(
+          <div key={s.c} style={{flex:1,background:"var(--surface)",border:"1px solid var(--border)",borderRadius:12,padding:"10px 8px",textAlign:"center"}}>
+            <div style={{fontSize:20,fontWeight:900,color:s.c}}>{s.v}{s.s||""}</div>
+            <div style={{fontSize:10,color:"var(--muted)"}}>{s.i}</div>
+          </div>
+        ))}
       </div>
-      <div style={{display:"flex",gap:12}}>
-        <div className="card" style={{padding:"10px 16px",textAlign:"center"}}>
-          <div style={{fontSize:20,fontWeight:800,color:"var(--green)"}}>{score.correct}</div>
-          <div style={{fontSize:11,color:"var(--muted)"}}>Correct</div>
-        </div>
-        <div className="card" style={{padding:"10px 16px",textAlign:"center"}}>
-          <div style={{fontSize:20,fontWeight:800,color:"var(--red)"}}>{score.wrong}</div>
-          <div style={{fontSize:11,color:"var(--muted)"}}>Wrong</div>
-        </div>
-        <div className="card" style={{padding:"10px 16px",textAlign:"center"}}>
-          <div style={{fontSize:20,fontWeight:800,color:"var(--accent2)"}}>{score.correct+score.wrong>0?Math.round(score.correct/(score.correct+score.wrong)*100):0}%</div>
-          <div style={{fontSize:11,color:"var(--muted)"}}>Accuracy</div>
-        </div>
+
+      {/* Filters */}
+      <div style={{display:"flex",gap:8,overflowX:"auto",paddingBottom:8,marginBottom:14}}>
+        {["All",...new Set(QUESTIONS.map(q=>q.topic))].map(tp=>(
+          <button key={tp} onClick={()=>setFilter(f=>({...f,topic:tp}))} style={{
+            flexShrink:0,padding:"7px 14px",borderRadius:20,fontSize:12,fontWeight:700,
+            background:filter.topic===tp?"var(--accent)":"var(--surface2)",
+            color:filter.topic===tp?"#fff":"var(--muted)",
+            border:`1px solid ${filter.topic===tp?"var(--accent)":"var(--border)"}`,cursor:"pointer"
+          }} className={lang==="ta"?"tamil":""}>{tp==="All"?lang==="ta"?"எல்லாம்":"All":tp}</button>
+        ))}
       </div>
-    </div>
 
-    {/* Filters */}
-    <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-      {[{k:"topic",opts:topics},{k:"difficulty",opts:difficulties}].map(({k,opts})=>(
-        <div key={k} style={{display:"flex",gap:6,alignItems:"center"}}>
-          <span style={{fontSize:12,color:"var(--muted)",fontWeight:600,textTransform:"uppercase"}}>{k}:</span>
-          {opts.map(o=><button key={o} onClick={()=>setFilter(f=>({...f,[k]:o}))}
-            className={`badge ${filter[k]===o?"":"btn-ghost"}`}
-            style={{background:filter[k]===o?"var(--accent)":"var(--surface2)",color:filter[k]===o?"#fff":"var(--muted)",
-              border:`1px solid ${filter[k]===o?"var(--accent)":"var(--border)"}`,cursor:"pointer",
-              padding:"5px 12px",borderRadius:20,fontSize:12,fontWeight:600}}>
-            {o}
-          </button>)}
-        </div>
-      ))}
-    </div>
-
-    {current ? <div style={{display:"grid",gridTemplateColumns:"1fr 300px",gap:20}}>
-      {/* Question card */}
-      <div className="card" style={{padding:28}}>
-        <div style={{display:"flex",gap:8,marginBottom:18}}>
+      {current&&qData?<>
+        {/* Difficulty + Topic */}
+        <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
           <span className={`badge tag-${current.difficulty.toLowerCase()}`}>{current.difficulty}</span>
-          <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}}>{current.topic}</span>
-          <span className="badge" style={{background:"var(--surface2)",color:"var(--muted)"}}>{current.chapter}</span>
-        </div>
-        <p style={{fontSize:17,fontWeight:600,lineHeight:1.6,marginBottom:24}}>{current.question}</p>
-        <div style={{display:"flex",flexDirection:"column",gap:10}}>
-          {current.options.map((opt,i)=>{
-            let cls="";
-            if(revealed) {
-              if(i===current.correct) cls=" correct";
-              else if(i===selected&&i!==current.correct) cls=" wrong";
-            } else if(i===selected) cls=" selected";
-            return <div key={i} className={`q-option${cls}`} onClick={()=>!revealed&&setSelected(i)}>
-              <div style={{width:28,height:28,borderRadius:8,background:
-                revealed&&i===current.correct?"var(--green)":revealed&&i===selected&&i!==current.correct?"var(--red)":
-                i===selected?"var(--accent)":"var(--surface2)",
-                color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,flexShrink:0}}>
-                {String.fromCharCode(65+i)}
-              </div>
-              <span style={{fontSize:15}}>{opt}</span>
-              {revealed&&i===current.correct&&<span style={{marginLeft:"auto",color:"var(--green)"}}>✓</span>}
-              {revealed&&i===selected&&i!==current.correct&&<span style={{marginLeft:"auto",color:"var(--red)"}}>✗</span>}
-            </div>;
-          })}
-        </div>
-        <div style={{display:"flex",gap:10,marginTop:20}}>
-          {!revealed
-            ? <button className="btn btn-primary" onClick={submit} disabled={selected===null} style={{flex:1}}>
-                Check Answer
-              </button>
-            : <button className="btn btn-primary" onClick={pickRandom} style={{flex:1}}>
-                Next Question →
-              </button>
-          }
-          <button className="btn btn-secondary" onClick={pickRandom}>Skip</button>
+          <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}} className={lang==="ta"?"tamil":""}>{current.topic}</span>
+          <span style={{fontSize:12,color:"var(--muted)",marginLeft:"auto"}}>{current.chapter}</span>
         </div>
 
-        {revealed&&<div style={{marginTop:20,padding:16,borderRadius:12,background:"rgba(124,58,237,.1)",border:"1px solid rgba(124,58,237,.2)"}}>
-          <div style={{fontSize:12,fontWeight:700,color:"var(--accent2)",marginBottom:6}}>💡 Explanation</div>
-          <p style={{fontSize:14,color:"var(--text)",lineHeight:1.6}}>{current.explanation}</p>
-          <div style={{marginTop:8,display:"flex",gap:8}}>
-            <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}}>📚 {current.concept}</span>
+        {/* Question */}
+        <div className="card card-p" style={{marginBottom:14}}>
+          <p style={{fontSize:16,fontWeight:600,lineHeight:1.7}} className={lang==="ta"?"tamil":""}>{qData.q}</p>
+        </div>
+
+        {/* Options */}
+        {qData.opts.map((opt,i)=>{
+          let extra="";
+          if(revealed){if(i===qData.correct)extra=" correct";else if(i===selected&&i!==qData.correct)extra=" wrong";}
+          else if(i===selected)extra=" selected";
+          return <button key={i} className={`opt-card${extra}`} onClick={()=>!revealed&&setSelected(i)}>
+            <div className="opt-letter" style={{
+              background:revealed&&i===qData.correct?"#10b981":revealed&&i===selected&&i!==qData.correct?"#ef4444":
+                i===selected?"#7c3aed":"var(--surface2)",
+              color:i===selected||revealed&&i===qData.correct?"#fff":revealed&&i===selected?"#fff":"var(--muted)"
+            }}>{String.fromCharCode(65+i)}</div>
+            <span style={{fontSize:14,textAlign:"left",flex:1,lineHeight:1.5}} className={lang==="ta"?"tamil":""}>{opt}</span>
+            {revealed&&i===qData.correct&&<span style={{color:"#10b981",fontSize:18}}>✓</span>}
+            {revealed&&i===selected&&i!==qData.correct&&<span style={{color:"#ef4444",fontSize:18}}>✗</span>}
+          </button>;
+        })}
+
+        {/* Explanation */}
+        {revealed&&<div style={{padding:14,borderRadius:14,background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.2)",marginBottom:14}}>
+          <p style={{fontSize:12,fontWeight:700,color:"var(--accent2)",marginBottom:6}}>💡 {t.explanation}</p>
+          <p style={{fontSize:13,lineHeight:1.6,color:"var(--text)"}} className={lang==="ta"?"tamil":""}>{qData.exp}</p>
+          <div style={{marginTop:8}}>
+            <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}} className={lang==="ta"?"tamil":""}>{qData.concept}</span>
           </div>
         </div>}
-      </div>
 
-      {/* MCQ info sidebar */}
-      <div style={{display:"flex",flexDirection:"column",gap:14}}>
-        <div className="card" style={{padding:18}}>
-          <h3 style={{fontSize:14,fontWeight:700,marginBottom:12}}>📚 MCQ Bank Stats</h3>
-          {[{l:"Total MCQs",v:SAMPLE_MCQS.length},{l:"Topics",v:topics.length-1},{l:"Your Filter",v:filtered.length+" MCQs"}].map(s=>(
-            <div key={s.l} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid var(--border)",fontSize:14}}>
-              <span style={{color:"var(--muted)"}}>{s.l}</span>
-              <span style={{fontWeight:700}}>{s.v}</span>
-            </div>
-          ))}
+        <div style={{display:"flex",gap:8}}>
+          {!revealed
+            ?<button className="btn btn-primary" onClick={check} disabled={selected===null} style={{flex:1}}>
+              {lang==="ta"?"பதிலை சரிபார்":"Check Answer"}
+            </button>
+            :<button className="btn btn-primary" onClick={pickRandom} style={{flex:1}}>
+              {lang==="ta"?"அடுத்த கேள்வி →":"Next Question →"}
+            </button>
+          }
+          <button className="btn btn-secondary" onClick={pickRandom} style={{width:"auto",padding:"13px 16px"}}>
+            {lang==="ta"?"தவிர்":"Skip"}
+          </button>
         </div>
-        <div className="card" style={{padding:18}}>
-          <h3 style={{fontSize:14,fontWeight:700,marginBottom:12}}>🎯 Session Stats</h3>
-          <div style={{display:"flex",justifyContent:"center"}}>
-            <DonutChart pct={score.correct+score.wrong>0?Math.round(score.correct/(score.correct+score.wrong)*100):0} color="var(--accent2)" label="Accuracy"/>
-          </div>
-        </div>
-      </div>
-    </div> : <div className="card" style={{padding:40,textAlign:"center"}}>
-      <div style={{fontSize:40,marginBottom:12}}>🎯</div>
-      <p style={{color:"var(--muted)"}}>No questions match your filter</p>
-    </div>}
-  </div>;
+      </>:<div style={{textAlign:"center",padding:"40px 0"}}>
+        <div style={{fontSize:40,marginBottom:10}}>😕</div>
+        <p style={{color:"var(--muted)"}}>{lang==="ta"?"பொருந்தும் கேள்விகள் இல்லை":"No questions match filter"}</p>
+      </div>}
+    </div>
+    <BottomNav/>
+  </>;
 }
 
-// ══════════════════════════════════════════════════════════
-// PAGE: TESTS LIST
-// ══════════════════════════════════════════════════════════
-function TestsPage() {
-  const {navigate,setActiveTest} = useApp();
-  const tests = generateTests();
-  return <div style={{animation:"fadeUp .4s ease"}}>
-    <div style={{marginBottom:20}}>
-      <h1 style={{fontSize:22,fontWeight:800}}>Test Centre</h1>
-      <p style={{fontSize:13,color:"var(--muted)"}}>Choose a test to practice</p>
-    </div>
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-      {tests.map(t=>(
-        <div key={t.id} className="card" style={{padding:22,cursor:"pointer",transition:"all .25s"}}
-          onClick={()=>{setActiveTest(t);navigate("exam")}}>
-          <div style={{display:"flex",justifyContent:"space-between",marginBottom:14}}>
-            <span className={`badge tag-${t.difficulty.toLowerCase()}`}>{t.difficulty}</span>
-            <span style={{fontSize:12,color:"var(--muted)"}}>⏱️ {t.duration} min</span>
-          </div>
-          <h3 style={{fontSize:16,fontWeight:700,marginBottom:4}}>{t.name}</h3>
-          <p style={{fontSize:13,color:"var(--muted)",marginBottom:14}}>{t.subject} · {t.year}</p>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <div style={{fontSize:12,color:"var(--muted)"}}>
-              <span style={{marginRight:12}}>❓ {t.questions.length} questions</span>
-              <span>👥 {t.totalAttempts.toLocaleString()}</span>
+// ══════════════════════════════════════════════════════
+// TESTS LIST
+// ══════════════════════════════════════════════════════
+function TestsPage(){
+  const {navigate,setActiveTest,lang} = useApp();
+  const t=T[lang];
+  return <>
+    <TopNav title={t.testsTab}/>
+    <div className="page">
+      <div className="sec-title"><span>📋</span><span className={lang==="ta"?"tamil":""}>{t.chooseTest}</span></div>
+      {TESTS.map(test=><div key={test.id} className="card" style={{marginBottom:12,overflow:"hidden"}}>
+        <div style={{height:4,background:`linear-gradient(90deg,${test.difficulty==="Easy"?"#10b981":test.difficulty==="Medium"?"#eab308":"#ef4444"},transparent)`}}/>
+        <div className="card-p">
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
+            <div style={{flex:1}}>
+              <p style={{fontWeight:700,fontSize:15,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</p>
+              <p style={{fontSize:13,color:"var(--muted)"}}>{test.subject} · {test.year}</p>
             </div>
-            <button className="btn btn-primary" style={{padding:"7px 14px",fontSize:13}} onClick={e=>{e.stopPropagation();setActiveTest(t);navigate("exam");}}>Start</button>
+            <span className={`badge tag-${test.difficulty.toLowerCase()}`}>{test.difficulty}</span>
           </div>
+          <div style={{display:"flex",gap:14,fontSize:13,color:"var(--muted)",marginBottom:14}}>
+            <span>❓ {test.qs.length} {t.questions}</span>
+            <span>⏱ {test.duration} {t.mins}</span>
+            <span>👥 {test.attempts.toLocaleString()}</span>
+          </div>
+          <button className="btn btn-primary" style={{fontSize:14}}
+            onClick={()=>{setActiveTest(test);navigate("exam");}}>
+            {t.startTest} →
+          </button>
         </div>
-      ))}
+      </div>)}
     </div>
-  </div>;
+    <BottomNav/>
+  </>;
 }
 
-// ══════════════════════════════════════════════════════════
-// PAGE: EXAM INTERFACE (Core test taking)
-// ══════════════════════════════════════════════════════════
-function ExamPage() {
-  const {activeTest,navigate,setTestResult,darkMode} = useApp();
+// ══════════════════════════════════════════════════════
+// EXAM INTERFACE
+// ══════════════════════════════════════════════════════
+function ExamPage(){
+  const {activeTest,navigate,setTestResult,user,lang} = useApp();
+  const t=T[lang];
   const [started,setStarted] = useState(false);
   const [current,setCurrent] = useState(0);
   const [answers,setAnswers] = useState({});
@@ -889,43 +955,40 @@ function ExamPage() {
   const [timeLeft,setTimeLeft] = useState(0);
   const [warn,setWarn] = useState(false);
   const [warnShown,setWarnShown] = useState(false);
-  const [confirmSub,setConfirmSub] = useState(false);
   const [showPalette,setShowPalette] = useState(false);
-  const timerRef = useRef(null);
+  const [confirmSub,setConfirmSub] = useState(false);
+  const timerRef=useRef(null);
 
-  const test = activeTest||generateTests()[0];
-  const qs = test.questions||[];
-  const total = qs.length;
+  const test=activeTest||TESTS[0];
+  const qs=test.qs||[];
+  const total=qs.length;
+  useEffect(()=>setTimeLeft(test.duration*60),[test]);
 
-  useEffect(()=>{ setTimeLeft(test.duration*60); },[test]);
-
-  const doSubmit = useCallback(()=>{
+  const doSubmit=useCallback(()=>{
     clearInterval(timerRef.current);
-    let correct=0,wrong=0,skipped=0;
-    const tmap={};
+    let c=0,w=0,s=0;const tmap={};
     qs.forEach((q,i)=>{
       const a=answers[i];
-      if(!tmap[q.topic]) tmap[q.topic]={c:0,t:0};
+      const qd=q[lang]||q.en;
+      if(!tmap[q.topic])tmap[q.topic]={c:0,t:0};
       tmap[q.topic].t++;
-      if(a===undefined) skipped++;
-      else if(a===q.correct){correct++;tmap[q.topic].c++;}
-      else wrong++;
+      if(a===undefined)s++;
+      else if(a===qd.correct){c++;tmap[q.topic].c++;}
+      else w++;
     });
-    const score=Math.round((correct/total)*100);
-    const accuracy=Math.round((correct/(correct+wrong||1))*100);
+    const score=Math.round((c/total)*100);
+    const accuracy=Math.round((c/(c+w||1))*100);
     const weakTopics=Object.entries(tmap).map(([name,d])=>({name,correct:d.c,total:d.t,accuracy:Math.round((d.c/d.t)*100)}));
-    const result={testId:test.id,testName:test.name,date:new Date().toISOString(),
-      totalQuestions:total,answers,timeTaken:(test.duration*60)-timeLeft,
-      correct,wrong,skipped,score,accuracy,weakTopics};
+    const result={testId:test.id,testName:lang==="ta"?test.nameTA:test.name,
+      date:new Date().toISOString(),userId:user?.id,totalQuestions:total,
+      answers,timeTaken:(test.duration*60)-timeLeft,correct:c,wrong:w,skipped:s,score,accuracy,weakTopics};
     setTestResult(result);
-    const h=JSON.parse(localStorage.getItem("eiq_history")||"[]");
-    h.push(result);
-    localStorage.setItem("eiq_history",JSON.stringify(h));
+    const h=getHistory();h.push(result);saveHistory(h);
     navigate("result");
-  },[answers,qs,total,test,timeLeft,navigate,setTestResult]);
+  },[answers,qs,total,test,timeLeft,lang,user]);
 
   useEffect(()=>{
-    if(!started) return;
+    if(!started)return;
     timerRef.current=setInterval(()=>{
       setTimeLeft(p=>{
         if(p<=1){clearInterval(timerRef.current);doSubmit();return 0;}
@@ -937,976 +1000,693 @@ function ExamPage() {
   },[started,doSubmit,warnShown]);
 
   const fmt=s=>`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
-
-  const qStatus=i=>{
-    if(marked.has(i)&&answers[i]!==undefined) return "marked-answered";
-    if(marked.has(i)) return "marked";
-    if(answers[i]!==undefined) return "answered";
-    if(i<current) return "visited";
-    return "not-visited";
-  };
-
-  const paletteClass=i=>{
-    const s=qStatus(i);
-    if(s==="answered") return "p-answered";
-    if(s==="marked") return "p-marked";
-    if(s==="marked-answered") return "p-marked-answered";
-    if(s==="visited") return "p-visited";
-    return "p-not-visited";
-  };
-
-  const q=qs[current];
   const answered=Object.keys(answers).length;
   const crit=timeLeft<300;
-
-  if(!started) return (
-    <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"calc(100vh - 60px)"}}>
-      <div className="card" style={{maxWidth:500,width:"100%",padding:40,textAlign:"center"}}>
-        <div style={{width:60,height:60,borderRadius:16,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
-          display:"flex",alignItems:"center",justifyContent:"center",fontSize:28,margin:"0 auto 20px"}}>🎯</div>
-        <h1 style={{fontSize:22,fontWeight:800,marginBottom:6}}>{test.name}</h1>
-        <p style={{color:"var(--muted)",fontSize:14,marginBottom:28}}>{test.subject} · {test.year}</p>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:28}}>
-          {[{i:"❓",l:"Questions",v:total},{i:"⏱️",l:"Duration",v:`${test.duration} min`},{i:"🏆",l:"Marking",v:"+1 / 0"}].map(s=>(
-            <div key={s.l} style={{padding:14,borderRadius:12,background:"var(--surface2)"}}>
-              <div style={{fontSize:22,marginBottom:4}}>{s.i}</div>
-              <div style={{fontSize:17,fontWeight:800}}>{s.v}</div>
-              <div style={{fontSize:11,color:"var(--muted)"}}>{s.l}</div>
-            </div>
-          ))}
-        </div>
-        <div style={{textAlign:"left",padding:16,borderRadius:12,background:"var(--surface2)",marginBottom:24}}>
-          <p style={{fontSize:13,fontWeight:700,marginBottom:8}}>📋 Instructions</p>
-          {["Each question carries 1 mark. No negative marking.",
-            "Use Mark for Review to flag questions for later.",
-            "Green palette = answered, Orange = marked, Red = visited unanswered.",
-            "Test auto-submits when timer hits 00:00."].map((t,i)=>(
-            <p key={i} style={{fontSize:12,color:"var(--muted)",marginBottom:4}}>• {t}</p>
-          ))}
-        </div>
-        <div style={{display:"flex",gap:10}}>
-          <button className="btn btn-secondary" onClick={()=>navigate("tests")} style={{flex:"0 0 auto"}}>← Back</button>
-          <button className="btn btn-primary" onClick={()=>setStarted(true)} style={{flex:1,fontSize:15}}>🚀 Begin Test</button>
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div style={{display:"flex",flexDirection:"column",minHeight:"calc(100vh - 60px)"}}>
-      {/* Exam topbar */}
-      <div style={{background:"var(--surface)",borderBottom:"1px solid var(--border)",padding:"10px 20px",
-        display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,flexShrink:0}}>
-        <div>
-          <p style={{fontWeight:700,fontSize:14}}>{test.name}</p>
-          <p style={{fontSize:12,color:"var(--muted)"}}>Q {current+1} / {total}</p>
-        </div>
-        <div style={{display:"flex",alignItems:"center",gap:8,padding:"8px 16px",borderRadius:12,
-          background:crit?"rgba(239,68,68,.15)":"var(--surface2)",
-          color:crit?"var(--red)":"var(--text)",fontWeight:800,fontSize:20,fontFamily:"JetBrains Mono,monospace",
-          border:`1px solid ${crit?"var(--red)":"var(--border)"}`,
-          animation:crit?"pulse 1s infinite":undefined}}>
-          ⏱ {fmt(timeLeft)}
-        </div>
-        <div style={{display:"flex",gap:8}}>
-          <div style={{fontSize:12,color:"var(--muted)",display:"flex",gap:12}}>
-            <span>✅ <strong style={{color:"var(--green)"}}>{answered}</strong></span>
-            <span>⏭ <strong style={{color:"var(--red)"}}>{total-answered}</strong></span>
-            <span>🚩 <strong style={{color:"var(--orange)"}}>{marked.size}</strong></span>
-          </div>
-          <button className="btn btn-secondary" onClick={()=>setShowPalette(p=>!p)} style={{fontSize:12,padding:"6px 10px"}}>Grid</button>
-          <button className="btn btn-success" onClick={()=>setConfirmSub(true)} style={{fontSize:12,padding:"6px 14px"}}>Submit ✓</button>
-        </div>
-      </div>
-
-      <div style={{display:"flex",flex:1,overflow:"hidden"}}>
-        {/* Question area */}
-        <div style={{flex:1,padding:24,overflowY:"auto"}}>
-          {q&&<div style={{maxWidth:720}}>
-            <div style={{display:"flex",gap:8,marginBottom:16}}>
-              <span className="badge" style={{background:"rgba(124,58,237,.15)",color:"var(--accent2)",border:"1px solid rgba(124,58,237,.25)"}}>{q.topic}</span>
-              <span className={`badge tag-${q.difficulty.toLowerCase()}`}>{q.difficulty}</span>
-              <span style={{marginLeft:"auto",fontSize:12,color:"var(--muted)"}}>Chapter: {q.chapter}</span>
-            </div>
-            <div className="card" style={{padding:22,marginBottom:20}}>
-              <p style={{fontSize:17,fontWeight:600,lineHeight:1.7}}>{q.question}</p>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              {q.options.map((opt,i)=><div key={i} className={`q-option${answers[current]===i?" selected":""}`}
-                onClick={()=>setAnswers({...answers,[current]:i})}>
-                <div style={{width:30,height:30,borderRadius:8,
-                  background:answers[current]===i?"var(--accent)":"var(--surface2)",
-                  color:answers[current]===i?"#fff":"var(--muted)",
-                  display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,flexShrink:0}}>
-                  {String.fromCharCode(65+i)}
-                </div>
-                <span style={{fontSize:15}}>{opt}</span>
-              </div>)}
-            </div>
-            <div style={{display:"flex",gap:10,marginTop:20,alignItems:"center"}}>
-              <button className="btn btn-secondary" onClick={()=>setCurrent(Math.max(0,current-1))} disabled={current===0}>← Prev</button>
-              <button className={`btn ${marked.has(current)?"btn-danger":"btn-secondary"}`}
-                onClick={()=>{const m=new Set(marked);m.has(current)?m.delete(current):m.add(current);setMarked(m);}}>
-                🚩 {marked.has(current)?"Unmark":"Mark Review"}
-              </button>
-              <button className="btn btn-secondary"
-                onClick={()=>{const a={...answers};delete a[current];setAnswers(a);}}>Clear</button>
-              <button className="btn btn-primary" style={{marginLeft:"auto"}}
-                onClick={()=>current<total-1?setCurrent(current+1):setConfirmSub(true)}>
-                {current<total-1?"Next →":"Submit ✓"}
-              </button>
-            </div>
-          </div>}
-        </div>
-
-        {/* Palette - desktop */}
-        <div style={{width:220,borderLeft:"1px solid var(--border)",padding:16,overflowY:"auto",background:"var(--surface)"}}>
-          <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Question Palette</p>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:6,marginBottom:14}}>
-            {qs.map((_,i)=><button key={i} className={`palette-btn ${paletteClass(i)}`}
-              onClick={()=>setCurrent(i)}
-              style={{outline:i===current?"2px solid var(--accent2)":undefined,outlineOffset:2}}>
-              {i+1}
-            </button>)}
-          </div>
-          <div style={{display:"flex",flexDirection:"column",gap:6,fontSize:11}}>
-            {[{c:"var(--green)",l:"Answered"},{c:"var(--red)",l:"Not Answered"},{c:"var(--orange)",l:"Marked"},{c:"var(--accent)",l:"Marked+Ans"}].map(x=>(
-              <div key={x.l} style={{display:"flex",alignItems:"center",gap:6}}>
-                <div style={{width:10,height:10,borderRadius:2,background:x.c,flexShrink:0}}/>
-                <span style={{color:"var(--muted)"}}>{x.l}</span>
-              </div>
-            ))}
-          </div>
-          <div style={{marginTop:14,padding:12,borderRadius:10,background:"var(--surface2)",fontSize:12}}>
-            <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
-              <span style={{color:"var(--muted)"}}>Answered</span><strong style={{color:"var(--green)"}}>{answered}</strong>
-            </div>
-            <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
-              <span style={{color:"var(--muted)"}}>Remaining</span><strong style={{color:"var(--red)"}}>{total-answered}</strong>
-            </div>
-            <div style={{display:"flex",justifyContent:"space-between"}}>
-              <span style={{color:"var(--muted)"}}>Marked</span><strong style={{color:"var(--orange)"}}>{marked.size}</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modals */}
-      {warn&&<div className="overlay"><div className="modal" style={{textAlign:"center",maxWidth:360}}>
-        <div style={{fontSize:48,marginBottom:12}}>⚠️</div>
-        <h2 style={{fontSize:20,fontWeight:800,marginBottom:8}}>5 Minutes Remaining!</h2>
-        <p style={{color:"var(--muted)",marginBottom:20}}>Please review and submit your answers soon.</p>
-        <button className="btn btn-primary" style={{width:"100%"}} onClick={()=>setWarn(false)}>Continue Exam</button>
-      </div></div>}
-
-      {confirmSub&&<div className="overlay"><div className="modal">
-        <h2 style={{fontSize:18,fontWeight:800,marginBottom:20}}>📋 Confirm Submission</h2>
-        {[{l:"Total Questions",v:total},{l:"Answered",v:answered,c:"var(--green)"},{l:"Not Answered",v:total-answered,c:"var(--red)"},{l:"Marked for Review",v:marked.size,c:"var(--orange)"}].map(s=>(
-          <div key={s.l} style={{display:"flex",justifyContent:"space-between",padding:"10px 14px",borderRadius:10,
-            background:"var(--surface2)",marginBottom:8}}>
-            <span style={{fontSize:14,color:"var(--muted)"}}>{s.l}</span>
-            <strong style={{color:s.c||"var(--text)"}}>{s.v}</strong>
-          </div>
-        ))}
-        <div style={{display:"flex",gap:10,marginTop:16}}>
-          <button className="btn btn-secondary" style={{flex:1}} onClick={()=>setConfirmSub(false)}>Cancel</button>
-          <button className="btn btn-success" style={{flex:1}} onClick={doSubmit}>Submit ✓</button>
-        </div>
-      </div></div>}
-
-      {showPalette&&<div className="overlay" onClick={()=>setShowPalette(false)}>
-        <div className="modal" onClick={e=>e.stopPropagation()}>
-          <h3 style={{fontWeight:700,marginBottom:14}}>Question Palette</h3>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(8,1fr)",gap:6}}>
-            {qs.map((_,i)=><button key={i} className={`palette-btn ${paletteClass(i)}`}
-              onClick={()=>{setCurrent(i);setShowPalette(false);}}>
-              {i+1}
-            </button>)}
-          </div>
-        </div>
-      </div>}
-    </div>
-  );
-}
-
-// ══════════════════════════════════════════════════════════
-// PAGE: RESULT
-// ══════════════════════════════════════════════════════════
-function ResultPage() {
-  const {testResult,activeTest,navigate} = useApp();
-  const [tab,setTab] = useState("summary");
-  const tests = generateTests();
-  if(!testResult) return <div style={{textAlign:"center",padding:60}}>
-    <div style={{fontSize:48,marginBottom:12}}>📊</div>
-    <p style={{color:"var(--muted)",marginBottom:16}}>No result data found</p>
-    <button className="btn btn-primary" onClick={()=>navigate("dashboard")}>Back to Dashboard</button>
-  </div>;
-
-  const {correct,wrong,skipped,score,accuracy,totalQuestions,weakTopics,timeTaken,testName,answers}=testResult;
-  const test=activeTest||tests[0];
-  const qs=test?.questions||[];
-  const fmt=s=>`${Math.floor(s/60)}m ${s%60}s`;
-  const grade=score>=90?{l:"Excellent! 🏆",c:"var(--green)"}:score>=75?{l:"Very Good 🌟",c:"var(--accent2)"}:score>=60?{l:"Good 👍",c:"var(--accent3)"}:score>=40?{l:"Average 📈",c:"var(--yellow)"}:{l:"Keep Trying 💪",c:"var(--red)"};
-  const pColor=a=>a>=70?"var(--green)":a>=50?"var(--yellow)":"var(--red)";
-
-  const exportTxt=()=>{
-    const c=`ExamIQ — Test Result\n${"=".repeat(40)}\nTest: ${testName}\nDate: ${new Date(testResult.date).toLocaleString()}\n\nSCORE: ${score}%\nCorrect: ${correct}/${totalQuestions}\nWrong: ${wrong}\nSkipped: ${skipped}\nAccuracy: ${accuracy}%\nTime: ${fmt(timeTaken||0)}\n\nSUBJECT ANALYSIS\n${(weakTopics||[]).map(t=>`${t.name}: ${t.accuracy}% (${t.correct}/${t.total})`).join('\n')}`;
-    const a=document.createElement("a");
-    a.href=URL.createObjectURL(new Blob([c],{type:"text/plain"}));
-    a.download=`result-${testName?.replace(/\s+/g,"-")}.txt`;a.click();
+  const qStatus=i=>{
+    if(marked.has(i)&&answers[i]!==undefined)return"p-mark-ans";
+    if(marked.has(i))return"p-mark";
+    if(answers[i]!==undefined)return"p-ans";
+    if(i<current)return"p-vis";
+    return"p-not";
   };
+  const q=qs[current];
+  const qd=q?q[lang]||q.en:null;
 
-  return <div style={{display:"flex",flexDirection:"column",gap:20,animation:"fadeUp .4s ease"}}>
-    <div style={{textAlign:"center",padding:"24px 0"}}>
-      <div style={{fontSize:52,marginBottom:10}}>🏁</div>
-      <h1 style={{fontSize:26,fontWeight:800,marginBottom:4}}>Test Complete</h1>
-      <p style={{color:"var(--muted)",fontSize:14,marginBottom:10}}>{testName}</p>
-      <span style={{padding:"6px 18px",borderRadius:20,fontSize:14,fontWeight:700,
-        background:`${grade.c}20`,color:grade.c,border:`1px solid ${grade.c}40`}}>{grade.l}</span>
+  if(!started) return <div className="full-page" style={{padding:20,justifyContent:"center"}}>
+    <div style={{textAlign:"center",marginBottom:28}}>
+      <div style={{fontSize:48,marginBottom:12}}>🎯</div>
+      <h2 style={{fontSize:20,fontWeight:800,marginBottom:6}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</h2>
+      <p style={{color:"var(--muted)",fontSize:14}}>{test.subject} · {test.year}</p>
     </div>
-
-    {/* Score row */}
-    <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}}>
-      {[{l:"Score",v:`${score}%`,i:"⭐",c:"#7c3aed"},{l:"Correct",v:correct,i:"✅",c:"#10b981"},
-        {l:"Wrong",v:wrong,i:"❌",c:"#ef4444"},{l:"Skipped",v:skipped,i:"⏭️",c:"#f97316"}].map(s=>(
-        <div key={s.l} className="stat-card" style={{textAlign:"center",padding:20}}>
-          <div style={{fontSize:28,marginBottom:6}}>{s.i}</div>
-          <div style={{fontSize:28,fontWeight:800,color:s.c}}>{s.v}</div>
-          <div style={{fontSize:12,color:"var(--muted)"}}>{s.l}</div>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:24}}>
+      {[{i:"❓",l:t.questions,v:total},{i:"⏱",l:t.duration,v:`${test.duration}${t.mins}`},{i:"🏆",l:"Marking",v:"+1/0"}].map(s=>(
+        <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:"1px solid var(--border)",textAlign:"center"}}>
+          <div style={{fontSize:22,marginBottom:4}}>{s.i}</div>
+          <div style={{fontWeight:800,fontSize:14}}>{s.v}</div>
+          <div style={{fontSize:10,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</div>
         </div>
       ))}
     </div>
+    <div style={{background:"var(--surface2)",borderRadius:14,padding:14,marginBottom:24}}>
+      <p style={{fontWeight:700,marginBottom:8,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.instructions}</p>
+      {(lang==="ta"?["ஒவ்வொரு கேள்விக்கும் 1 மதிப்பெண்","எதிர்மறை மதிப்பெண் இல்லை","நேரம் முடிந்தால் தானாக சமர்ப்பிக்கும்","மதிப்பாய்வுக்கு கேள்விகளை குறியிடலாம்"]:["1 mark per question","No negative marking","Auto-submits when timer ends","Mark questions for review"]).map((line,i)=>(
+        <p key={i} style={{fontSize:13,color:"var(--muted)",marginBottom:4}} className={lang==="ta"?"tamil":""}>• {line}</p>
+      ))}
+    </div>
+    <button className="btn btn-primary" style={{fontSize:16}} onClick={()=>setStarted(true)}>🚀 {t.beginTest}</button>
+    <button className="btn btn-secondary" style={{marginTop:10}} onClick={()=>navigate("tests")}>← {lang==="ta"?"திரும்பு":"Back"}</button>
+  </div>;
 
-    {/* Tabs */}
-    <div style={{display:"flex",gap:4,background:"var(--surface2)",padding:4,borderRadius:14,width:"fit-content"}}>
-      {[{k:"summary",l:"📊 Summary"},{k:"analysis",l:"🔍 Analysis"},{k:"answers",l:"📝 Answers"}].map(t=>(
-        <button key={t.k} onClick={()=>setTab(t.k)} style={{
-          padding:"8px 18px",borderRadius:11,fontSize:13,fontWeight:700,border:"none",cursor:"pointer",
-          background:tab===t.k?"var(--surface)":"transparent",color:tab===t.k?"var(--accent2)":"var(--muted)"}}>
-          {t.l}
+  return <div style={{display:"flex",flexDirection:"column",height:"100vh",overflow:"hidden"}}>
+    {/* Exam top bar */}
+    <div style={{background:"var(--surface)",borderBottom:"1px solid var(--border)",padding:"10px 14px",
+      display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+      <div style={{flex:1,minWidth:0}}>
+        <p style={{fontWeight:700,fontSize:13,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} className={lang==="ta"?"tamil":""}>{lang==="ta"?test.nameTA:test.name}</p>
+        <p style={{fontSize:11,color:"var(--muted)"}}>{t.questionNo} {current+1} {t.of} {total}</p>
+      </div>
+      <div style={{fontFamily:"monospace",fontWeight:900,fontSize:20,padding:"6px 14px",borderRadius:12,
+        background:crit?"rgba(239,68,68,.15)":"var(--surface2)",
+        color:crit?"#ef4444":"var(--text)",border:`1px solid ${crit?"rgba(239,68,68,.4)":"var(--border)"}`,
+        flexShrink:0,animation:crit?"pulse 1s infinite":undefined}}>
+        ⏱ {fmt(timeLeft)}
+      </div>
+      <button onClick={()=>setShowPalette(true)} style={{width:36,height:36,borderRadius:9,background:"var(--surface2)",border:"1px solid var(--border)",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>🔲</button>
+    </div>
+
+    {/* Progress bar */}
+    <div style={{height:3,background:"var(--surface2)"}}>
+      <div style={{height:"100%",background:"linear-gradient(90deg,#7c3aed,#a855f7)",width:`${(answered/total)*100}%`,transition:"width .3s"}}/>
+    </div>
+
+    {/* Question area */}
+    <div style={{flex:1,overflowY:"auto",padding:14,WebkitOverflowScrolling:"touch"}}>
+      {q&&qd&&<>
+        <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+          <span className={`badge tag-${q.difficulty.toLowerCase()}`}>{q.difficulty}</span>
+          <span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}} className={lang==="ta"?"tamil":""}>{q.topic}</span>
+        </div>
+        <div className="card card-p" style={{marginBottom:14}}>
+          <p style={{fontSize:16,fontWeight:600,lineHeight:1.7}} className={lang==="ta"?"tamil":""}>{qd.q}</p>
+        </div>
+        {qd.opts.map((opt,i)=><button key={i}
+          className={`opt-card${answers[current]===i?" selected":""}`}
+          onClick={()=>setAnswers({...answers,[current]:i})}>
+          <div className="opt-letter" style={{background:answers[current]===i?"#7c3aed":"var(--surface2)",color:answers[current]===i?"#fff":"var(--muted)"}}>
+            {String.fromCharCode(65+i)}
+          </div>
+          <span style={{fontSize:15,flex:1,textAlign:"left",lineHeight:1.5}} className={lang==="ta"?"tamil":""}>{opt}</span>
+        </button>)}
+      </>}
+    </div>
+
+    {/* Bottom controls */}
+    <div style={{background:"var(--surface)",borderTop:"1px solid var(--border)",padding:"10px 14px",flexShrink:0}}>
+      <div style={{display:"flex",gap:8,marginBottom:8}}>
+        <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={()=>setCurrent(Math.max(0,current-1))} disabled={current===0}>
+          ← {t.prevQ}
+        </button>
+        <button className={`btn btn-sm ${marked.has(current)?"btn-danger":"btn-secondary"}`}
+          style={{width:"auto",padding:"9px 14px"}}
+          onClick={()=>{const m=new Set(marked);m.has(current)?m.delete(current):m.add(current);setMarked(m);}}>
+          🚩 {t.markReview}
+        </button>
+        <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={()=>current<total-1?setCurrent(current+1):setConfirmSub(true)}>
+          {current<total-1?`${t.nextQ} →`:`${t.submitTest} ✓`}
+        </button>
+      </div>
+      <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"var(--muted)"}}>
+        <span>✅ <strong style={{color:"#10b981"}}>{answered}</strong></span>
+        <span>⏭ <strong style={{color:"#ef4444"}}>{total-answered}</strong></span>
+        <span>🚩 <strong style={{color:"#f97316"}}>{marked.size}</strong></span>
+        <button className="btn btn-success btn-sm" style={{width:"auto",padding:"6px 12px",fontSize:12}} onClick={()=>setConfirmSub(true)}>
+          {t.submit} ✓
+        </button>
+      </div>
+    </div>
+
+    {/* Palette Modal */}
+    {showPalette&&<div className="modal-overlay" onClick={()=>setShowPalette(false)}>
+      <div className="modal-sheet" onClick={e=>e.stopPropagation()}>
+        <div className="modal-pill"/>
+        <p style={{fontWeight:800,marginBottom:4}}>{lang==="ta"?"கேள்வி பலகம்":"Question Palette"}</p>
+        <div className="palette-grid">
+          {qs.map((_,i)=><button key={i} className={`p-btn ${qStatus(i)}`}
+            style={{outline:i===current?"2px solid var(--accent2)":"none",outlineOffset:2}}
+            onClick={()=>{setCurrent(i);setShowPalette(false);}}>
+            {i+1}
+          </button>)}
+        </div>
+        <div style={{display:"flex",gap:12,fontSize:11,flexWrap:"wrap",marginTop:4}}>
+          {[{c:"#10b981",l:lang==="ta"?"பதில்":"Answered"},{c:"#f97316",l:lang==="ta"?"குறி":"Marked"},
+            {c:"#7c3aed",l:lang==="ta"?"குறி+பதில்":"Mark+Ans"},{c:"var(--surface2)",l:lang==="ta"?"செல்லவில்லை":"Not visited"}].map(x=>(
+            <div key={x.l} style={{display:"flex",alignItems:"center",gap:4}} className={lang==="ta"?"tamil":""}>
+              <div style={{width:10,height:10,borderRadius:2,background:x.c}}/>
+              <span style={{color:"var(--muted)"}}>{x.l}</span>
+            </div>
+          ))}
+        </div>
+        <button className="btn btn-secondary" style={{marginTop:16}} onClick={()=>setShowPalette(false)}>{t.cancel}</button>
+      </div>
+    </div>}
+
+    {/* Warning */}
+    {warn&&<div className="modal-overlay"><div className="modal-sheet">
+      <div className="modal-pill"/>
+      <div style={{textAlign:"center"}}>
+        <div style={{fontSize:44,marginBottom:10}}>⚠️</div>
+        <h3 style={{fontWeight:800,fontSize:18,marginBottom:8}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"5 நிமிடங்கள் மட்டுமே உள்ளன!":"5 Minutes Remaining!"}</h3>
+        <p style={{color:"var(--muted)",fontSize:14,marginBottom:20}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"உங்கள் பதில்களை மதிப்பாய்வு செய்து சமர்ப்பியுங்கள்.":"Please review and submit your answers."}</p>
+        <button className="btn btn-primary" onClick={()=>setWarn(false)}>{lang==="ta"?"தொடரவும்":"Continue Exam"}</button>
+      </div>
+    </div></div>}
+
+    {/* Confirm Submit */}
+    {confirmSub&&<div className="modal-overlay"><div className="modal-sheet">
+      <div className="modal-pill"/>
+      <h3 style={{fontWeight:800,fontSize:17,marginBottom:16}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தேர்வை சமர்ப்பிக்கவா?":"Submit Test?"}</h3>
+      {[{l:lang==="ta"?"மொத்த கேள்விகள்":"Total",v:total},
+        {l:lang==="ta"?"பதிலளித்தது":"Answered",v:answered,c:"#10b981"},
+        {l:lang==="ta"?"பதிலளிக்காதது":"Unanswered",v:total-answered,c:"#ef4444"},
+        {l:lang==="ta"?"குறியிடப்பட்டது":"Marked",v:marked.size,c:"#f97316"}].map(s=>(
+        <div key={s.l} style={{display:"flex",justifyContent:"space-between",padding:"10px 14px",borderRadius:10,background:"var(--surface2)",marginBottom:8}}>
+          <span style={{fontSize:14,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</span>
+          <strong style={{color:s.c||"var(--text)"}}>{s.v}</strong>
+        </div>
+      ))}
+      <div style={{display:"flex",gap:8,marginTop:16}}>
+        <button className="btn btn-secondary" style={{flex:1}} onClick={()=>setConfirmSub(false)}>{t.cancel}</button>
+        <button className="btn btn-success" style={{flex:1}} onClick={doSubmit}>{t.submitTest} ✓</button>
+      </div>
+    </div></div>}
+  </div>;
+}
+
+// ══════════════════════════════════════════════════════
+// RESULT
+// ══════════════════════════════════════════════════════
+function ResultPage(){
+  const {testResult,activeTest,navigate,lang} = useApp();
+  const t=T[lang];
+  const [tab,setTab] = useState("summary");
+  if(!testResult) return <div style={{textAlign:"center",padding:60}}>
+    <div style={{fontSize:44,marginBottom:12}}>📊</div>
+    <p style={{color:"var(--muted)",marginBottom:16}}>{lang==="ta"?"முடிவு இல்லை":"No result data"}</p>
+    <button className="btn btn-primary" onClick={()=>navigate("dashboard")}>{t.backHome}</button>
+  </div>;
+
+  const {correct,wrong,skipped,score,accuracy,totalQuestions,weakTopics,timeTaken,testName,answers}=testResult;
+  const test=activeTest||TESTS[0];
+  const qs=test.qs||[];
+  const fmt=s=>`${Math.floor(s/60)}m ${s%60}s`;
+  const grade=score>=90?{l:"Excellent! 🏆",c:"#10b981"}:score>=75?{l:lang==="ta"?"மிகவும் நல்லது 🌟":"Very Good 🌟",c:"#7c3aed"}:score>=60?{l:lang==="ta"?"நல்லது 👍":"Good 👍",c:"#06b6d4"}:score>=40?{l:lang==="ta"?"சராசரி 📈":"Average 📈",c:"#eab308"}:{l:lang==="ta"?"மேலும் முயற்சி 💪":"Keep Trying 💪",c:"#ef4444"};
+  const pc=a=>a>=70?"#10b981":a>=50?"#eab308":"#ef4444";
+
+  const shareResult = () => {
+    const text=`🎯 CRACKTNPSC Result\n📝 ${testName}\n✅ Score: ${score}%\n🎯 Accuracy: ${accuracy}%\n✓ Correct: ${correct}/${totalQuestions}\n\nJoin CRACKTNPSC for exam prep!`;
+    if(navigator.share) navigator.share({title:"My Exam Result",text});
+    else alert(text);
+  };
+
+  return <>
+    <TopNav title={lang==="ta"?"முடிவு":"Result"} showBack onBack={()=>navigate("dashboard")}/>
+    <div className="page-no-bottom">
+      {/* Grade banner */}
+      <div style={{textAlign:"center",padding:"20px 0 16px"}}>
+        <div style={{fontSize:48,marginBottom:8}}>🏁</div>
+        <h2 style={{fontSize:22,fontWeight:800,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தேர்வு முடிந்தது!":"Test Complete!"}</h2>
+        <p style={{color:"var(--muted)",fontSize:13,marginBottom:10}} className={lang==="ta"?"tamil":""}>{testName}</p>
+        <span style={{padding:"6px 16px",borderRadius:20,fontSize:14,fontWeight:700,
+          background:`${grade.c}20`,color:grade.c,border:`1px solid ${grade.c}40`}} className={lang==="ta"?"tamil":""}>{grade.l}</span>
+      </div>
+
+      {/* Score cards */}
+      <div className="stat-row">
+        {[{l:t.score,v:`${score}%`,i:"⭐",c:"#7c3aed"},{l:t.correct,v:correct,i:"✅",c:"#10b981"},
+          {l:t.wrong,v:wrong,i:"❌",c:"#ef4444"},{l:t.skipped,v:skipped,i:"⏭",c:"#f97316"}].map(s=>(
+          <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:`1px solid var(--border)`,textAlign:"center"}}>
+            <div style={{fontSize:20,marginBottom:4}}>{s.i}</div>
+            <div style={{fontSize:22,fontWeight:900,color:s.c}}>{s.v}</div>
+            <div style={{fontSize:10,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabs */}
+      <div className="toggle-wrap" style={{marginBottom:14}}>
+        {[{k:"summary",l:lang==="ta"?"சுருக்கம்":"Summary"},{k:"analysis",l:lang==="ta"?"பகுப்பாய்வு":"Analysis"},{k:"answers",l:lang==="ta"?"பதில்கள்":"Answers"}].map(tab2=>(
+          <button key={tab2.k} className={`toggle-btn ${tab===tab2.k?"active":""}`} onClick={()=>setTab(tab2.k)} className={`toggle-btn ${tab===tab2.k?"active":""} ${lang==="ta"?"tamil":""}`}>{tab2.l}</button>
+        ))}
+      </div>
+
+      {tab==="summary"&&<>
+        <div className="card card-p" style={{marginBottom:14}}>
+          <p style={{fontWeight:700,marginBottom:14}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"செயல்திறன்":"Performance"}</p>
+          <div style={{display:"flex",justifyContent:"space-around"}}>
+            <div style={{textAlign:"center"}}><DonutChart pct={score} color="#7c3aed"/><p style={{fontSize:12,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.score}</p></div>
+            <div style={{textAlign:"center"}}><DonutChart pct={accuracy} color="#10b981"/><p style={{fontSize:12,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.accuracy}</p></div>
+          </div>
+        </div>
+        <div className="card card-p" style={{marginBottom:14}}>
+          {[{l:lang==="ta"?"மொத்த கேள்விகள்":"Total Questions",v:totalQuestions},
+            {l:t.correct,v:correct,c:"#10b981"},{l:t.wrong,v:wrong,c:"#ef4444"},
+            {l:t.skipped,v:skipped,c:"#f97316"},{l:t.accuracy,v:`${accuracy}%`,c:"#7c3aed"},
+            {l:lang==="ta"?"எடுத்த நேரம்":"Time Taken",v:fmt(timeTaken||0)}].map(d=>(
+            <div key={d.l} style={{display:"flex",justifyContent:"space-between",padding:"9px 0",borderBottom:"1px solid var(--border)"}}>
+              <span style={{fontSize:14,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{d.l}</span>
+              <strong style={{color:d.c||"var(--text)"}}>{d.v}</strong>
+            </div>
+          ))}
+        </div>
+      </>}
+
+      {tab==="analysis"&&<div className="card card-p" style={{marginBottom:14}}>
+        <p style={{fontWeight:700,marginBottom:14}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தலைப்பு வாரியான பகுப்பாய்வு":"Topic Analysis"}</p>
+        {(weakTopics||[]).sort((a,b)=>a.accuracy-b.accuracy).map(tp=>(
+          <div key={tp.name} style={{marginBottom:14}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+              <span style={{fontWeight:600,fontSize:14}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                <span style={{fontSize:12,color:"var(--muted)"}}>{tp.correct}/{tp.total}</span>
+                <span style={{fontSize:13,fontWeight:700,color:pc(tp.accuracy)}}>{tp.accuracy}%</span>
+              </div>
+            </div>
+            <div className="progress-bar"><div className="progress-fill" style={{width:`${tp.accuracy}%`,background:pc(tp.accuracy)}}/></div>
+          </div>
+        ))}
+        <div style={{padding:12,borderRadius:12,background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.2)",marginTop:8}}>
+          <p style={{fontSize:13,fontWeight:700,color:"var(--accent2)",marginBottom:4}}>💡 {lang==="ta"?"பரிந்துரை":"Recommendation"}</p>
+          <p style={{fontSize:13,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>
+            {(weakTopics||[]).filter(tp=>tp.accuracy<50).length>0
+              ?lang==="ta"
+                ?`கவனிக்க: ${(weakTopics||[]).filter(tp=>tp.accuracy<50).map(tp=>tp.name).join(", ")}. இந்த பகுதிகளில் அதிக பயிற்சி தேவை.`
+                :`Focus on: ${(weakTopics||[]).filter(tp=>tp.accuracy<50).map(tp=>tp.name).join(", ")}. These need more practice.`
+              :lang==="ta"?"சிறப்பான செயல்திறன்! தொடர்ந்து பயிற்சி செய்யுங்கள்.":"Great performance! Keep practicing."}
+          </p>
+        </div>
+      </div>}
+
+      {tab==="answers"&&<div style={{marginBottom:14}}>
+        {qs.map((q,i)=>{
+          const qd=q[lang]||q.en;
+          const uAns=answers?.[i];
+          const ok=uAns===qd.correct,skip=uAns===undefined;
+          return <div key={i} className="card" style={{marginBottom:10,overflow:"hidden",
+            borderColor:skip?"var(--border)":ok?"rgba(16,185,129,.4)":"rgba(239,68,68,.4)"}}>
+            <div className="card-p">
+              <div style={{display:"flex",gap:8,marginBottom:10,alignItems:"center"}}>
+                <div style={{width:26,height:26,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,fontSize:13,
+                  background:skip?"var(--surface2)":ok?"rgba(16,185,129,.2)":"rgba(239,68,68,.2)",
+                  color:skip?"var(--muted)":ok?"#10b981":"#ef4444"}}>
+                  {skip?"—":ok?"✓":"✗"}
+                </div>
+                <span className={`badge tag-${q.difficulty.toLowerCase()}`}>{q.difficulty}</span>
+                <span style={{fontSize:12,color:"var(--muted)",marginLeft:"auto"}} className={lang==="ta"?"tamil":""}>{q.topic}</span>
+              </div>
+              <p style={{fontSize:13,fontWeight:500,marginBottom:12,lineHeight:1.6}} className={lang==="ta"?"tamil":""}>{i+1}. {qd.q}</p>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+                {qd.opts.map((opt,j)=><div key={j} style={{
+                  padding:"7px 10px",borderRadius:8,fontSize:12,
+                  background:j===qd.correct?"rgba(16,185,129,.1)":j===uAns&&!ok?"rgba(239,68,68,.1)":"var(--surface2)",
+                  border:`1px solid ${j===qd.correct?"rgba(16,185,129,.3)":j===uAns&&!ok?"rgba(239,68,68,.3)":"var(--border)"}`
+                }} className={lang==="ta"?"tamil":""}>{String.fromCharCode(65+j)}. {opt}</div>)}
+              </div>
+            </div>
+            {qd.exp&&<div style={{padding:"10px 14px",borderTop:"1px solid var(--border)",background:"rgba(124,58,237,.04)"}}>
+              <span style={{fontSize:12,fontWeight:700,color:"var(--accent2)"}}>💡 </span>
+              <span style={{fontSize:12,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{qd.exp}</span>
+            </div>}
+          </div>;
+        })}
+      </div>}
+
+      <div style={{display:"flex",gap:8,paddingBottom:20,flexWrap:"wrap"}}>
+        <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={()=>navigate("dashboard")}>{t.backHome}</button>
+        <button className="btn btn-secondary btn-sm" style={{width:"auto",padding:"9px 14px"}} onClick={shareResult}>📤 {t.shareResult}</button>
+        <button className="btn btn-primary btn-sm" style={{flex:1}} onClick={()=>navigate("exam")}>🔁 {t.retake}</button>
+      </div>
+    </div>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// ANALYTICS
+// ══════════════════════════════════════════════════════
+function AnalyticsPage(){
+  const {lang,user} = useApp();
+  const t=T[lang];
+  const history=getHistory().filter(h=>h.userId===user?.id);
+  const topicData=[
+    {name:"Polity",acc:40},{name:"History",acc:78},{name:"Science",acc:35},
+    {name:"Geography",acc:62},{name:"Tamil",acc:85},{name:"Economics",acc:50},
+  ];
+  const pc=a=>a>=70?"#10b981":a>=50?"#eab308":"#ef4444";
+
+  return <>
+    <TopNav title={t.analyticsTab}/>
+    <div className="page">
+      <div style={{display:"flex",justifyContent:"space-around",marginBottom:16}}>
+        <div style={{textAlign:"center"}}><DonutChart pct={72} color="#7c3aed" size={80}/><p style={{fontSize:11,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.overall}</p></div>
+        <div style={{textAlign:"center"}}><DonutChart pct={81} color="#10b981" size={80}/><p style={{fontSize:11,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>{t.accuracy}</p></div>
+        <div style={{textAlign:"center"}}><DonutChart pct={65} color="#06b6d4" size={80}/><p style={{fontSize:11,color:"var(--muted)",marginTop:4}} className={lang==="ta"?"tamil":""}>Progress</p></div>
+      </div>
+
+      <div className="sec-title"><span>📚</span><span className={lang==="ta"?"tamil":""}>{lang==="ta"?"தலைப்பு வாரியான துல்லியம்":"Chapter Accuracy"}</span></div>
+      <div className="card card-p" style={{marginBottom:14}}>
+        {topicData.map(tp=>(
+          <div key={tp.name} style={{marginBottom:14}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:5,fontSize:13}}>
+              <span style={{fontWeight:600}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <span style={{fontWeight:700,color:pc(tp.acc)}}>{tp.acc}%</span>
+            </div>
+            <div className="progress-bar"><div className="progress-fill" style={{width:`${tp.acc}%`,background:pc(tp.acc)}}/></div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        <div className="card card-p" style={{border:"1px solid rgba(239,68,68,.3)"}}>
+          <p style={{fontWeight:700,color:"#ef4444",marginBottom:10,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.weakAreas}</p>
+          {topicData.filter(tp=>tp.acc<55).map(tp=>(
+            <div key={tp.name} style={{display:"flex",justifyContent:"space-between",padding:"7px 10px",borderRadius:8,background:"rgba(239,68,68,.08)",marginBottom:6}}>
+              <span style={{fontSize:13,fontWeight:600}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <span style={{fontSize:12,fontWeight:700,color:"#ef4444"}}>{tp.acc}%</span>
+            </div>
+          ))}
+        </div>
+        <div className="card card-p" style={{border:"1px solid rgba(16,185,129,.3)"}}>
+          <p style={{fontWeight:700,color:"#10b981",marginBottom:10,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.strongAreas}</p>
+          {topicData.filter(tp=>tp.acc>=70).map(tp=>(
+            <div key={tp.name} style={{display:"flex",justifyContent:"space-between",padding:"7px 10px",borderRadius:8,background:"rgba(16,185,129,.08)",marginBottom:6}}>
+              <span style={{fontSize:13,fontWeight:600}} className={lang==="ta"?"tamil":""}>{tp.name}</span>
+              <span style={{fontSize:12,fontWeight:700,color:"#10b981"}}>{tp.acc}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Rank prediction */}
+      <div className="card card-p" style={{background:"linear-gradient(135deg,rgba(124,58,237,.12),rgba(6,182,212,.08))",border:"1px solid rgba(124,58,237,.3)",marginBottom:14}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <div>
+            <p style={{fontWeight:800,fontSize:15,marginBottom:4}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தரவரிசை கணிப்பு 🎯":"Rank Prediction 🎯"}</p>
+            <p style={{fontSize:12,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தற்போதைய செயல்திறன் அடிப்படையில்":"Based on current performance"}</p>
+          </div>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontSize:28,fontWeight:900,color:"var(--accent2)"}}>Top 15%</div>
+            <div style={{fontSize:10,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{lang==="ta"?"தரவரிசை வரம்பு":"Rank band"}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════════════════
+function ProfilePage(){
+  const {user,setUser,navigate,lang,setLang,darkMode,setDarkMode} = useApp();
+  const t=T[lang];
+  const history=getHistory().filter(h=>h.userId===user?.id);
+
+  const logout=()=>{
+    localStorage.removeItem("ct_session");
+    setUser(null);navigate("login");
+  };
+
+  return <>
+    <TopNav title={t.profile}/>
+    <div className="page">
+      {/* Profile card */}
+      <div style={{textAlign:"center",padding:"16px 0 24px"}}>
+        <div style={{width:72,height:72,borderRadius:22,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",
+          display:"flex",alignItems:"center",justifyContent:"center",fontSize:30,margin:"0 auto 12px",
+          boxShadow:"0 8px 24px rgba(124,58,237,.4)"}}>
+          {user?.name?.[0]||"S"}
+        </div>
+        <p style={{fontWeight:800,fontSize:18}}>{user?.name}</p>
+        <p style={{color:"var(--muted)",fontSize:14,marginTop:4}}>📱 +91 {user?.phone}</p>
+        {user?.email&&<p style={{color:"var(--muted)",fontSize:13,marginTop:2}}>{user?.email}</p>}
+        <div style={{display:"inline-flex",alignItems:"center",gap:6,marginTop:8,padding:"4px 12px",borderRadius:20,
+          background:"rgba(16,185,129,.15)",color:"#10b981",border:"1px solid rgba(16,185,129,.3)",fontSize:12,fontWeight:700}}>
+          🎓 {lang==="ta"?"மாணவர்":"Student"}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="stat-row" style={{marginBottom:20}}>
+        {[{l:lang==="ta"?"தேர்வுகள்":"Tests",v:history.length,c:"#7c3aed"},
+          {l:lang==="ta"?"சராசரி":"Avg",v:`${history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length):0}%`,c:"#10b981"},
+          {l:lang==="ta"?"நாட்கள்":"Streak",v:"🔥 3",c:"#f97316"},
+          {l:lang==="ta"?"தரவரிசை":"Rank",v:"#12",c:"#eab308"}].map(s=>(
+          <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:"1px solid var(--border)",textAlign:"center"}}>
+            <div style={{fontWeight:900,fontSize:20,color:s.c}}>{s.v}</div>
+            <div style={{fontSize:11,color:"var(--muted)"}} className={lang==="ta"?"tamil":""}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Settings */}
+      <div className="sec-title"><span>⚙️</span><span className={lang==="ta"?"tamil":""}>{t.settings}</span></div>
+
+      {/* Language selector */}
+      <div className="card card-p" style={{marginBottom:12}}>
+        <p style={{fontWeight:700,marginBottom:12,fontSize:14}} className={lang==="ta"?"tamil":""}>{t.selectLang}</p>
+        <div style={{display:"flex",gap:10}}>
+          {[{k:"en",l:"🇬🇧 English"},{k:"ta",l:"🇮🇳 தமிழ்"}].map(l=>(
+            <button key={l.k} className={`lang-pill ${lang===l.k?"active":""}`} style={{flex:1,justifyContent:"center"}}
+              onClick={()=>setLang(l.k)}>
+              {l.l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Dark mode */}
+      <div className="card card-p" style={{marginBottom:12,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <span style={{fontWeight:600,fontSize:14}} className={lang==="ta"?"tamil":""}>{darkMode?lang==="ta"?"இருள் பயன்முறை":"Dark Mode":lang==="ta"?"ஒளி பயன்முறை":"Light Mode"}</span>
+        <label style={{position:"relative",display:"inline-block",width:50,height:27,cursor:"pointer"}}>
+          <input type="checkbox" checked={darkMode} onChange={()=>setDarkMode(d=>!d)} style={{opacity:0,width:0,height:0}}/>
+          <div style={{position:"absolute",inset:0,background:darkMode?"#7c3aed":"var(--surface2)",borderRadius:14,transition:"all .3s",border:"1px solid var(--border)"}}>
+            <div style={{position:"absolute",top:2,left:darkMode?24:2,width:22,height:22,borderRadius:"50%",background:"#fff",transition:"left .3s",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}/>
+          </div>
+        </label>
+      </div>
+
+      {/* Logout */}
+      <button className="btn btn-danger" style={{marginTop:8}} onClick={logout}>
+        🚪 {t.logout}
+      </button>
+    </div>
+    <BottomNav/>
+  </>;
+}
+
+// ══════════════════════════════════════════════════════
+// ADMIN PANEL
+// ══════════════════════════════════════════════════════
+function AdminPanel(){
+  const {navigate,setUser,lang} = useApp();
+  const [tab,setTab] = useState("overview");
+  const users=getUsers();
+  const history=getHistory();
+
+  const stats={
+    users:users.length,
+    tests:history.length,
+    avg:history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length):0,
+    today:users.filter(u=>u.joinedAt&&new Date(u.joinedAt).toDateString()===new Date().toDateString()).length,
+  };
+
+  const logout=()=>{localStorage.removeItem("ct_session");setUser(null);navigate("login");};
+
+  const exportCSV=()=>{
+    const rows=[["Name","Phone","Email","Joined","Tests","Avg Score"]];
+    users.forEach(u=>{
+      const uh=history.filter(h=>h.userId===u.id);
+      const avg=uh.length?Math.round(uh.reduce((a,b)=>a+b.score,0)/uh.length):0;
+      rows.push([u.name,u.phone,u.email||"",u.joinedAt?new Date(u.joinedAt).toLocaleDateString():"",uh.length,avg+"%"]);
+    });
+    const csv=rows.map(r=>r.join(",")).join("\n");
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+    a.download="CRACKTNPSC_Users.csv";a.click();
+  };
+
+  const syncToSheet=async()=>{
+    const allData={
+      action:"sync_all",
+      users:users.map(u=>({name:u.name,phone:u.phone,email:u.email||"",joined:u.joinedAt||""})),
+      totalTests:history.length,
+      timestamp:new Date().toLocaleString()
+    };
+    await saveToGoogleSheet(allData);
+    alert(lang==="ta"?"கூகிள் ஷீட்டுக்கு அனுப்பப்பட்டது!":"Data sent to Google Sheets!");
+  };
+
+  return <div style={{display:"flex",flexDirection:"column",height:"100vh",overflow:"hidden"}}>
+    {/* Admin nav */}
+    <div style={{background:"linear-gradient(135deg,#7c3aed,#4c1d95)",padding:"12px 16px",display:"flex",alignItems:"center",gap:10,flexShrink:0}}>
+      <div style={{width:36,height:36,borderRadius:10,background:"rgba(255,255,255,.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>👑</div>
+      <div style={{flex:1}}>
+        <p style={{fontWeight:800,fontSize:16,color:"#fff"}}>Admin Panel</p>
+        <p style={{fontSize:11,color:"rgba(255,255,255,.6)"}}>CRACKTNPSC</p>
+      </div>
+      <button onClick={logout} style={{padding:"6px 12px",borderRadius:8,background:"rgba(255,255,255,.15)",color:"#fff",fontSize:12,fontWeight:700,border:"1px solid rgba(255,255,255,.2)"}}>Logout</button>
+    </div>
+
+    {/* Admin tabs */}
+    <div style={{display:"flex",background:"var(--surface)",borderBottom:"1px solid var(--border)",flexShrink:0}}>
+      {[{k:"overview",i:"📊",l:"Overview"},{k:"users",i:"👥",l:"Users"},{k:"tests",i:"📝",l:"Results"}].map(tb=>(
+        <button key={tb.k} onClick={()=>setTab(tb.k)} style={{
+          flex:1,padding:"11px 6px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,
+          borderBottom:`2px solid ${tab===tb.k?"#7c3aed":"transparent"}`,
+          color:tab===tb.k?"#7c3aed":"var(--muted)",background:"none",fontSize:10,fontWeight:700,
+          transition:"all .2s"
+        }}>
+          <span style={{fontSize:18}}>{tb.i}</span>{tb.l}
         </button>
       ))}
     </div>
 
-    {tab==="summary"&&<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-      <div className="card" style={{padding:24}}>
-        <h3 style={{fontSize:15,fontWeight:700,marginBottom:16}}>Performance Overview</h3>
-        <div style={{display:"flex",justifyContent:"space-around"}}>
-          <DonutChart pct={score} color="#7c3aed" size={110} label="Score"/>
-          <DonutChart pct={accuracy} color="#10b981" size={110} label="Accuracy"/>
-        </div>
-      </div>
-      <div className="card" style={{padding:24}}>
-        <h3 style={{fontSize:15,fontWeight:700,marginBottom:14}}>Test Details</h3>
-        {[{l:"Total Questions",v:totalQuestions},{l:"Correct",v:correct,c:"var(--green)"},{l:"Wrong",v:wrong,c:"var(--red)"},
-          {l:"Skipped",v:skipped,c:"var(--orange)"},{l:"Accuracy",v:`${accuracy}%`,c:"var(--accent2)"},{l:"Time Taken",v:fmt(timeTaken||0)}].map(d=>(
-          <div key={d.l} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid var(--border)"}}>
-            <span style={{fontSize:13,color:"var(--muted)"}}>{d.l}</span>
-            <strong style={{color:d.c||"var(--text)"}}>{d.v}</strong>
-          </div>
-        ))}
-      </div>
-    </div>}
-
-    {tab==="analysis"&&<div className="card" style={{padding:24}}>
-      <h3 style={{fontSize:15,fontWeight:700,marginBottom:20}}>Chapter / Topic Analysis</h3>
-      <div style={{display:"flex",flexDirection:"column",gap:16}}>
-        {(weakTopics||[]).sort((a,b)=>a.accuracy-b.accuracy).map(t=>(
-          <div key={t.name}>
-            <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
-              <div>
-                <span style={{fontWeight:600}}>{t.name}</span>
-                <span style={{fontSize:12,color:"var(--muted)",marginLeft:8}}>({t.correct}/{t.total})</span>
-              </div>
-              <div style={{display:"flex",alignItems:"center",gap:8}}>
-                <span style={{fontSize:13,fontWeight:700,color:pColor(t.accuracy)}}>{t.accuracy}%</span>
-                <span>{t.accuracy>=70?"💪":t.accuracy>=50?"📈":"⚠️"}</span>
-              </div>
-            </div>
-            <div className="progress-bar">
-              <div className="progress-fill" style={{width:`${t.accuracy}%`,background:pColor(t.accuracy)}}/>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div style={{marginTop:20,padding:16,borderRadius:12,background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.2)"}}>
-        <p style={{fontSize:13,fontWeight:700,color:"var(--accent2)",marginBottom:4}}>💡 AI Recommendation</p>
-        <p style={{fontSize:13,color:"var(--muted)"}}>
-          {(weakTopics||[]).filter(t=>t.accuracy<50).length>0
-            ?`Prioritise: ${(weakTopics||[]).filter(t=>t.accuracy<50).map(t=>t.name).join(", ")}. Review related chapters before your next test.`
-            :"Great performance! Continue practicing to maintain your edge."}
-        </p>
-      </div>
-    </div>}
-
-    {tab==="answers"&&<div style={{display:"flex",flexDirection:"column",gap:12}}>
-      {qs.map((q,i)=>{
-        const uAns=answers?.[i];
-        const ok=uAns===q.correct,skip=uAns===undefined;
-        return <div key={i} className="card" style={{overflow:"hidden",borderColor:skip?"var(--border)":ok?"rgba(16,185,129,.4)":"rgba(239,68,68,.4)"}}>
-          <div style={{padding:18}}>
-            <div style={{display:"flex",gap:8,marginBottom:10}}>
-              <div style={{width:28,height:28,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",
-                fontWeight:700,fontSize:13,background:skip?"var(--surface2)":ok?"rgba(16,185,129,.2)":"rgba(239,68,68,.2)",
-                color:skip?"var(--muted)":ok?"var(--green)":"var(--red)"}}>
-                {skip?"—":ok?"✓":"✗"}
-              </div>
-              <span className={`badge tag-${q.difficulty.toLowerCase()}`}>{q.difficulty}</span>
-              <span style={{fontSize:12,color:"var(--muted)",marginLeft:"auto"}}>{q.topic}</span>
-            </div>
-            <p style={{fontSize:14,fontWeight:500,marginBottom:12,lineHeight:1.6}}>{i+1}. {q.question}</p>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-              {q.options.map((opt,j)=><div key={j} style={{
-                padding:"7px 10px",borderRadius:8,fontSize:12,display:"flex",alignItems:"center",gap:6,
-                background:j===q.correct?"rgba(16,185,129,.1)":j===uAns&&!ok?"rgba(239,68,68,.1)":"var(--surface2)",
-                border:`1px solid ${j===q.correct?"rgba(16,185,129,.3)":j===uAns&&!ok?"rgba(239,68,68,.3)":"var(--border)"}`}}>
-                <span style={{width:18,height:18,borderRadius:4,display:"flex",alignItems:"center",justifyContent:"center",
-                  fontWeight:700,fontSize:10,flexShrink:0,
-                  background:j===q.correct?"var(--green)":j===uAns&&!ok?"var(--red)":"var(--surface)",
-                  color:j===q.correct||j===uAns&&!ok?"#fff":"var(--muted)"}}>
-                  {String.fromCharCode(65+j)}
-                </span>
-                {opt}
-              </div>)}
-            </div>
-          </div>
-          {q.explanation&&<div style={{padding:"12px 18px",borderTop:"1px solid var(--border)",background:"rgba(124,58,237,.04)"}}>
-            <span style={{fontSize:12,fontWeight:700,color:"var(--accent2)"}}>💡 </span>
-            <span style={{fontSize:12,color:"var(--muted)"}}>{q.explanation}</span>
-            <span className="badge" style={{marginLeft:8,background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}}>📚 {q.concept}</span>
-          </div>}
-        </div>;
-      })}
-    </div>}
-
-    <div style={{display:"flex",gap:10,paddingBottom:20}}>
-      <button className="btn btn-secondary" onClick={()=>navigate("dashboard")}>🏠 Dashboard</button>
-      <button className="btn btn-secondary" onClick={exportTxt}>📥 Export</button>
-      <button className="btn btn-primary" style={{marginLeft:"auto"}} onClick={()=>navigate("exam")}>🔁 Retake Test</button>
-    </div>
-  </div>;
-}
-
-// ══════════════════════════════════════════════════════════
-// PAGE: ANALYTICS
-// ══════════════════════════════════════════════════════════
-function AnalyticsPage() {
-  const history=JSON.parse(localStorage.getItem("eiq_history")||"[]");
-  const hasData=history.length>0;
-
-  const mockTopics=[
-    {name:"Polity",accuracy:40,total:25,correct:10},{name:"History",accuracy:80,total:20,correct:16},
-    {name:"Science",accuracy:35,total:20,correct:7},{name:"Geography",accuracy:65,total:20,correct:13},
-    {name:"Tamil Literature",accuracy:85,total:20,correct:17},{name:"Economics",accuracy:55,total:20,correct:11},
-  ];
-
-  const scoreHistory=[60,72,68,75,80,71,85,78,82,90].map((v,i)=>({label:`T${i+1}`,value:v}));
-  const pColor=a=>a>=70?"var(--green)":a>=50?"var(--yellow)":"var(--red)";
-
-  return <div style={{display:"flex",flexDirection:"column",gap:20,animation:"fadeUp .4s ease"}}>
-    <div>
-      <h1 style={{fontSize:22,fontWeight:800}}>Analytics</h1>
-      <p style={{fontSize:13,color:"var(--muted)"}}>Chapter-wise performance & weak area detection</p>
-    </div>
-
-    {/* Overall donuts */}
-    <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
-      {[{pct:72,c:"#7c3aed",l:"Overall Score"},{pct:81,c:"#10b981",l:"Accuracy"},{pct:65,c:"#06b6d4",l:"Completion"},{pct:78,c:"#f97316",l:"Improvement"}].map(d=>(
-        <div key={d.l} className="card" style={{padding:20,display:"flex",flexDirection:"column",alignItems:"center"}}>
-          <DonutChart pct={d.pct} color={d.c} size={90} label={d.l}/>
-        </div>
-      ))}
-    </div>
-
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-      {/* Score trend */}
-      <div className="card" style={{padding:20}}>
-        <h3 style={{fontSize:15,fontWeight:700,marginBottom:4}}>📈 Score Trend</h3>
-        <p style={{fontSize:12,color:"var(--muted)",marginBottom:16}}>Last 10 test scores</p>
-        <BarChart data={scoreHistory}/>
-      </div>
-
-      {/* Chapter accuracy table */}
-      <div className="card" style={{padding:20}}>
-        <h3 style={{fontSize:15,fontWeight:700,marginBottom:16}}>📚 Chapter Accuracy</h3>
-        <div style={{display:"flex",flexDirection:"column",gap:12}}>
-          {mockTopics.map(t=>(
-            <div key={t.name}>
-              <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,fontSize:13}}>
-                <span style={{fontWeight:600}}>{t.name}</span>
-                <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                  <span style={{color:"var(--muted)"}}>{t.correct}/{t.total}</span>
-                  <span style={{fontWeight:700,color:pColor(t.accuracy)}}>{t.accuracy}%</span>
-                </div>
-              </div>
-              <div className="progress-bar">
-                <div className="progress-fill" style={{width:`${t.accuracy}%`,background:pColor(t.accuracy)}}/>
-              </div>
+    <div style={{flex:1,overflowY:"auto",padding:14,WebkitOverflowScrolling:"touch"}}>
+      {tab==="overview"&&<>
+        <div className="stat-row">
+          {[{i:"👥",l:"Total Users",v:stats.users,c:"#7c3aed"},{i:"📝",l:"Tests Taken",v:stats.tests,c:"#10b981"},
+            {i:"⭐",l:"Avg Score",v:`${stats.avg}%`,c:"#06b6d4"},{i:"🆕",l:"Today",v:stats.today,c:"#f97316"}].map(s=>(
+            <div key={s.l} style={{padding:14,borderRadius:14,background:"var(--surface)",border:"1px solid var(--border)",textAlign:"center"}}>
+              <div style={{fontSize:20,marginBottom:4}}>{s.i}</div>
+              <div style={{fontSize:22,fontWeight:900,color:s.c}}>{s.v}</div>
+              <div style={{fontSize:10,color:"var(--muted)"}}>{s.l}</div>
             </div>
           ))}
         </div>
-      </div>
-    </div>
 
-    {/* Weak / Strong split */}
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-      <div className="card" style={{padding:20,border:"1px solid rgba(239,68,68,.3)"}}>
-        <h3 style={{fontSize:15,fontWeight:700,color:"var(--red)",marginBottom:14}}>⚠️ Weak Areas</h3>
-        {mockTopics.filter(t=>t.accuracy<60).map(t=>(
-          <div key={t.name} style={{display:"flex",justifyContent:"space-between",padding:"10px 14px",borderRadius:10,
-            background:"rgba(239,68,68,.08)",marginBottom:8}}>
-            <span style={{fontSize:14,fontWeight:600}}>{t.name}</span>
-            <div style={{textAlign:"right"}}>
-              <div style={{fontSize:14,fontWeight:700,color:"var(--red)"}}>{t.accuracy}%</div>
-              <div style={{fontSize:11,color:"var(--muted)"}}>Needs focus</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="card" style={{padding:20,border:"1px solid rgba(16,185,129,.3)"}}>
-        <h3 style={{fontSize:15,fontWeight:700,color:"var(--green)",marginBottom:14}}>💪 Strong Areas</h3>
-        {mockTopics.filter(t=>t.accuracy>=70).map(t=>(
-          <div key={t.name} style={{display:"flex",justifyContent:"space-between",padding:"10px 14px",borderRadius:10,
-            background:"rgba(16,185,129,.08)",marginBottom:8}}>
-            <span style={{fontSize:14,fontWeight:600}}>{t.name}</span>
-            <div style={{textAlign:"right"}}>
-              <div style={{fontSize:14,fontWeight:700,color:"var(--green)"}}>{t.accuracy}%</div>
-              <div style={{fontSize:11,color:"var(--muted)"}}>Excellent!</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Rank prediction */}
-    <div className="card" style={{padding:24,background:"linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.08))"}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div>
-          <h3 style={{fontSize:16,fontWeight:700,marginBottom:4}}>🎯 Rank Prediction</h3>
-          <p style={{fontSize:13,color:"var(--muted)"}}>Based on your current performance vs historical cutoffs</p>
+        <div style={{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap"}}>
+          <button className="btn btn-primary btn-sm" style={{flex:1}} onClick={syncToSheet}>📊 Sync to Google Sheet</button>
+          <button className="btn btn-secondary btn-sm" style={{flex:1}} onClick={exportCSV}>📥 Export CSV</button>
         </div>
-        <div style={{textAlign:"right"}}>
-          <div style={{fontSize:36,fontWeight:800,color:"var(--accent2)"}}>Top 15%</div>
-          <div style={{fontSize:12,color:"var(--muted)"}}>Estimated rank band</div>
+
+        <div className="card card-p">
+          <p style={{fontWeight:700,marginBottom:12,fontSize:14}}>📋 Recent Registrations</p>
+          {users.length===0?<p style={{color:"var(--muted)",fontSize:13,textAlign:"center",padding:"16px 0"}}>No users yet</p>:
+          users.slice(-5).reverse().map((u,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid var(--border)"}}>
+            <div>
+              <p style={{fontWeight:600,fontSize:14}}>{u.name}</p>
+              <p style={{fontSize:12,color:"var(--muted)"}}>📱 {u.phone}</p>
+            </div>
+            <span style={{fontSize:11,color:"var(--muted)"}}>{u.joinedAt?new Date(u.joinedAt).toLocaleDateString():"-"}</span>
+          </div>)}
         </div>
-      </div>
-      <div style={{marginTop:16,padding:14,borderRadius:10,background:"rgba(124,58,237,.1)"}}>
-        <p style={{fontSize:13,color:"var(--muted)"}}>💡 Improve Science (35%) and Polity (40%) to enter the <strong style={{color:"var(--accent2)"}}>Top 5%</strong> rank band.</p>
-      </div>
-    </div>
-  </div>;
-}
+      </>}
 
-// ══════════════════════════════════════════════════════════
-// PAGE: LEADERBOARD
-// ══════════════════════════════════════════════════════════
-function LeaderboardPage() {
-  const {user} = useApp();
-  const history=JSON.parse(localStorage.getItem("eiq_history")||"[]");
-  const myScore=history.length>0?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length):0;
-  const myEntry={rank:"—",name:user?.name||"You",score:myScore,tests:history.length,accuracy:myScore,streak:0,isMe:true};
-  const board=[...MOCK_LEADERBOARD,myEntry].sort((a,b)=>b.score-a.score).map((e,i)=>({...e,rank:e.isMe?"—":i+1}));
-
-  return <div style={{display:"flex",flexDirection:"column",gap:20,animation:"fadeUp .4s ease"}}>
-    <div><h1 style={{fontSize:22,fontWeight:800}}>Leaderboard 🏆</h1><p style={{fontSize:13,color:"var(--muted)"}}>Top performers this month</p></div>
-
-    {/* Top 3 podium */}
-    <div style={{display:"flex",justifyContent:"center",alignItems:"flex-end",gap:20,padding:"20px 0"}}>
-      {[board[1],board[0],board[2]].filter(Boolean).map((p,i)=>{
-        const hs=[72,100,56],cs=["#94a3b8","#f59e0b","#b45309"],ps=[2,1,3],ms=[32,40,32];
-        return <div key={p.name} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
-          <div style={{textAlign:"center"}}>
-            <div style={{fontSize:ms[i]}}>🥇🥈🥉"[i]</div>
-            <p style={{fontSize:13,fontWeight:700}}>{p.name}</p>
-            <p style={{fontSize:12,color:"var(--muted)"}}>{p.score}%</p>
-          </div>
-          <div style={{width:72,height:hs[i],borderRadius:"10px 10px 0 0",
-            background:`linear-gradient(to top,${cs[i]}33,${cs[i]})`,
-            display:"flex",alignItems:"center",justifyContent:"center",
-            color:"#fff",fontWeight:900,fontSize:18}}>{ps[i]}</div>
-        </div>;
-      })}
-    </div>
-
-    <div className="card" style={{overflow:"hidden"}}>
-      <table className="table">
-        <thead><tr><th>Rank</th><th>Student</th><th>Avg Score</th><th>Tests</th><th>Accuracy</th><th>Streak</th></tr></thead>
-        <tbody>
-          {board.map((e,i)=><tr key={i} style={{background:e.isMe?"rgba(124,58,237,.08)":undefined}}>
-            <td><span style={{fontWeight:900,fontSize:15,color:e.rank===1?"#f59e0b":e.rank===2?"#94a3b8":e.rank===3?"#b45309":"var(--muted)"}}>
-              {e.rank===1?"🥇":e.rank===2?"🥈":e.rank===3?"🥉":`#${e.rank}`}
-            </span></td>
-            <td><div style={{display:"flex",alignItems:"center",gap:10}}>
-              <div style={{width:32,height:32,borderRadius:8,background:e.isMe?"var(--accent)":"var(--surface2)",
-                display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,
-                color:e.isMe?"#fff":"var(--muted)"}}>{e.name[0]}</div>
-              <div>
-                <p style={{fontSize:14,fontWeight:700,color:e.isMe?"var(--accent2)":undefined}}>{e.name}{e.isMe?" (You)":""}</p>
+      {tab==="users"&&<>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+          <p style={{fontWeight:800,fontSize:16}}>All Users ({users.length})</p>
+          <button className="btn btn-secondary btn-sm" style={{width:"auto",padding:"8px 12px"}} onClick={exportCSV}>📥 CSV</button>
+        </div>
+        {users.length===0?<div style={{textAlign:"center",padding:"40px 0"}}>
+          <div style={{fontSize:40,marginBottom:10}}>👥</div>
+          <p style={{color:"var(--muted)"}}>No registered users yet</p>
+        </div>:
+        users.map((u,i)=>{
+          const uh=history.filter(h=>h.userId===u.id);
+          const avg=uh.length?Math.round(uh.reduce((a,b)=>a+b.score,0)/uh.length):0;
+          return <div key={i} className="card card-p" style={{marginBottom:10}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+              <div style={{display:"flex",gap:10,alignItems:"center"}}>
+                <div style={{width:36,height:36,borderRadius:10,background:"linear-gradient(135deg,#7c3aed,#06b6d4)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:800,fontSize:15}}>{u.name[0]}</div>
+                <div>
+                  <p style={{fontWeight:700,fontSize:14}}>{u.name}</p>
+                  <p style={{fontSize:12,color:"var(--muted)"}}>📱 {u.phone}</p>
+                </div>
               </div>
-            </div></td>
-            <td><span style={{fontWeight:700,color:e.score>=80?"var(--green)":e.score>=60?"var(--yellow)":"var(--red)"}}>{e.score}%</span></td>
-            <td style={{color:"var(--muted)"}}>{e.tests}</td>
-            <td>{e.accuracy}%</td>
-            <td>🔥 {e.streak}</td>
-          </tr>)}
-        </tbody>
-      </table>
-    </div>
-  </div>;
-}
-
-// ══════════════════════════════════════════════════════════
-// ADMIN PAGES
-// ══════════════════════════════════════════════════════════
-function AdminDashboard() {
-  const {navigate} = useApp();
-  const books=SAMPLE_BOOKS;
-  const history=JSON.parse(localStorage.getItem("eiq_history")||"[]");
-  return <div style={{display:"flex",flexDirection:"column",gap:20,animation:"fadeUp .4s ease"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-      <div><h1 style={{fontSize:22,fontWeight:800}}>Admin Overview</h1><p style={{fontSize:13,color:"var(--muted)"}}>Platform management dashboard</p></div>
-      <button className="btn btn-primary" onClick={()=>navigate("admin-upload")}>+ Upload Book</button>
-    </div>
-
-    <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}}>
-      {[{i:"📚",l:"Books Uploaded",v:books.length,c:"#7c3aed"},{i:"🧩",l:"Total MCQs",v:"800+",c:"#10b981"},
-        {i:"👥",l:"Active Students",v:342,c:"#06b6d4"},{i:"📝",l:"Tests Taken",v:1840,c:"#f97316"}].map(s=>(
-        <div key={s.l} className="stat-card" style={{padding:20}}>
-          <div style={{width:40,height:40,borderRadius:12,background:`${s.c}20`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,marginBottom:12}}>{s.i}</div>
-          <div style={{fontSize:28,fontWeight:800,color:s.c}}>{s.v}</div>
-          <div style={{fontSize:13,color:"var(--muted)"}}>{s.l}</div>
-        </div>
-      ))}
-    </div>
-
-    {/* Books table */}
-    <div className="card" style={{overflow:"hidden"}}>
-      <div style={{padding:"16px 20px",borderBottom:"1px solid var(--border)",display:"flex",justifyContent:"space-between"}}>
-        <h3 style={{fontWeight:700}}>📚 Uploaded Books</h3>
-        <button className="btn btn-secondary" style={{fontSize:13}} onClick={()=>navigate("admin-upload")}>+ Add Book</button>
-      </div>
-      <table className="table">
-        <thead><tr><th>Title</th><th>Subject</th><th>Chapters</th><th>MCQs</th><th>Source</th><th>Status</th><th>Action</th></tr></thead>
-        <tbody>
-          {books.map(b=><tr key={b.id}>
-            <td style={{fontWeight:600}}>{b.title}</td>
-            <td style={{color:"var(--muted)"}}>{b.subject}</td>
-            <td>{b.chapters}</td>
-            <td><span style={{color:"var(--accent2)",fontWeight:700}}>{b.mcqs}</span></td>
-            <td><span className="badge" style={{background:"var(--surface2)",color:"var(--muted)"}}>{b.source}</span></td>
-            <td><span className="badge tag-easy">✓ {b.status}</span></td>
-            <td><button className="btn btn-secondary" style={{fontSize:12,padding:"5px 10px"}} onClick={()=>navigate("admin-mcqs")}>View MCQs</button></td>
-          </tr>)}
-        </tbody>
-      </table>
-    </div>
-
-    {/* Student performance preview */}
-    <div className="card" style={{padding:20}}>
-      <h3 style={{fontSize:15,fontWeight:700,marginBottom:16}}>👥 Top Student Performance</h3>
-      <table className="table">
-        <thead><tr><th>Student</th><th>Tests Taken</th><th>Avg Score</th><th>Accuracy</th></tr></thead>
-        <tbody>
-          {MOCK_LEADERBOARD.slice(0,5).map(s=><tr key={s.name}>
-            <td style={{fontWeight:600}}>{s.name}</td>
-            <td>{s.tests}</td>
-            <td><span style={{color:"var(--green)",fontWeight:700}}>{s.score}%</span></td>
-            <td>{s.accuracy}%</td>
-          </tr>)}
-        </tbody>
-      </table>
-    </div>
-  </div>;
-}
-
-function AdminUpload() {
-  const {navigate,setToast} = useApp();
-  const [stage,setStage] = useState("upload");
-  const [file,setFile] = useState(null);
-  const [drag,setDrag] = useState(false);
-  const [settings,setSettings] = useState({title:"",subject:"General Studies",numMcqs:100,difficulty:"All",chunkSize:500,year:"2024"});
-  const [progress,setProgress] = useState(0);
-  const [progText,setProgText] = useState("");
-  const [generated,setGenerated] = useState(null);
-  const [useAI,setUseAI] = useState(true);
-
-  const handleFile = f => {
-    const exts=[".pdf",".docx",".txt"];
-    const ok=exts.some(e=>f.name.toLowerCase().endsWith(e));
-    if(!ok){setToast({msg:"Only PDF, DOCX, TXT supported",type:"error"});return;}
-    setFile(f);
-    setSettings(s=>({...s,title:f.name.replace(/\.(pdf|docx|txt)$/i,"")}));
-    setStage("settings");
-  };
-
-  const process = async () => {
-    setStage("processing");
-    const steps=[
-      {p:5,t:"📂 Reading file..."},
-      {p:15,t:"📄 Extracting text content..."},
-      {p:30,t:"🔍 Detecting chapters & topics..."},
-      {p:45,t:"🤖 Sending to Claude AI..."},
-      {p:60,t:"✨ Generating MCQs..."},
-      {p:75,t:"🏷️ Tagging by chapter & difficulty..."},
-      {p:88,t:"✅ Validating answers..."},
-      {p:95,t:"📊 Creating test bank..."},
-      {p:100,t:"🎉 Done!"},
-    ];
-    for(const s of steps){
-      setProgText(s.t);setProgress(s.p);
-      await new Promise(r=>setTimeout(r,500+Math.random()*300));
-    }
-
-    // Try real AI
-    let qs=[];
-    if(useAI){
-      try{
-        const res=await fetch("https://api.anthropic.com/v1/messages",{
-          method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({
-            model:"claude-sonnet-4-20250514",max_tokens:1000,
-            messages:[{role:"user",content:`Generate 10 high-quality MCQs for a competitive exam (TNPSC/UPSC style) from the subject: "${settings.subject}". 
-Return ONLY valid JSON array, no markdown:
-[{"id":1,"topic":"${settings.subject}","chapter":"Chapter Name","difficulty":"Medium","question":"...?","options":["A","B","C","D"],"correct":0,"explanation":"...","concept":"..."}]
-correct = 0-indexed integer.`}]
-          })
-        });
-        if(res.ok){const d=await res.json();const raw=d.content?.[0]?.text||"[]";qs=JSON.parse(raw.replace(/```json|```/g,"").trim());}
-      }catch(e){}
-    }
-    if(!qs.length){
-      qs=SAMPLE_MCQS.filter(q=>settings.subject==="All"||q.topic.toLowerCase().includes(settings.subject.toLowerCase().slice(0,4)));
-      if(!qs.length) qs=[...SAMPLE_MCQS].sort(()=>Math.random()-.5).slice(0,settings.numMcqs);
-    }
-
-    const result={
-      id:Date.now(),title:settings.title,subject:settings.subject,
-      totalMcqs:qs.length,chapters:[...new Set(qs.map(q=>q.chapter||"General"))].length,
-      difficulty:settings.difficulty,mcqs:qs,
-    };
-    setGenerated(result);
-    // Save to test bank
-    const banks=JSON.parse(localStorage.getItem("eiq_banks")||"[]");
-    banks.push(result);
-    localStorage.setItem("eiq_banks",JSON.stringify(banks));
-    setStage("done");
-  };
-
-  const subjects=["General Studies","Tamil","History","Geography","Science","Polity","Economics","English","Mathematics"];
-  const stIdx=["upload","settings","processing","done"].indexOf(stage);
-
-  return <div style={{maxWidth:700,animation:"fadeUp .4s ease"}}>
-    <div style={{marginBottom:24}}>
-      <h1 style={{fontSize:22,fontWeight:800}}>Upload Book / PDF</h1>
-      <p style={{fontSize:13,color:"var(--muted)"}}>AI will extract text and generate thousands of MCQs automatically</p>
-    </div>
-
-    {/* Steps */}
-    <div style={{display:"flex",alignItems:"center",gap:0,marginBottom:28}}>
-      {["Upload","Settings","Processing","Done"].map((s,i)=>(
-        <React.Fragment key={s}>
-          <div style={{display:"flex",alignItems:"center",gap:6}}>
-            <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",
-              fontSize:13,fontWeight:700,transition:"all .3s",
-              background:i===stIdx?"var(--accent)":stIdx>i?"var(--green)":"var(--surface2)",
-              color:i===stIdx||stIdx>i?"#fff":"var(--muted)"}}>
-              {stIdx>i?"✓":i+1}
+              <div style={{textAlign:"right"}}>
+                <div style={{fontSize:16,fontWeight:800,color:"#7c3aed"}}>{avg}%</div>
+                <div style={{fontSize:10,color:"var(--muted)"}}>{uh.length} tests</div>
+              </div>
             </div>
-            <span style={{fontSize:13,fontWeight:stIdx===i?700:400,color:stIdx===i?"var(--text)":"var(--muted)"}}>{s}</span>
-          </div>
-          {i<3&&<div style={{flex:1,height:2,margin:"0 8px",background:stIdx>i?"var(--green)":"var(--surface2)",transition:"all .3s"}}/>}
-        </React.Fragment>
-      ))}
-    </div>
+            {/* Admin sees password */}
+            <div style={{padding:"8px 12px",borderRadius:8,background:"rgba(239,68,68,.06)",border:"1px solid rgba(239,68,68,.15)",fontSize:12}}>
+              <span style={{color:"var(--muted)"}}>🔑 Password: </span>
+              <span style={{fontFamily:"monospace",color:"#ef4444",fontWeight:700}}>{u.password}</span>
+              {u.email&&<span style={{color:"var(--muted)",marginLeft:12}}>✉️ {u.email}</span>}
+            </div>
+          </div>;
+        })}
+      </>}
 
-    {stage==="upload"&&<div
-      className={`upload-zone ${drag?"drag":""}`}
-      onDragOver={e=>{e.preventDefault();setDrag(true)}}
-      onDragLeave={()=>setDrag(false)}
-      onDrop={e=>{e.preventDefault();setDrag(false);handleFile(e.dataTransfer.files[0])}}
-      onClick={()=>document.getElementById("fup").click()}>
-      <input id="fup" type="file" accept=".pdf,.docx,.txt" style={{display:"none"}} onChange={e=>handleFile(e.target.files[0])}/>
-      <div style={{fontSize:52,marginBottom:16}}>📁</div>
-      <h3 style={{fontSize:18,fontWeight:700,marginBottom:8}}>Drop file here or click to browse</h3>
-      <p style={{color:"var(--muted)",fontSize:14,marginBottom:20}}>Previous year papers, textbooks, notes</p>
-      <div style={{display:"flex",gap:10,justifyContent:"center",marginBottom:20}}>
-        {["PDF","DOCX","TXT"].map(f=><span key={f} className="badge" style={{background:"var(--surface2)",color:"var(--muted)",border:"1px solid var(--border)"}}>{f}</span>)}
-      </div>
-      <button className="btn btn-primary" style={{fontSize:14}}>Browse Files</button>
-      <p style={{fontSize:12,color:"var(--muted)",marginTop:12}}>Max file size: 50MB</p>
-    </div>}
-
-    {stage==="settings"&&<div className="card" style={{padding:28}}>
-      <div style={{display:"flex",gap:10,padding:14,borderRadius:12,background:"rgba(16,185,129,.1)",border:"1px solid rgba(16,185,129,.3)",marginBottom:24}}>
-        <span style={{fontSize:20}}>✅</span>
-        <div><p style={{fontWeight:700,color:"var(--green)"}}>{file?.name}</p>
-          <p style={{fontSize:12,color:"var(--muted)"}}>{(file?.size/1024).toFixed(1)} KB • {file?.name.split(".").pop().toUpperCase()}</p></div>
-      </div>
-      <h2 style={{fontSize:16,fontWeight:700,marginBottom:20}}>Configure MCQ Generation</h2>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-        <div style={{gridColumn:"1/-1"}}>
-          <label className="label">Book / Test Title</label>
-          <input className="input" value={settings.title} onChange={e=>setSettings({...settings,title:e.target.value})} placeholder="e.g. TNPSC Group 1 Study Material"/>
-        </div>
-        {[
-          {l:"Subject",k:"subject",type:"select",opts:subjects},
-          {l:"Difficulty",k:"difficulty",type:"select",opts:["All","Easy","Medium","Hard"]},
-          {l:"Number of MCQs to Generate",k:"numMcqs",type:"number",min:10,max:10000},
-          {l:"Year",k:"year",type:"text"},
-        ].map(f=><div key={f.k}>
-          <label className="label">{f.l}</label>
-          {f.type==="select"
-            ?<select className="input" value={settings[f.k]} onChange={e=>setSettings({...settings,[f.k]:e.target.value})}>
-              {f.opts.map(o=><option key={o}>{o}</option>)}
-            </select>
-            :<input className="input" type={f.type} value={settings[f.k]} min={f.min} max={f.max}
-              onChange={e=>setSettings({...settings,[f.k]:f.type==="number"?parseInt(e.target.value):e.target.value})}/>
-          }
-        </div>)}
-      </div>
-      <div style={{display:"flex",alignItems:"center",gap:12,marginTop:16,padding:14,borderRadius:12,background:"rgba(124,58,237,.08)"}}>
-        <label style={{position:"relative",display:"inline-block",width:44,height:24,cursor:"pointer"}}>
-          <input type="checkbox" checked={useAI} onChange={e=>setUseAI(e.target.checked)} style={{opacity:0,width:0,height:0}}/>
-          <div style={{position:"absolute",inset:0,background:useAI?"var(--accent)":"var(--surface2)",borderRadius:12,transition:"all .3s"}}>
-            <div style={{position:"absolute",top:2,left:useAI?22:2,width:20,height:20,borderRadius:"50%",background:"#fff",transition:"left .3s"}}/>
-          </div>
-        </label>
-        <div>
-          <p style={{fontSize:14,fontWeight:700,color:"var(--accent2)"}}>🤖 Use Claude AI</p>
-          <p style={{fontSize:12,color:"var(--muted)"}}>Generates high-quality MCQs with explanations from content</p>
-        </div>
-      </div>
-      <div style={{display:"flex",gap:10,marginTop:20}}>
-        <button className="btn btn-secondary" onClick={()=>setStage("upload")}>← Back</button>
-        <button className="btn btn-primary" style={{flex:1}} onClick={process}>🚀 Generate {settings.numMcqs} MCQs</button>
-      </div>
-    </div>}
-
-    {stage==="processing"&&<div className="card" style={{padding:52,textAlign:"center"}}>
-      <div style={{width:70,height:70,borderRadius:20,background:"linear-gradient(135deg,var(--accent),var(--accent3))",
-        display:"flex",alignItems:"center",justifyContent:"center",fontSize:32,margin:"0 auto 24px",
-        animation:"glow 2s infinite"}}>🤖</div>
-      <h2 style={{fontSize:22,fontWeight:800,marginBottom:8}}>AI Processing...</h2>
-      <p style={{color:"var(--muted)",marginBottom:28,fontSize:14}}>{progText}</p>
-      <div className="progress-bar" style={{height:10,marginBottom:12}}>
-        <div className="progress-fill" style={{width:`${progress}%`,background:"linear-gradient(90deg,var(--accent),var(--accent3))"}}/>
-      </div>
-      <p className="mono" style={{color:"var(--accent2)",fontWeight:600}}>{progress}%</p>
-      <p style={{fontSize:12,color:"var(--muted)",marginTop:12}}>Generating MCQs from {file?.name}...</p>
-    </div>}
-
-    {stage==="done"&&generated&&<div className="card" style={{padding:40,textAlign:"center"}}>
-      <div style={{fontSize:52,marginBottom:16}}>🎉</div>
-      <h2 style={{fontSize:22,fontWeight:800,marginBottom:8}}>MCQ Bank Created!</h2>
-      <p style={{color:"var(--muted)",marginBottom:28,fontSize:14}}>Ready for students to practice</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:28}}>
-        {[{i:"🧩",l:"MCQs Generated",v:generated.totalMcqs},{i:"📖",l:"Chapters",v:generated.chapters},{i:"📚",l:"Subject",v:generated.subject}].map(s=>(
-          <div key={s.l} style={{padding:16,borderRadius:14,background:"var(--surface2)"}}>
-            <div style={{fontSize:24,marginBottom:4}}>{s.i}</div>
-            <div style={{fontWeight:800,color:"var(--accent2)",fontSize:16}}>{s.v}</div>
-            <div style={{fontSize:11,color:"var(--muted)"}}>{s.l}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{display:"flex",gap:10,justifyContent:"center"}}>
-        <button className="btn btn-secondary" onClick={()=>{setStage("upload");setFile(null);setGenerated(null);setProgress(0);}}>Upload Another</button>
-        <button className="btn btn-primary" onClick={()=>navigate("admin-mcqs")}>View MCQ Bank →</button>
-      </div>
-    </div>}
-  </div>;
-}
-
-function AdminMCQs() {
-  const [filter,setFilter] = useState({topic:"All",diff:"All",search:""});
-  const [selected,setSelected] = useState(new Set());
-
-  const banks=JSON.parse(localStorage.getItem("eiq_banks")||"[]");
-  const allMcqs=[...SAMPLE_MCQS,...banks.flatMap(b=>b.mcqs||[])];
-
-  const topics=["All",...new Set(allMcqs.map(q=>q.topic))];
-  const diffs=["All","Easy","Medium","Hard"];
-
-  const filtered=allMcqs.filter(q=>
-    (filter.topic==="All"||q.topic===filter.topic)&&
-    (filter.diff==="All"||q.difficulty===filter.diff)&&
-    (!filter.search||q.question.toLowerCase().includes(filter.search.toLowerCase()))
-  );
-
-  return <div style={{display:"flex",flexDirection:"column",gap:16,animation:"fadeUp .4s ease"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-      <div>
-        <h1 style={{fontSize:22,fontWeight:800}}>MCQ Bank</h1>
-        <p style={{fontSize:13,color:"var(--muted)"}}>{allMcqs.length} total MCQs • {filtered.length} filtered</p>
-      </div>
-      <div style={{display:"flex",gap:8}}>
-        {selected.size>0&&<button className="btn btn-primary" style={{fontSize:13}}>Create Test from {selected.size} selected</button>}
-        <button className="btn btn-secondary" style={{fontSize:13}}>Export CSV</button>
-      </div>
-    </div>
-
-    {/* Filters */}
-    <div className="card" style={{padding:16,display:"flex",gap:12,flexWrap:"wrap",alignItems:"center"}}>
-      <input className="input" style={{maxWidth:220}} placeholder="Search questions..." value={filter.search} onChange={e=>setFilter(f=>({...f,search:e.target.value}))}/>
-      <select className="input" style={{maxWidth:150}} value={filter.topic} onChange={e=>setFilter(f=>({...f,topic:e.target.value}))}>
-        {topics.map(t=><option key={t}>{t}</option>)}
-      </select>
-      <select className="input" style={{maxWidth:130}} value={filter.diff} onChange={e=>setFilter(f=>({...f,diff:e.target.value}))}>
-        {diffs.map(d=><option key={d}>{d}</option>)}
-      </select>
-      <span style={{fontSize:13,color:"var(--muted)",marginLeft:"auto"}}>{filtered.length} results</span>
-    </div>
-
-    {/* MCQ table */}
-    <div className="card" style={{overflow:"hidden"}}>
-      <table className="table">
-        <thead><tr>
-          <th><input type="checkbox" onChange={e=>{if(e.target.checked)setSelected(new Set(filtered.map(q=>q.id)));else setSelected(new Set());}}/></th>
-          <th>#</th><th>Question</th><th>Topic</th><th>Chapter</th><th>Difficulty</th>
-        </tr></thead>
-        <tbody>
-          {filtered.slice(0,50).map((q,i)=><tr key={q.id||i}>
-            <td><input type="checkbox" checked={selected.has(q.id||i)} onChange={e=>{const s=new Set(selected);e.target.checked?s.add(q.id||i):s.delete(q.id||i);setSelected(s);}}/></td>
-            <td style={{color:"var(--muted)",fontSize:13}}>{i+1}</td>
-            <td style={{maxWidth:320}}>
-              <p style={{fontWeight:500,fontSize:13,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{q.question}</p>
-              <p style={{fontSize:11,color:"var(--muted)",marginTop:2}}>✓ {q.options?.[q.correct]}</p>
-            </td>
-            <td><span className="badge" style={{background:"rgba(6,182,212,.1)",color:"var(--accent3)",border:"1px solid rgba(6,182,212,.2)"}}>{q.topic}</span></td>
-            <td style={{fontSize:12,color:"var(--muted)"}}>{q.chapter}</td>
-            <td><span className={`badge tag-${q.difficulty?.toLowerCase()||"medium"}`}>{q.difficulty}</span></td>
-          </tr>)}
-        </tbody>
-      </table>
-      {filtered.length>50&&<div style={{padding:"12px 20px",color:"var(--muted)",fontSize:13,borderTop:"1px solid var(--border)"}}>
-        Showing 50 of {filtered.length} results
-      </div>}
+      {tab==="tests"&&<>
+        <p style={{fontWeight:800,fontSize:16,marginBottom:12}}>All Results ({history.length})</p>
+        {history.length===0?<div style={{textAlign:"center",padding:"40px 0"}}>
+          <div style={{fontSize:40,marginBottom:10}}>📝</div>
+          <p style={{color:"var(--muted)"}}>No test results yet</p>
+        </div>:
+        history.slice().reverse().slice(0,30).map((h,i)=>{
+          const u=users.find(u=>u.id===h.userId);
+          return <div key={i} className="card card-p" style={{marginBottom:10}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+              <div>
+                <p style={{fontWeight:700,fontSize:14}}>{u?.name||"Demo Student"}</p>
+                <p style={{fontSize:12,color:"var(--muted)"}}>📱 {u?.phone||"9876543210"}</p>
+              </div>
+              <div style={{textAlign:"right"}}>
+                <span style={{fontSize:18,fontWeight:900,color:h.score>=60?"#10b981":"#ef4444"}}>{h.score}%</span>
+              </div>
+            </div>
+            <div style={{display:"flex",gap:10,fontSize:12,color:"var(--muted)",flexWrap:"wrap"}}>
+              <span>📝 {h.testName}</span>
+              <span>✅ {h.correct}/{h.totalQuestions}</span>
+              <span>🎯 {h.accuracy}%</span>
+              <span>📅 {new Date(h.date).toLocaleDateString()}</span>
+            </div>
+          </div>;
+        })}
+      </>}
     </div>
   </div>;
 }
 
-function AdminTests() {
-  const {navigate,setActiveTest} = useApp();
-  const tests=generateTests();
-  return <div style={{animation:"fadeUp .4s ease"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
-      <div><h1 style={{fontSize:22,fontWeight:800}}>Manage Tests</h1><p style={{fontSize:13,color:"var(--muted)"}}>Create and manage exam tests</p></div>
-      <button className="btn btn-primary">+ Create Test</button>
-    </div>
-    <div className="card" style={{overflow:"hidden"}}>
-      <table className="table">
-        <thead><tr><th>Test Name</th><th>Subject</th><th>Questions</th><th>Duration</th><th>Difficulty</th><th>Attempts</th><th>Actions</th></tr></thead>
-        <tbody>
-          {tests.map(t=><tr key={t.id}>
-            <td style={{fontWeight:600}}>{t.name}</td>
-            <td style={{color:"var(--muted)"}}>{t.subject}</td>
-            <td>{t.questions.length}</td>
-            <td>{t.duration} min</td>
-            <td><span className={`badge tag-${t.difficulty.toLowerCase()}`}>{t.difficulty}</span></td>
-            <td>{t.totalAttempts.toLocaleString()}</td>
-            <td><div style={{display:"flex",gap:6}}>
-              <button className="btn btn-secondary" style={{fontSize:12,padding:"5px 10px"}} onClick={()=>{setActiveTest(t);navigate("exam");}}>Preview</button>
-              <button className="btn btn-ghost" style={{fontSize:12,padding:"5px 10px",color:"var(--red)"}}>Delete</button>
-            </div></td>
-          </tr>)}
-        </tbody>
-      </table>
-    </div>
-  </div>;
-}
-
-function AdminStudents() {
-  return <div style={{animation:"fadeUp .4s ease"}}>
-    <div style={{marginBottom:20}}><h1 style={{fontSize:22,fontWeight:800}}>Student Performance</h1><p style={{fontSize:13,color:"var(--muted)"}}>Monitor all student activity</p></div>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,marginBottom:20}}>
-      {[{l:"Total Students",v:342,c:"#7c3aed"},{l:"Active Today",v:89,c:"#10b981"},{l:"Avg Score",v:"72%",c:"#06b6d4"}].map(s=>(
-        <div key={s.l} className="stat-card" style={{padding:20}}>
-          <div style={{fontSize:28,fontWeight:800,color:s.c}}>{s.v}</div>
-          <div style={{fontSize:13,color:"var(--muted)"}}>{s.l}</div>
-        </div>
-      ))}
-    </div>
-    <div className="card" style={{overflow:"hidden"}}>
-      <table className="table">
-        <thead><tr><th>Student</th><th>Tests Taken</th><th>Avg Score</th><th>Accuracy</th><th>Last Active</th><th>Status</th></tr></thead>
-        <tbody>
-          {MOCK_LEADERBOARD.map(s=><tr key={s.name}>
-            <td><div style={{display:"flex",alignItems:"center",gap:10}}>
-              <div style={{width:28,height:28,borderRadius:7,background:"var(--surface2)",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:12}}>{s.name[0]}</div>
-              <span style={{fontWeight:600}}>{s.name}</span>
-            </div></td>
-            <td>{s.tests}</td>
-            <td><span style={{color:s.score>=70?"var(--green)":"var(--yellow)",fontWeight:700}}>{s.score}%</span></td>
-            <td>{s.accuracy}%</td>
-            <td style={{color:"var(--muted)",fontSize:13}}>2 days ago</td>
-            <td><span className="badge tag-easy">Active</span></td>
-          </tr>)}
-        </tbody>
-      </table>
-    </div>
-  </div>;
-}
-
-// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
 // ROOT APP
-// ══════════════════════════════════════════════════════════
-function App() {
+// ══════════════════════════════════════════════════════
+function App(){
   const [page,setPage] = useState("login");
   const [user,setUser] = useState(null);
+  const [lang,setLang] = useState("en");
   const [darkMode,setDarkMode] = useState(true);
   const [activeTest,setActiveTest] = useState(null);
   const [testResult,setTestResult] = useState(null);
   const [toast,setToast] = useState(null);
-  const [tests,setTests] = useState([]);
 
   useEffect(()=>{
-    const u=localStorage.getItem("eiq_user");
-    if(u){setUser(JSON.parse(u));setPage("dashboard");}
-    const dm=localStorage.getItem("eiq_dark");
+    const s=localStorage.getItem("ct_session");
+    if(s){ const u=JSON.parse(s);setUser(u);setPage(u.role==="admin"?"admin":"dashboard"); }
+    const dm=localStorage.getItem("ct_dark");
     if(dm!==null)setDarkMode(dm==="true");
+    const lg=localStorage.getItem("ct_lang");
+    if(lg)setLang(lg);
   },[]);
 
   useEffect(()=>{
     document.documentElement.className=darkMode?"":"light";
-    localStorage.setItem("eiq_dark",darkMode);
+    localStorage.setItem("ct_dark",darkMode);
   },[darkMode]);
 
+  useEffect(()=>{
+    localStorage.setItem("ct_lang",lang);
+  },[lang]);
+
   const navigate=p=>setPage(p);
+  const showToast=(t)=>{setToast(t);};
+  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(null),3000);return()=>clearTimeout(t);}},[toast]);
 
-  const isExam=page==="exam";
-  const isLogin=page==="login";
-  const showSidebar=!isExam&&!isLogin&&user;
-
-  const pageComponent=()=>{
+  const renderPage=()=>{
     switch(page){
-      case "login": return <LoginPage/>;
-      case "dashboard": return <StudentDashboard/>;
-      case "practice": return <PracticePage/>;
-      case "tests": return <TestsPage/>;
-      case "exam": return <ExamPage/>;
-      case "result": return <ResultPage/>;
+      case "login":     return <LoginScreen/>;
+      case "dashboard": return <Dashboard/>;
+      case "practice":  return <PracticePage/>;
+      case "tests":     return <TestsPage/>;
+      case "exam":      return <ExamPage/>;
+      case "result":    return <ResultPage/>;
       case "analytics": return <AnalyticsPage/>;
-      case "leaderboard": return <LeaderboardPage/>;
-      case "admin-dashboard": return <AdminDashboard/>;
-      case "admin-upload": return <AdminUpload/>;
-      case "admin-mcqs": return <AdminMCQs/>;
-      case "admin-tests": return <AdminTests/>;
-      case "admin-students": return <AdminStudents/>;
-      default: return <StudentDashboard/>;
+      case "profile":   return <ProfilePage/>;
+      case "admin":     return <AdminPanel/>;
+      default:          return <Dashboard/>;
     }
   };
 
-  return <Ctx.Provider value={{user,setUser,darkMode,setDarkMode,page,navigate,activeTest,setActiveTest,testResult,setTestResult,tests,setTests,setToast}}>
-    {!isLogin&&<NavBar/>}
-    {isLogin
-      ? pageComponent()
-      : <div className="app-layout">
-          {showSidebar&&!isExam&&<Sidebar/>}
-          <div className="page-content">
-            {pageComponent()}
-          </div>
-        </div>
-    }
-    {toast&&<Toast msg={toast.msg} type={toast.type} onClose={()=>setToast(null)}/>}
+  return <Ctx.Provider value={{
+    page,navigate,user,setUser,lang,setLang,darkMode,setDarkMode,
+    activeTest,setActiveTest,testResult,setTestResult,
+    toast,setToast:showToast
+  }}>
+    <div id="app">
+      {renderPage()}
+      {toast&&<Toast msg={toast.msg} type={toast.type} onClose={()=>setToast(null)}/>}
+    </div>
   </Ctx.Provider>;
 }
 
